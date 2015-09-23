@@ -18,6 +18,8 @@
 <string name="Back">Back</string>
 <string name="Profile">Profile</string>
 <string name="Settings">Settings</string>
+<string name="Upload_Image">Upload Image</string>
+<string name="SaveEvent">Save Event</string>
 
 <!--Input field string names for the activity screens-->
 <string name="Profile_Picture">Profile Picture:</string>
@@ -110,5 +112,8 @@
 
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

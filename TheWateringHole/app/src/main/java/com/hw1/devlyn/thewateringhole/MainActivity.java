@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,12 +23,13 @@ import info.info.wateringhole.slidingmenu.model.NavDrawerItem;
 
 import static com.hw1.devlyn.thewateringhole.R.*;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity  {
     /*Fields for the buttons to be used in this class.*/
     Button Events;
     Button Friends;
     Button Profile;
     Button Settings;
+    int currentUser;
 
     /*These fields are used for the navigation slide out menu.*/
     private DrawerLayout mDrawerLayout;
@@ -52,9 +54,11 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(layout.activity_main);
+        Intent thisIntent = getIntent();
+        Log.d("MainAct", "Inside mainactivity");
+        currentUser = thisIntent.getIntExtra("userId", -1);
+        Log.d("MainAct", "UserID was " + currentUser);
 
         mTitle = mDrawerTitle = getTitle();
 
@@ -272,7 +276,8 @@ public class MainActivity extends ActionBarActivity {
                  *profile activity page.
                  */
                 case 4:
-                    Intent EditProfile = new Intent(MainActivity.this, EditProfileActivity.class);
+                    Intent EditProfile = new Intent(MainActivity.this, FragmentEditProfileActivity.class);
+                    /*EditProfile.putExtra("userId", currentUser);*/
 
                     startActivity(EditProfile);
                     break;

@@ -1,8 +1,11 @@
 package com.hw1.devlyn.thewateringhole;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -12,9 +15,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import info.info.wateringhole.slidingmenu.adapter.NavDrawerListAdapter;
 import info.info.wateringhole.slidingmenu.model.NavDrawerItem;
@@ -38,11 +48,35 @@ public class EditProfileActivity extends ActionBarActivity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
 
+    private static final int REQUEST_CODE = 1;
+    private Bitmap bitmap;
+
+    EditText Description;
+    EditText Likes_Dislikes;
+
+    Button Save;
+
+    int currentUser;
+    /*String Description;
+    String Likes_Dislikes;*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+        Intent thisIntent = getIntent();
+        Log.d("MainAct", "Inside mainactivity");
+        currentUser = thisIntent.getIntExtra("userId", -1);
+        Log.d("MainAct", "UserID was " + currentUser);
+
+        Description = (EditText) this.findViewById(R.id.Description);
+        Likes_Dislikes = (EditText) this.findViewById(R.id.Likes_Dislikes);
+
+        Save = (Button) this.findViewById(R.id.save_btn);
+
+        /*Save.setOnClickListener((View.OnClickListener) Save);*/
+
 
         mTitle = mDrawerTitle = getTitle();
 
@@ -116,6 +150,58 @@ public class EditProfileActivity extends ActionBarActivity {
             displayView(0);
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("HELLO", "inside activityresult");
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK)
+            try {
+                // We need to recyle unused bitmaps
+                Log.d("ATTEMPTING STREAM", "Stream Starting" + bitmap);
+                if (bitmap != null) {
+                    bitmap.recycle();
+                }
+                InputStream stream = getContentResolver().openInputStream(
+                        data.getData());
+                bitmap = BitmapFactory.decodeStream(stream);
+                stream.close();
+                Log.d("BITMAP","Bitmap is:  " + bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    /**public void onClick(View view) {
+        ConnectDb conDb = new ConnectDb();
+        /*Checks to see if the click is the login else if the click is on the register button*/
+        /**if (view == Save) {
+            String description = Description.getText().toString();
+            String likes_Dislikes = Likes_Dislikes.getText().toString();
+            String[] params = {"save", description, likes_Dislikes};
+            try {
+                conDb.execute(params).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            int userId = conDb.getUserId();
+            if(userId != -1){
+                Toast.makeText(getBaseContext(), "Saved", Toast.LENGTH_SHORT).show();
+                Intent Save = new Intent(this, EditProfileActivity.class );
+                Save.putExtra("userId", userId);
+
+                this.startActivity(Save);
+            }else {
+                Toast.makeText(getBaseContext(), "Invalid Save", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -220,9 +306,10 @@ public class EditProfileActivity extends ActionBarActivity {
                 *profile activity page.
                 */
                 case 4:
-                    Intent EditProfile = new Intent(EditProfileActivity.this, EditProfileActivity.class);
+                    Intent EditProfile = new Intent(EditProfileActivity.this, FragmentEditProfileActivity.class);
+                    /*EditProfile.putExtra("userId", currentUser);*/
 
-                    /*startActivity(EditProfile);*/
+                    startActivity(EditProfile);
                     break;
 
                 /*Case 5 used for the Settings item in the list and redirects the user to the

@@ -25,7 +25,8 @@
         android:layout_alignLeft="@+id/userNamePass"
         android:layout_alignStart="@+id/userNamePass"
         android:layout_alignRight="@+id/userNamePass"
-        android:layout_alignEnd="@+id/userNamePass" />
+        android:layout_alignEnd="@+id/userNamePass"
+        android:background="@drawable/wateringhole_textfield_activated_holo_dark" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -34,7 +35,8 @@
         android:ems="10"
         android:id="@+id/userNamePass"
         android:layout_below="@+id/userNameText"
-        android:hint="Password" />
+        android:hint="Password"
+        android:background="@drawable/wateringhole_textfield_activated_holo_dark" />
 
     <Button
         android:id="@+id/login_button"
@@ -68,4 +70,16 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <!--<ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/userNamePass"
+        android:layout_alignEnd="@+id/userNamePass"
+        android:layout_marginRight="34dp"
+        android:layout_marginEnd="34dp"
+        android:layout_marginBottom="64dp"
+        android:background="@drawable/wateringhole_progressbar_indeterminate_holo1" />
+        -->
 </RelativeLayout>

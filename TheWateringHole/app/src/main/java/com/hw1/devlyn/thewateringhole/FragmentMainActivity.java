@@ -27,7 +27,7 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
     private OnFragmentInteractionListener mListener;
 
     private boolean mIntentInProgress;
-
+    private int currentUser;
     /*Fields for the buttons to be used in this class.*/
     Button Events;
     Button Friends;
@@ -59,6 +59,12 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle args = getActivity().getIntent().getExtras();
+        currentUser = args.getInt("userId");
+        /*Intent thisIntent = getIntent();
+        Log.d("MainAct", "Inside mainactivity");
+        currentUser = thisIntent.getIntExtra("userId", -1);*/
+        Log.d("MainAct", "UserID was " + currentUser);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -139,6 +145,7 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             this.startActivity(friends);
         } else if (view == Profile) {
             Intent profile = new Intent(getActivity(), EditProfileActivity.class);
+            profile.putExtra("userId", currentUser);
 
             Button b = (Button) view;
             this.startActivity(profile);
@@ -149,6 +156,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             this.startActivity(settings);
         }
     }
+
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
