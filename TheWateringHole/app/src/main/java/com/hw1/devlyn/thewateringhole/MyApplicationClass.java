@@ -141,18 +141,25 @@ public class MyApplicationClass extends Application {
             return -1;
         }
 
-        public ArrayList<String> getUserProfileInfo(String userId){
+        public ArrayList<String> getUserProfileInfo(String userId, String description, String likes_dislikes){
             ArrayList<String> profileInfo = new ArrayList<String>();
             try {
                 preparedStatement = connect
-                        .prepareStatement("select * from userProfile where userId = ?");
+                        .prepareStatement("select * from userProfile where userId=?, description=?, likes_dislikes=?");
                 preparedStatement.setString(1, userId);
-                Log.d("lol", "UserID is: " + userId);
-                ResultSet userProfileInfo =  preparedStatement.executeQuery();
-                if(userProfileInfo != null){
-                    profileInfo.add(userProfileInfo.getString("description"));
-                    profileInfo.add(userProfileInfo.getString("likes_dislikes"));
-                    profileInfo.add(userProfileInfo.getString("profileName"));
+                preparedStatement.setString(2, description);
+                preparedStatement.setString(3, likes_dislikes);
+                Log.d("userProfile", "UserID is: " + userId);
+                Log.d("description", "description is: " + description);
+                Log.d("likes_dislikes", "likes/dislikes are : " + likes_dislikes);
+                ResultSet getProfileResult =  preparedStatement.executeQuery();
+                if(getProfileResult != null){
+                    profileInfo.add(getProfileResult.getString("description"));
+                    Log.d("profileInfo", "DESCRIPTION : " + profileInfo);
+                    profileInfo.add(getProfileResult.getString("likes_dislikes"));
+                    Log.d("profileInfo", "LIKES/DISLIKES" + profileInfo);
+                    profileInfo.add(getProfileResult.getString("profileName"));
+                    Log.d("profileInfo", "profileName" + profileInfo);
                 }
             } catch (SQLException e){
             e.printStackTrace();

@@ -65,10 +65,16 @@ public class EditProfileActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-        Intent thisIntent = getIntent();
+        /*Intent thisIntent = getIntent();
         Log.d("MainAct", "Inside mainactivity");
         currentUser = thisIntent.getIntExtra("userId", -1);
-        Log.d("MainAct", "UserID was " + currentUser);
+        Log.d("MainAct", "UserID was " + currentUser);*/
+       /* if (savedInstanceState == null) {
+            FragmentEditProfileActivity editProfile = new FragmentEditProfileActivity();
+            editProfile.setArguments(getIntent().getExtras());
+            getSupportFragmentManager().beginTransaction().add(
+                    android.R.id.content, editProfile).commit();
+        }*/
 
         Description = (EditText) this.findViewById(R.id.Description);
         Likes_Dislikes = (EditText) this.findViewById(R.id.Likes_Dislikes);

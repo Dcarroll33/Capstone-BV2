@@ -30,6 +30,8 @@ public class MainActivity extends ActionBarActivity  {
     Button Profile;
     Button Settings;
     int currentUser;
+    String description;
+    String likes_dislikes;
 
     /*These fields are used for the navigation slide out menu.*/
     private DrawerLayout mDrawerLayout;
@@ -55,10 +57,24 @@ public class MainActivity extends ActionBarActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_main);
+        /*if (savedInstanceState == null) {
+            FragmentMainActivity mainActivity = new FragmentMainActivity();
+            mainActivity.setArguments(getIntent().getExtras());
+            getSupportFragmentManager().beginTransaction().add(
+                    android.R.id.content, mainActivity).commit();
+        }*/
         Intent thisIntent = getIntent();
         Log.d("MainAct", "Inside mainactivity");
         currentUser = thisIntent.getIntExtra("userId", -1);
+        description = thisIntent.getStringExtra("description");
+        likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
         Log.d("MainAct", "UserID was " + currentUser);
+        Log.d("MainAct", "description is : " + description);
+        Log.d("MainAct", "likes/dislikes are : " + likes_dislikes);
+
+        /*Bundle bundle = new Bundle();
+        bundle.putInt(userId, -1);
+        FragmentEditProfileActivity.setArguments(bundle);*/
 
         mTitle = mDrawerTitle = getTitle();
 

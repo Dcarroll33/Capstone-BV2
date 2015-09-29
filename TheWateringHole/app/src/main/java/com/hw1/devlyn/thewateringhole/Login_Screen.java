@@ -78,11 +78,14 @@ public class Login_Screen extends Activity implements View.OnClickListener {
                 e.printStackTrace();
             }
             int userId = conDb.getUserId();
+            String description = conDb.getDescription();
+            String likes_dislikes = conDb.getLikesDislikes();
             if(userId != -1){
                 Toast.makeText(getBaseContext(), "Logged in", Toast.LENGTH_SHORT).show();
                 Intent login = new Intent(this, MainActivity.class );
                 login.putExtra("userId", userId);
-
+                login.putExtra("description", description);
+                login.putExtra("likes_dislikes", likes_dislikes);
                 this.startActivity(login);
             }else {
                 Toast.makeText(getBaseContext(), "Invalid username or password", Toast.LENGTH_SHORT).show();

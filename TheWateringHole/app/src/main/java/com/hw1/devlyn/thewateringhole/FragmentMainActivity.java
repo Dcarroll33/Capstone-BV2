@@ -28,6 +28,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
 
     private boolean mIntentInProgress;
     private int currentUser;
+    private String description;
+    private String likes_dislikes;
     /*Fields for the buttons to be used in this class.*/
     Button Events;
     Button Friends;
@@ -39,10 +41,20 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
      * Method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param /*param1 Parameter 1.
+     * @param /*param2 Parameter 2.
      * @return A new instance of fragment FragmentMainActivity.
      */
+    /*public static FragmentEditProfileActivity newInstance(int currentUser) {
+        FragmentEditProfileActivity f = new FragmentEditProfileActivity();
+
+        // Supply index input as an argument.
+        Bundle args = new Bundle();
+        args.putInt("userId", currentUser);
+        f.setArguments(args);
+
+        return f;
+    }*/
     public static FragmentMainActivity newInstance(String param1, String param2) {
         FragmentMainActivity fragment = new FragmentMainActivity();
         Bundle args = new Bundle();
@@ -61,10 +73,14 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
         super.onCreate(savedInstanceState);
         Bundle args = getActivity().getIntent().getExtras();
         currentUser = args.getInt("userId");
+        description = args.getString("description");
+        likes_dislikes = args.getString("description");
         /*Intent thisIntent = getIntent();
         Log.d("MainAct", "Inside mainactivity");
         currentUser = thisIntent.getIntExtra("userId", -1);*/
         Log.d("MainAct", "UserID was " + currentUser);
+        Log.d("MainAct", "Description is : " + description);
+        Log.d("MainAct", "Likes/Dislikes are : " + likes_dislikes);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);

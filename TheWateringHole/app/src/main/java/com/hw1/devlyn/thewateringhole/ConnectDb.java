@@ -39,6 +39,9 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
 
     private int eventSave = -1;
 
+    private String description =  null;
+    private String likes_dislikes = null;
+
     private HttpClient httpclient;
 
     private HttpPost httppost;
@@ -143,6 +146,13 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
 
     public int getUserId(){
         return userId;
+    }
+    public String getDescription(){
+        return description;
+    }
+
+    public String getLikesDislikes(){
+        return likes_dislikes;
     }
 
     public int getSave(){
