@@ -145,7 +145,7 @@ public class MyApplicationClass extends Application {
             ArrayList<String> profileInfo = new ArrayList<String>();
             try {
                 preparedStatement = connect
-                        .prepareStatement("select * from userProfile where userId=?, description=?, likes_dislikes=?");
+                        .prepareStatement("select * from userProfile where userId=?"); /*and description=? and likes_dislikes=?");*/
                 preparedStatement.setString(1, userId);
                 preparedStatement.setString(2, description);
                 preparedStatement.setString(3, likes_dislikes);
@@ -153,13 +153,15 @@ public class MyApplicationClass extends Application {
                 Log.d("description", "description is: " + description);
                 Log.d("likes_dislikes", "likes/dislikes are : " + likes_dislikes);
                 ResultSet getProfileResult =  preparedStatement.executeQuery();
-                if(getProfileResult != null){
-                    profileInfo.add(getProfileResult.getString("description"));
+                if(getProfileResult.next()){
+                    /*profileInfo.add*/ profileInfo.add(getProfileResult.getString("description"));
                     Log.d("profileInfo", "DESCRIPTION : " + profileInfo);
                     profileInfo.add(getProfileResult.getString("likes_dislikes"));
                     Log.d("profileInfo", "LIKES/DISLIKES" + profileInfo);
-                    profileInfo.add(getProfileResult.getString("profileName"));
-                    Log.d("profileInfo", "profileName" + profileInfo);
+                    /*profileInfo.add(getProfileResult.getString("profileName"));
+                    Log.d("profileInfo", "profileName" + profileInfo);*/
+                } else {
+                    Log.d("getProfileResult", "getProfileResult is empty");
                 }
             } catch (SQLException e){
             e.printStackTrace();

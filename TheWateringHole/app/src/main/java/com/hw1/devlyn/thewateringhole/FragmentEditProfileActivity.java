@@ -55,8 +55,10 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
 
     Button Save;
     Button UploadImage;
+    Button Load;
 
     ConnectDb conDb = new ConnectDb();
+    ConnectDb conDb2 = new ConnectDb();
     int currentUser;
     private static final int REQUEST_CODE = 1;
     private Bitmap bitmap;
@@ -119,9 +121,9 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        try {
+        /*try {
             /*dao.readDataBase();*/
-            Log.d("HERE", "We made it.. UserID is: " + currentUser);
+            /*Log.d("HERE", "We made it.. UserID is: " + currentUser);
             ArrayList<String> getProfileResult = dao.getUserProfileInfo(String.valueOf(currentUser), description, likes_dislikes);
             Log.d("ArrayList<String>", "The value of getProfileResult is : " + getProfileResult);
             Description.setText(getProfileResult.get(2));
@@ -131,9 +133,9 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
             /*UserName.setText(getProfileResult.get(2));
             Log.d("USERNAME", "SET USERNAME" + UserName);*/
 
-        } catch (Exception e){
+        /*} catch (Exception e){
             Log.e("Sync Failed", e.toString());
-        }
+        }*/
 
 
 
@@ -152,6 +154,7 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         UserName = (EditText) rootView.findViewById(R.id.Username);
         Save = (Button) rootView.findViewById(R.id.save_btn);
         UploadImage = (Button) rootView.findViewById(R.id.uploadImage);
+        Load = (Button) rootView.findViewById(R.id.load_btn);
 
         return rootView;
     }
@@ -226,6 +229,17 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);//
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_IMAGE);
+        }
+        if(view == Load) {
+            try {
+                String[] params = {"load", String.valueOf(conDb2.getUserId()), description, likes_dislikes};
+                conDb2.execute(params).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 

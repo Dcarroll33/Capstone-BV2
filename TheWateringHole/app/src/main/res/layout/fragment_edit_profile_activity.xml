@@ -84,5 +84,14 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/wateringhole_textfield_activated_holo_dark"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Load"
+        android:id="@+id/load_btn"
+        android:background="@drawable/login_button"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
 

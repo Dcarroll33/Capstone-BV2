@@ -18,6 +18,7 @@ import org.xml.sax.XMLReader;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -39,8 +40,10 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
 
     private int eventSave = -1;
 
-    private String description =  null;
-    private String likes_dislikes = null;
+    private ArrayList<String> getProfileInfo = null;
+
+    /*private ArrayList<String> getUserProfileResult =  null;
+    private String likes_dislikes = null;*/
 
     private HttpClient httpclient;
 
@@ -70,9 +73,11 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
             } else if (strings[0] == "login") {
                 dao.readDataBase();
                 int result = dao.loginUser(strings[1], strings[2]);
+                /*ArrayList<String> getUserProfileInfo = dao.getUserProfileInfo(strings[1], strings[2], strings[3]);*/
                 if (result != -1) {
                     Log.d("ConDB", "Login successful! User ID is: " + result);
                     userId = result;
+                    /*getUserProfileResult = getUserProfileInfo;*/
                     return 0;
                 } else {
                     Log.d("ConDB", "Login failed :'(");
@@ -97,6 +102,13 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                     return 0;
                 } else {
                     return -1;
+                }
+            } else if (strings[0] == "load") {
+                dao.readDataBase();
+                ArrayList<String> getUserProfileResult = dao.getUserProfileInfo(strings[1])/*, strings[2], strings[3])*/;
+                if (getUserProfileResult != null) {
+                    Log.d("LoadSuccessful", "Load Successful");
+                    getProfileInfo = getUserProfileResult;
                 }
             }
         } catch (Exception e) {
@@ -147,13 +159,13 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
     public int getUserId(){
         return userId;
     }
-    public String getDescription(){
-        return description;
+    public ArrayList<String> getUserProfileResult(){
+        return getProfileInfo;
     }
 
-    public String getLikesDislikes(){
+    /*public String getLikesDislikes(){
         return likes_dislikes;
-    }
+    }*/
 
     public int getSave(){
         return save;
