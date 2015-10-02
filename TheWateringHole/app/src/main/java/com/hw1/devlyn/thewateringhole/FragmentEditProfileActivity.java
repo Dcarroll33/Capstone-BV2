@@ -52,6 +52,7 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
     String description;
     String likes_dislikes;
     String name;
+    String setDescription;
 
     Button Save;
     Button UploadImage;
@@ -60,6 +61,7 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
     ConnectDb conDb = new ConnectDb();
     ConnectDb conDb2 = new ConnectDb();
     int currentUser;
+    int idUserProfile;
     private static final int REQUEST_CODE = 1;
     private Bitmap bitmap;
 
@@ -106,6 +108,7 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
 
         Bundle args = getActivity().getIntent().getExtras();
         currentUser = args.getInt("userId");
+        idUserProfile = args.getInt("idUserProfile");
         description = args.getString("description");
         likes_dislikes = args.getString("likes_dislikes");
         /*Bundle args = getArguments();
@@ -232,7 +235,7 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         }
         if(view == Load) {
             try {
-                String[] params = {"load", String.valueOf(conDb2.getUserId()), description, likes_dislikes};
+                String[] params = {"load",String.valueOf(conDb2.getUserProfileInfo()), String.valueOf(conDb2.getUserId()), description, likes_dislikes};
                 conDb2.execute(params).get();
             } catch (InterruptedException e) {
                 e.printStackTrace();

@@ -51,26 +51,6 @@ public class MyApplicationClass extends Application {
             return -1;
         }
 
-        /*public int saveUserProfile(String description, String likes_dislikes) {
-            try {
-                preparedStatement = connect
-                        .prepareStatement("select * from users where description=?");
-                preparedStatement.setString(1, description);
-                ResultSet descriptionResult = preparedStatement.executeQuery();
-                preparedStatement = connect
-                        .prepareStatement("insert into description(description) values (?)");
-                preparedStatement.setString(1, description);
-                preparedStatement = connect
-                        .prepareStatement("insert into likes_dislikes(likes_dislikes) values (?)");
-                preparedStatement.setString(2, likes_dislikes);
-                Log.d("SQLConnect", "added to DB");
-                return preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                Log.e("MYMYSQLACCESS", e.getMessage());
-            }
-            return -1;
-        }
-        */
         public static void readDataBase() throws Exception {
             try {
                 // This will load the MySQL driver, each DB has its own driver
@@ -111,7 +91,7 @@ public class MyApplicationClass extends Application {
             try {
                 Log.d("UserProfile", "Got data: userId: " + userId + " desc: " + description + " likes-dislikes: " + likes_dislikes);
                 preparedStatement = connect
-                        .prepareStatement("select * from userProfile where userId = ?");
+                        .prepareStatement("select * from userProfile where 'idUserProfile=?'");
                 preparedStatement.setString(1, userId);
                 Log.d("lol", "About to execute prepstatement1");
                 ResultSet userProfileResult =  preparedStatement.executeQuery();
@@ -141,27 +121,35 @@ public class MyApplicationClass extends Application {
             return -1;
         }
 
-        public ArrayList<String> getUserProfileInfo(String userId, String description, String likes_dislikes){
+        public ArrayList<String> getUserProfileInfo(String idUserProfile, String userId, String description, String likes_dislikes){
             ArrayList<String> profileInfo = new ArrayList<String>();
             try {
                 preparedStatement = connect
-                        .prepareStatement("select * from userProfile where userId=?"); /*and description=? and likes_dislikes=?");*/
-                preparedStatement.setString(1, userId);
-                preparedStatement.setString(2, description);
-                preparedStatement.setString(3, likes_dislikes);
-                Log.d("userProfile", "UserID is: " + userId);
-                Log.d("description", "description is: " + description);
-                Log.d("likes_dislikes", "likes/dislikes are : " + likes_dislikes);
+                        .prepareStatement("select * from userProfile where 'idUserProfile=?' "/*and userId=? and description=? and likes_dislikes=?"*/);
+                /*preparedStatement.setString(1, idUserProfile);
+                /*preparedStatement.setString(2, idUserProfile);
+                preparedStatement.setString(3, description);
+                preparedStatement.setString(4, likes_dislikes);
+                /*Log.d("MyApplicationClass", "idUserProfile" + idUserProfile);
+                /*Log.d("MyApplicationClass", "UserID is: " + profileInfo.set(2, userId));
+                Log.d("MyApplicationClass", "description is: " + profileInfo.set(3, description));
+                Log.d("MyApplicationClass", "likes/dislikes are : " + profileInfo.set(4, likes_dislikes));*/
                 ResultSet getProfileResult =  preparedStatement.executeQuery();
-                if(getProfileResult.next()){
-                    /*profileInfo.add*/ profileInfo.add(getProfileResult.getString("description"));
-                    Log.d("profileInfo", "DESCRIPTION : " + profileInfo);
+                Log.d("MyApplication", "getProfileResult is :" + getProfileResult);
+                if(!getProfileResult.next()){
+                    profileInfo.add(getProfileResult.getString("idUserProfile"));
+                    Log.d("MyApplication: profInfo", "IDUSERPROFILE : " + profileInfo);
+                    profileInfo.add(getProfileResult.getString("userId"));
+                    Log.d("MyApplication: profInfo", "USERID : " + profileInfo);
+                    profileInfo.add(getProfileResult.getString("description"));
+                    Log.d("MyApplication: profInfo", "DESCRIPTION : " + profileInfo);
                     profileInfo.add(getProfileResult.getString("likes_dislikes"));
-                    Log.d("profileInfo", "LIKES/DISLIKES" + profileInfo);
+                    Log.d("MyApplication: profInfo", "LIKES/DISLIKES" + profileInfo);
                     /*profileInfo.add(getProfileResult.getString("profileName"));
                     Log.d("profileInfo", "profileName" + profileInfo);*/
                 } else {
-                    Log.d("getProfileResult", "getProfileResult is empty");
+                    Log.d("MyApplication: getProfR", "getProfileResult is empty");
+                    /*Log.d("MyApplication: CheckPt", "UserResult" + getProfileResult.getInt("userId"));*/
                 }
             } catch (SQLException e){
             e.printStackTrace();

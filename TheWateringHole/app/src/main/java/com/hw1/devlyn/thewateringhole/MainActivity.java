@@ -30,6 +30,7 @@ public class MainActivity extends ActionBarActivity  {
     Button Profile;
     Button Settings;
     int currentUser;
+    int idUserProfile;
     String description;
     String likes_dislikes;
 
@@ -66,9 +67,11 @@ public class MainActivity extends ActionBarActivity  {
         Intent thisIntent = getIntent();
         Log.d("MainAct", "Inside mainactivity");
         currentUser = thisIntent.getIntExtra("userId", -1);
+        idUserProfile = thisIntent.getIntExtra("idUserProfile", -1);
         description = thisIntent.getStringExtra("description");
         likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
         Log.d("MainAct", "UserID was " + currentUser);
+        Log.d("MaintAct", "idUSerProfile" + idUserProfile);
         Log.d("MainAct", "description is : " + description);
         Log.d("MainAct", "likes/dislikes are : " + likes_dislikes);
 

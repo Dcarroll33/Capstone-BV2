@@ -79,14 +79,20 @@ public class Login_Screen extends Activity implements View.OnClickListener {
                 e.printStackTrace();
             }
             int userId = conDb.getUserId();
-            ArrayList<String> description = conDb.getUserProfileResult();
-            Log.d("LOGINSCREEN", "description is : " + description);
+            ArrayList<String> idUserProfile = conDb.getUserProfileInfo();
+            /*ArrayList<String> getProfileResult = new ArrayList<String>();
+            getProfileResult = conDb.getUserProfileInfo();
+            String description = String.valueOf(getProfileResult);
+            Log.d("LoginScreen", "description is : " + description);
             /*String likes_dislikes = conDb.getLikesDislikes();*/
             if(userId != -1){
                 Toast.makeText(getBaseContext(), "Logged in", Toast.LENGTH_SHORT).show();
                 Intent login = new Intent(this, MainActivity.class );
+                /*login.putExtra("idUserProfile", idUserProfile);*/
                 login.putExtra("userId", userId);
-                login.putExtra("description", description);
+                login.putExtra("idUserProfile", idUserProfile);
+                /*login.putExtra("description", description);
+                Log.d("LoginScreen", "description is : " + description);
                 /*login.putExtra("likes_dislikes", likes_dislikes);*/
                 this.startActivity(login);
             }else {

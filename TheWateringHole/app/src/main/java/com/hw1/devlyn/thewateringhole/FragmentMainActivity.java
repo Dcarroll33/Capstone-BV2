@@ -28,6 +28,7 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
 
     private boolean mIntentInProgress;
     private int currentUser;
+    private int idUserProfile;
     private String description;
     private String likes_dislikes;
     /*Fields for the buttons to be used in this class.*/
@@ -73,12 +74,14 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
         super.onCreate(savedInstanceState);
         Bundle args = getActivity().getIntent().getExtras();
         currentUser = args.getInt("userId");
+        idUserProfile = args.getInt("idUserProfile");
         description = args.getString("description");
         likes_dislikes = args.getString("description");
         /*Intent thisIntent = getIntent();
         Log.d("MainAct", "Inside mainactivity");
         currentUser = thisIntent.getIntExtra("userId", -1);*/
         Log.d("MainAct", "UserID was " + currentUser);
+        Log.d("MainAct", "isUserProfile is" + idUserProfile);
         Log.d("MainAct", "Description is : " + description);
         Log.d("MainAct", "Likes/Dislikes are : " + likes_dislikes);
         if (getArguments() != null) {
@@ -162,6 +165,9 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
         } else if (view == Profile) {
             Intent profile = new Intent(getActivity(), EditProfileActivity.class);
             profile.putExtra("userId", currentUser);
+            profile.putExtra("idUserProfile", idUserProfile);
+            profile.putExtra("description", description);
+            profile.putExtra("likes/dislikes", likes_dislikes);
 
             Button b = (Button) view;
             this.startActivity(profile);

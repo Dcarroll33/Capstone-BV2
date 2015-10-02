@@ -40,7 +40,16 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
 
     private int eventSave = -1;
 
+    private String idUserProfile = null;
+
+    private String description = null;
+
+    private String likes_dislikes = null;
+
+    public ArrayList<String> load = null;
+
     private ArrayList<String> getProfileInfo = null;
+
 
     /*private ArrayList<String> getUserProfileResult =  null;
     private String likes_dislikes = null;*/
@@ -66,7 +75,7 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
         try {
             if (strings[0] == "register") {
                 dao.readDataBase();
-                Log.d("conDb", "Registration success");
+                Log.d("connectDb", "Registration success");
                 result = dao.registerUser(strings[1], strings[2], strings[3]);
                 return result;
 
@@ -75,19 +84,19 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                 int result = dao.loginUser(strings[1], strings[2]);
                 /*ArrayList<String> getUserProfileInfo = dao.getUserProfileInfo(strings[1], strings[2], strings[3]);*/
                 if (result != -1) {
-                    Log.d("ConDB", "Login successful! User ID is: " + result);
+                    Log.d("ConnectDb", "Login successful! User ID is: " + result);
                     userId = result;
                     /*getUserProfileResult = getUserProfileInfo;*/
                     return 0;
                 } else {
-                    Log.d("ConDB", "Login failed :'(");
+                    Log.d("ConnectDb", "Login failed :'(");
                     return -1;
                 }
             } else if (strings[0] == "save") {
                 dao.readDataBase();
                 int saveResult = dao.userProfile(strings[1], strings[2], strings[3], strings[4]);
                 if (saveResult != -1) {
-                    Log.d("ConDB", "Save successful");
+                    Log.d("ConnectDb", "Save successful");
                     save = saveResult;
                     return 0;
                 } else {
@@ -97,7 +106,7 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                 dao.readDataBase();
                 int eventResult = dao.userEvents(strings[1], strings[2], strings[3]);
                 if (eventResult != -1) {
-                    Log.d("EventSaved", "Event saved");
+                    Log.d("ConnectDb", "Event saved");
                     eventSave = eventResult;
                     return 0;
                 } else {
@@ -105,10 +114,18 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                 }
             } else if (strings[0] == "load") {
                 dao.readDataBase();
-                ArrayList<String> getUserProfileResult = dao.getUserProfileInfo(strings[1])/*, strings[2], strings[3])*/;
+                ArrayList<String> getUserProfileResult = dao.getUserProfileInfo(strings[1], strings[2], strings[3], strings[4]);
+                Log.d("ConnectDb", "getUserProfileResult contains : " + getUserProfileResult.get(1) + getUserProfileResult.get(2)
+                                                        + getUserProfileResult.get(3) + getUserProfileResult.get(4));
                 if (getUserProfileResult != null) {
-                    Log.d("LoadSuccessful", "Load Successful");
-                    getProfileInfo = getUserProfileResult;
+                    getUserProfileResult.get(1);
+                    getUserProfileResult.get(2);
+                    getUserProfileResult.get(3);
+                    getUserProfileResult.get(4);
+                    /*load = getUserProfileResult;*/
+                    return 0;
+                } else {
+                    return -1;
                 }
             }
         } catch (Exception e) {
@@ -116,41 +133,6 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
         }
         return null;
     }
-        /*return null;*/
-        /*try {
-            // Save the image to the SD card.
-            //File file = new File(Environment.getExternalStorageDirectory(),
-            //System.currentTimeMillis() + ".png");
-            //FileOutputStream stream = new FileOutputStream(file);
-            //bitmap.compress(CompressFormat.PNG, 100, stream);
-
-            //convert to byte
-
-
-            String name = "prescription";
-            //save image to mysql
-
-
-            httpclient = new DefaultHttpClient();
-            httppost = new HttpPost("jdbc:mysql://direct.cwardcode.com/wateringhole");
-            nameValuePairs = new ArrayList<>();
-            nameValuePairs.add(new BasicNameValuePair("name", name));
-         //   nameValuePairs.add(new BasicNameValuePair("image", imagedata));
-            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            response = httpclient.execute(httppost);
-
-            HttpEntity entity = response.getEntity();
-
-            InputStream is = entity.getContent();
-
-            Log.e("Connection", "connection success ");
-          //  Log.e("bitmap", imagedata);
-
-        } catch (Exception e) {
-            Log.e("upload failed", e.toString());
-        }
-        return null;
-    }*/
 
     public int getResult(){
         return result;
@@ -159,8 +141,13 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
     public int getUserId(){
         return userId;
     }
-    public ArrayList<String> getUserProfileResult(){
-        return getProfileInfo;
+
+    public ArrayList<String> getUserProfileInfo(){
+        return load;
+    }
+
+    /*public int getUserProfileId(){
+        return idUserProfile;
     }
 
     /*public String getLikesDislikes(){
