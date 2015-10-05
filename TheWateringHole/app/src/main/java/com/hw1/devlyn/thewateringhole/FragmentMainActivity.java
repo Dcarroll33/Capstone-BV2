@@ -158,7 +158,7 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             Button b = (Button) view;
             this.startActivity(events);
         } else if (view == Friends) {
-            Intent friends = new Intent(getActivity(), FriendsActivity.class);
+            Intent friends = new Intent(getActivity(), LocateFriendsActivity.class);
 
             Button b = (Button) view;
             this.startActivity(friends);

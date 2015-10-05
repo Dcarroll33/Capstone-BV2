@@ -1,8 +1,11 @@
 package com.hw1.devlyn.thewateringhole;
 
+/*import android.app.Fragment;*/
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -42,11 +45,13 @@ public class LocateFriendsActivity extends ActionBarActivity  {
 
 
     Button locate;
+    /*public static FragmentManager fragmentManager;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locate__friends);
+        /*fragmentManager = getSupportFragmentManager();*/
 
         mTitle = mDrawerTitle = getTitle();
 
@@ -202,7 +207,7 @@ public class LocateFriendsActivity extends ActionBarActivity  {
                 case 1:
                     Intent FindPeople = new Intent(LocateFriendsActivity.this, LocateFriendsActivity.class);
 
-                    /*startActivity(FindPeople);*/
+                    startActivity(FindPeople);
                     break;
                 /*Case 2 used for the FindEvents item in the list and redirects the user to the
                 *locate event activity page.
