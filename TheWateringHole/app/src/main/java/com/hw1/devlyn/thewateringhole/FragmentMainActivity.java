@@ -75,7 +75,7 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
         Bundle args = getActivity().getIntent().getExtras();
         currentUser = args.getInt("userId");
         idUserProfile = args.getInt("idUserProfile");
-        description = args.getString("description");
+        description = args.getString("description", "foo");
         likes_dislikes = args.getString("description");
         /*Intent thisIntent = getIntent();
         Log.d("MainAct", "Inside mainactivity");
