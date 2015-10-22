@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.hw1.devlyn.thewateringhole.FriendsProfileActivity"
+    tools:context="com.hw1.devlyn.thewateringhole1.FriendsProfileActivity"
     android:background="#ffbd32ff">
 
 
@@ -26,7 +26,7 @@
             <fragment
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:name="com.hw1.devlyn.thewateringhole.FragmentFriendsProfile"
+                android:name="com.hw1.devlyn.thewateringhole1.FragmentFriendsProfile"
                 android:id="@+id/fragment_main_activity"
                 android:layout_gravity="center" />
         </FrameLayout>

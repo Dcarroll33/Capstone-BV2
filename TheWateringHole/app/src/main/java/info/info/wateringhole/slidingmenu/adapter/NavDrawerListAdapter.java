@@ -3,7 +3,6 @@ package info.info.wateringhole.slidingmenu.adapter;
 /**
  * Created by Devlyn on 2/23/2015.
  */
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hw1.devlyn.thewateringhole.R;
+import com.hw1.devlyn.thewateringhole1.R;
 
 import java.util.ArrayList;
 
