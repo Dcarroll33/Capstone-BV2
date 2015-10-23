@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
         Log.d("MainAct", "UserID was " + currentUser);
         Log.d("MainAct", "idUSerProfile" + idUserProfile);
+        Log.d("MainAct", "userName is : " + userName);
         Log.d("MainAct", "description is : " + description);
         Log.d("MainAct", "likes/dislikes are : " + likes_dislikes);
 

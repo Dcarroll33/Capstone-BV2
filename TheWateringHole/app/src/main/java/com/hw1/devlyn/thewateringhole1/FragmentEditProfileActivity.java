@@ -46,6 +46,7 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
     String description;
     String events;
     String likes_dislikes;
+    String name;
 
     Button Save;
     Button UploadImage;
@@ -58,8 +59,6 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
     private Bitmap bitmap;
 
     private static AsyncTask<String, Void, String> dbCon;
-    private String name;
-
     /**
      * Method to create a new instance of
      * this fragment using the provided parameters.
@@ -178,13 +177,13 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         if (view == Save) {
             description = Description.getText().toString();
             likes_dislikes = Likes_Dislikes.getText().toString();
-            name = UserName.getText().toString();
+            userName = UserName.getText().toString();
 
             /*if (description != null && likes_dislikes != null){*/
 
 
             try {
-                String[] params = {"save", /*String.valueOf(conDb2.getUserProfileInfo())*/ String.valueOf(conDb.getUserId()), name, description, likes_dislikes};
+                String[] params = {"save", String.valueOf(conDb2.getUserProfileInfo()), String.valueOf(conDb.getUserId()), userName, description, likes_dislikes};
                 conDb.execute(params).get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
