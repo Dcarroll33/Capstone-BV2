@@ -77,6 +77,7 @@ public class EditProfileActivity extends ActionBarActivity {
         events = thisIntent.getStringExtra("events");
         likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
 
+
         //ConnectDb conDb = new ConnectDb();
 
         //description = conDb.getUserProfileInfo().get(3);

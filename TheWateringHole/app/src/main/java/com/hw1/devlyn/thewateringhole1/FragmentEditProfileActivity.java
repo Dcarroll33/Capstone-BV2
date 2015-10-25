@@ -2,6 +2,11 @@ package com.hw1.devlyn.thewateringhole1;
 
 import android.app.Activity;
 /*import android.app.Fragment;*/
+import android.app.DownloadManager;
+import android.content.Context;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
@@ -40,6 +46,8 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
     EditText Likes_Dislikes;
     EditText UserName;
 
+    ImageView profileImage;
+
     String currentUser;
     String idUserProfile;
     String userName;
@@ -59,6 +67,8 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
     private Bitmap bitmap;
 
     private static AsyncTask<String, Void, String> dbCon;
+    private int RESULT_LOAD_IMAGE;
+
     /**
      * Method to create a new instance of
      * this fragment using the provided parameters.
@@ -97,24 +107,6 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        /*try {
-            /*dao.readDataBase();*/
-            /*Log.d("HERE", "We made it.. UserID is: " + currentUser);
-            ArrayList<String> getProfileResult = dao.getUserProfileInfo(String.valueOf(currentUser), description, likes_dislikes);
-            Log.d("ArrayList<String>", "The value of getProfileResult is : " + getProfileResult);
-            Description.setText(getProfileResult.get(2));
-            Log.d("DESCRIPTION", "SET DESCRIPTION" + Description);
-            Likes_Dislikes.setText(getProfileResult.get(3));
-            Log.d("LIKES_DISLIKES", "SET LIKES_DISLIKES" + Likes_Dislikes);
-            /*UserName.setText(getProfileResult.get(2));
-            Log.d("USERNAME", "SET USERNAME" + UserName);*/
-
-        /*} catch (Exception e){
-            Log.e("Sync Failed", e.toString());
-        }*/
-
-
-
     }
 
     @Override
@@ -131,6 +123,10 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         Save = (Button) rootView.findViewById(R.id.save_btn);
         UploadImage = (Button) rootView.findViewById(R.id.uploadImage);
         Load = (Button) rootView.findViewById(R.id.load_btn);
+
+        UserName.setText(userName);
+        Description.setText(description);
+        Likes_Dislikes.setText(likes_dislikes);
 
         return rootView;
     }
@@ -183,7 +179,7 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
 
 
             try {
-                String[] params = {"save", String.valueOf(conDb2.getUserProfileInfo()), String.valueOf(conDb.getUserId()), userName, description, likes_dislikes};
+                String[] params = {"save", currentUser, userName, description, likes_dislikes};
                 conDb.execute(params).get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -201,27 +197,33 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
             }
         }
         if (view == UploadImage) {
-            Intent intent = new Intent();
+            Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(i, RESULT_LOAD_IMAGE);
+            /*Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);//
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_IMAGE);
-        }
-        if(view == Load) {
-            UserName.setText(userName);
-            Description.setText(description);
-            Likes_Dislikes.setText(likes_dislikes);
-
-            try {
-                String[] params = {"load",String.valueOf(conDb2.getUserProfileInfo()), String.valueOf(conDb2.getUserId()), description, likes_dislikes, name};
-                conDb2.execute(params).get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_IMAGE);*/
         }
     }
+    /*@Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            Cursor cursor = Context.getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+            ImageView imageView = (ImageView) getView().findViewById(R.id.profileImage);
+            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+        }
+    }
+
+    private DownloadManager getContentResolver() {
+        return null;
+    }*/
 
     /**
      * This interface must be implemented by activities that contain this

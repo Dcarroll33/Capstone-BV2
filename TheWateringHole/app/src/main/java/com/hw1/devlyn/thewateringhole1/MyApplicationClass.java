@@ -90,7 +90,7 @@ public class MyApplicationClass extends Application {
             try {
                 Log.d("UserProfile", "Got data: userId: " + userId + " desc: " + description + " likes-dislikes: " + likes_dislikes + "userName: " + name);
                 preparedStatement = connect
-                        .prepareStatement("select * from userProfile where 'userId=?'");
+                        .prepareStatement("select * from userProfile where userId=?");
                 preparedStatement.setString(1, userId);
                 Log.d("lol", "About to execute prepstatement1");
                 ResultSet userProfileResult =  preparedStatement.executeQuery();
@@ -106,11 +106,12 @@ public class MyApplicationClass extends Application {
                     return preparedStatement.executeUpdate();
                 } else {
                     preparedStatement = connect
-                            .prepareStatement("update userProfile set userName=?, description=?, likes_dislikes=? where (select * from users where idusers=?)");
-                    preparedStatement.setString(1, userId);
-                    preparedStatement.setString(2, name);
-                    preparedStatement.setString(3, description);
-                    preparedStatement.setString(4, likes_dislikes);
+                            .prepareStatement("update userProfile set userName=?, description=?, likes_dislikes=? where idUserProfile=?");
+
+                    preparedStatement.setString(1, name);
+                    preparedStatement.setString(2, description);
+                    preparedStatement.setString(3, likes_dislikes);
+                    preparedStatement.setString(4, userId);
                     Log.d("UPDATE", "userId already exists");
                     return preparedStatement.executeUpdate();
                 }
@@ -120,7 +121,7 @@ public class MyApplicationClass extends Application {
             return -1;
         }
 
-        public ArrayList<String> getUserProfileInfo(int userId){//, String idUserProfile, String description, String likes_dislikes){
+        public ArrayList<String> getUserProfileInfo(int userId){
             ArrayList<String> profileInfo = new ArrayList<>();
             try {
                 preparedStatement = connect
@@ -146,20 +147,6 @@ public class MyApplicationClass extends Application {
                 profileInfo.add(4, eventsR);
                 profileInfo.add(5, likes_dislikes_R);
 
-
-                /*if(getProfileResult.next()){
-                    profileInfo.add(String.valueOf(getProfileResult.getInt(0)));
-                    Log.d("MyApplication: profInfo", "IDUSERPROFILE : " + profileInfo);
-                    profileInfo.add(String.valueOf(getProfileResult.getInt(1)));
-                    Log.d("MyApplication: profInfo", "USERID : " + profileInfo);
-                    profileInfo.add(getProfileResult.getString(2));
-                    Log.d("MyApplication: profInfo", "DESCRIPTION : " + profileInfo);
-                    profileInfo.add(getProfileResult.getString(3));
-                    Log.d("MyApplication: profInfo", "LIKES/DISLIKES" + profileInfo);
-                } else {
-                    Log.d("MyApplication: getProfR", "getProfileResult is empty");*/
-                    /*Log.d("MyApplication: CheckPt", "UserResult" + getProfileResult.getInt("userId"));*/
-                //}
             } catch (SQLException e){
             e.printStackTrace();
         }
