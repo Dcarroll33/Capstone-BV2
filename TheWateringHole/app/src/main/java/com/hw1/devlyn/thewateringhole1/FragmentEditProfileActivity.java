@@ -6,6 +6,7 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -22,6 +23,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -46,7 +49,7 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
     EditText Likes_Dislikes;
     EditText UserName;
 
-    ImageView profileImage;
+    private ImageView profileImage;
 
     String currentUser;
     String idUserProfile;
@@ -61,19 +64,19 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
     Button Load;
 
     ConnectDb conDb = new ConnectDb();
-    ConnectDb conDb2 = new ConnectDb();
+    //ConnectDb conDb2 = new ConnectDb();
 
     private static final int REQUEST_CODE = 1;
     private Bitmap bitmap;
 
     private static AsyncTask<String, Void, String> dbCon;
-    private int RESULT_LOAD_IMAGE;
+    private int PICK_IMAGE_REQUEST = 1;
 
     /**
      * Method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param /*param1 Parameter 1.
+     * java.lang.String@param /*param1 Parameter 1.
      * @param /*param2 Parameter 2.
      * @return A new instance of fragment FragmentEvents.
      */
@@ -123,6 +126,7 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         Save = (Button) rootView.findViewById(R.id.save_btn);
         UploadImage = (Button) rootView.findViewById(R.id.uploadImage);
         Load = (Button) rootView.findViewById(R.id.load_btn);
+        profileImage = (ImageView) rootView.findViewById(R.id.profileImage);
 
         UserName.setText(userName);
         Description.setText(description);
@@ -175,9 +179,6 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
             likes_dislikes = Likes_Dislikes.getText().toString();
             userName = UserName.getText().toString();
 
-            /*if (description != null && likes_dislikes != null){*/
-
-
             try {
                 String[] params = {"save", currentUser, userName, description, likes_dislikes};
                 conDb.execute(params).get();
@@ -197,33 +198,50 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
             }
         }
         if (view == UploadImage) {
-            Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(i, RESULT_LOAD_IMAGE);
+            Intent intent = new Intent();
+            intent.setType("image/jpeg");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+            //Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            //startActivityForResult(i, PICK_IMAGE_REQUEST);
             /*Intent intent = new Intent();
             intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);//
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_IMAGE);*/
-        }
-    }
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-            Cursor cursor = Context.getContentResolver().query(selectedImage,filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-            ImageView imageView = (ImageView) getView().findViewById(R.id.profileImage);
-            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            intent.setAction(Intent.ACTION_PICK);
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);*/
         }
     }
 
-    private DownloadManager getContentResolver() {
-        return null;
-    }*/
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK
+                && null != data && data.getData() != null) {
+
+            Uri uri = data.getData();
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                // Log.d(TAG, String.valueOf(bitmap));
+                profileImage.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+            //EditProfileActivity activity = (EditProfileActivity)getActivity();
+            //BitmapFactory.Options options = new BitmapFactory.Options();
+            //options.inSampleSize = 4;
+
+
+            //Bitmap bitmap = BitmapFactory.decodeFile(filePath /*options*/);
+            //profileImage = (ImageView) getView().findViewById(R.id.profileImage);
+           // Bitmap bitmap = getBitmapFromCameraData(data, activity);
+           // profileImage.setImageBitmap(bitmap);
+       // } else {
+           // Log.d("RESULTCODE", "RESULTCODE" + resultCode);
+           // Log.d("REQUESTCODE", "REQUEST_CODE" + requestCode);
+
+    }
 
     /**
      * This interface must be implemented by activities that contain this

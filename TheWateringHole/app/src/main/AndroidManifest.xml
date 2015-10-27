@@ -47,11 +47,11 @@
         android:value="@integer/google_play_services_version" />
 
 
-    <!--<ImageView
-            android:layout_width="wrap_content"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/watering_hole"
-        android:layout_gravity="center" />-->
+        android:layout_gravity="center" />
         <activity
             android:name="com.hw1.devlyn.thewateringhole1.SplashActivity"
             android:label="@string/app_name"

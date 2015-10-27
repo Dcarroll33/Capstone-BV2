@@ -61,25 +61,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_main);
-        /*if (savedInstanceState == null) {
-            FragmentMainActivity mainActivity = new FragmentMainActivity();
-            mainActivity.setArguments(getIntent().getExtras());
-            getSupportFragmentManager().beginTransaction().add(
-                    android.R.id.content, mainActivity).commit();
-        }*/
+
         Intent thisIntent = getIntent();
-        Log.d("MainAct", "Inside mainactivity");
         currentUser = thisIntent.getStringExtra("userId");
         idUserProfile = thisIntent.getStringExtra("idUserProfile");
         userName = thisIntent.getStringExtra("userName");
         description = thisIntent.getStringExtra("description");
         events = thisIntent.getStringExtra("events");
         likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
-        Log.d("MainAct", "UserID was " + currentUser);
-        Log.d("MainAct", "idUSerProfile" + idUserProfile);
-        Log.d("MainAct", "userName is : " + userName);
-        Log.d("MainAct", "description is : " + description);
-        Log.d("MainAct", "likes/dislikes are : " + likes_dislikes);
+
 
         Fragment fragment = new Fragment();
                 Bundle bundle = new Bundle();
@@ -165,38 +155,7 @@ public class MainActivity extends AppCompatActivity {
             // on first time display view for first nav item
             displayView(0);
         }
-
-        //FragmentMainActivity fragment = (FragmentMainActivity) getFragmentManager().findFragmentById(id.main_fragment);
-
     }
-
-    /*This method is for the on screen clicks by the user depending on which button is pushed
-        in this case the Events, Friends, Profile or Settings buttons. Once one button has been
-        clicked depending on their relationship the screen will switch to the appropriate screen.*/
-    /*public void onClick(View v) {
-        Log.d("Made it OnClick", "mDrawerList created" + mDrawerList);
-        if (v == Events) {
-            Intent events = new Intent(this, EventsActivity.class);
-
-            Button b = (Button) v;
-            this.startActivity(events);
-        } else if (v == Friends) {
-            Intent friends = new Intent(this, Friends.class);
-
-            Button b = (Button) v;
-            this.startActivity(friends);
-        } else if (v == Profile) {
-            Intent profile = new Intent(this, UserProfile.class);
-
-            Button b = (Button) v;
-            this.startActivity(profile);
-        } else if (v == Settings) {
-            Intent settings = new Intent(this, Settings.class);
-
-            Button b = (Button) v;
-            this.startActivity(settings);
-        }
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -211,17 +170,6 @@ public class MainActivity extends AppCompatActivity {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
-        /*
-        // Handle action bar actions click
-        switch (item.getItemId()) {
-            case id.action_settings:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-        */
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -276,9 +224,9 @@ public class MainActivity extends AppCompatActivity {
                  *activity page.
                  */
                 case 0:
-                    Intent home = new Intent(MainActivity.this, MainActivity.class);
+                    Intent Home = new Intent(MainActivity.this, MainActivity.class);
 
-                    /*startActivity(home);*/
+                    startActivity(Home);
                     break;
                 /*Case 1 used for the FindPeople item in the list and redirects the user to the
                  *locate friends activity page.

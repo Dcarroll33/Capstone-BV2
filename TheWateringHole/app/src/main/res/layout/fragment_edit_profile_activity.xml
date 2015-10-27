@@ -60,18 +60,20 @@
         android:textSize="20sp"
         android:layout_width="240dp"
         android:layout_height="50dp"
-        android:layout_marginTop="45dp"
         android:layout_below="@+id/save_btn"
-        android:layout_alignLeft="@+id/save_btn"
-        android:layout_alignStart="@+id/save_btn" />
+        android:layout_centerHorizontal="true" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/profileImage"
+        android:contentDescription="profileImage"
         android:layout_alignBottom="@+id/Likes_Dislikes"
-        android:layout_toEndOf="@+id/textView9"
-        android:layout_toRightOf="@+id/textView9" />
+        android:layout_alignRight="@+id/save_btn"
+        android:layout_alignEnd="@+id/save_btn"
+        android:layout_alignTop="@+id/Username"
+        android:layout_toRightOf="@+id/textView9"
+        android:layout_toEndOf="@+id/textView9" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -83,14 +85,6 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp"
         android:background="@drawable/wateringhole_textfield_activated_holo_dark"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView2"
-        android:layout_below="@+id/textView9"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
 

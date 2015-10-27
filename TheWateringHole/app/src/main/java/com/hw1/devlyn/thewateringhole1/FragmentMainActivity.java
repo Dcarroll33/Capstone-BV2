@@ -43,16 +43,7 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
      * @param /*param2 Parameter 2.
      * @return A new instance of fragment FragmentMainActivity.
      */
-    /*public static FragmentEditProfileActivity newInstance(int currentUser) {
-        FragmentEditProfileActivity f = new FragmentEditProfileActivity();
 
-        // Supply index input as an argument.
-        Bundle args = new Bundle();
-        args.putInt("userId", currentUser);
-        f.setArguments(args);
-
-        return f;
-    }*/
     public static FragmentMainActivity newInstance(String param1, String param2) {
         FragmentMainActivity fragment = new FragmentMainActivity();
         Bundle args = new Bundle();
@@ -78,10 +69,6 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
         events = args.getString("events", events);
         likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
 
-        Log.d("FragMainAct", "UserID was " + currentUser);
-        Log.d("FragMainAct", "isUserProfile is" + idUserProfile);
-        Log.d("FragMainAct", "Description is : " + description);
-        Log.d("FragMainAct", "Likes/Dislikes are : " + likes_dislikes);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);

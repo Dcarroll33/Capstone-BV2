@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -77,25 +75,6 @@ public class EditProfileActivity extends ActionBarActivity {
         events = thisIntent.getStringExtra("events");
         likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
 
-
-        //ConnectDb conDb = new ConnectDb();
-
-        //description = conDb.getUserProfileInfo().get(3);
-        //likes_Dislikes = conDb.getUserProfileInfo().get(4);
-
-        //Fragment fragment = new Fragment();
-       // Bundle bundle = new Bundle();
-       // bundle.putString("description", description );
-       // bundle.putString("likes_dislikes", likes_Dislikes);
-       // fragment.setArguments(bundle);
-        //description = thisIntent.getStringExtra("description");
-        //likes_Dislikes = thisIntent.getStringExtra("likes_dislikes");
-       /* if (savedInstanceState == null) {
-            FragmentEditProfileActivity editProfile = new FragmentEditProfileActivity();
-            editProfile.setArguments(getIntent().getExtras());
-            getSupportFragmentManager().beginTransaction().add(
-                    android.R.id.content, editProfile).commit();
-        }*/
 
         Description = (EditText) this.findViewById(R.id.Description);
         Likes_Dislikes = (EditText) this.findViewById(R.id.Likes_Dislikes);
@@ -178,58 +157,6 @@ public class EditProfileActivity extends ActionBarActivity {
             displayView(0);
         }
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d("HELLO", "inside activityresult");
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK)
-            try {
-                // We need to recyle unused bitmaps
-                Log.d("ATTEMPTING STREAM", "Stream Starting" + bitmap);
-                if (bitmap != null) {
-                    bitmap.recycle();
-                }
-                InputStream stream = getContentResolver().openInputStream(
-                        data.getData());
-                bitmap = BitmapFactory.decodeStream(stream);
-                stream.close();
-                Log.d("BITMAP","Bitmap is:  " + bitmap);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-
-    /**public void onClick(View view) {
-        ConnectDb conDb = new ConnectDb();
-        /*Checks to see if the click is the login else if the click is on the register button*/
-        /**if (view == Save) {
-            String description = Description.getText().toString();
-            String likes_Dislikes = Likes_Dislikes.getText().toString();
-            String[] params = {"save", description, likes_Dislikes};
-            try {
-                conDb.execute(params).get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-            int userId = conDb.getUserId();
-            if(userId != -1){
-                Toast.makeText(getBaseContext(), "Saved", Toast.LENGTH_SHORT).show();
-                Intent Save = new Intent(this, EditProfileActivity.class );
-                Save.putExtra("userId", userId);
-
-                this.startActivity(Save);
-            }else {
-                Toast.makeText(getBaseContext(), "Invalid Save", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -328,14 +255,13 @@ public class EditProfileActivity extends ActionBarActivity {
                 case 3:
                     Intent FindHangouts = new Intent(EditProfileActivity.this, LocateHangoutActivity.class);
 
-                    /*startActivity(FindHangouts);*/
+                    startActivity(FindHangouts);
                     break;
                 /*Case 4 used for the Edit Profile item in the list and redirects the user to the
                 *profile activity page.
                 */
                 case 4:
                     Intent EditProfile = new Intent(EditProfileActivity.this, FragmentEditProfileActivity.class);
-                    /*EditProfile.putExtra("userId", currentUser);*/
 
                     startActivity(EditProfile);
                     break;
