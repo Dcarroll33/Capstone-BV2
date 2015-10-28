@@ -98,8 +98,8 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getActivity().getIntent().getExtras();
-        currentUser = args.getString("userId", currentUser);
-        idUserProfile = args.getString("idUserProfile", idUserProfile);
+        //currentUser = args.getString("userId", currentUser);
+        //idUserProfile = args.getString("idUserProfile", idUserProfile);
         userName = args.getString("userName", userName);
         description = args.getString("description", description);
         events = args.getString("events", events);
@@ -228,19 +228,6 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
                 e.printStackTrace();
             }
         }
-            //EditProfileActivity activity = (EditProfileActivity)getActivity();
-            //BitmapFactory.Options options = new BitmapFactory.Options();
-            //options.inSampleSize = 4;
-
-
-            //Bitmap bitmap = BitmapFactory.decodeFile(filePath /*options*/);
-            //profileImage = (ImageView) getView().findViewById(R.id.profileImage);
-           // Bitmap bitmap = getBitmapFromCameraData(data, activity);
-           // profileImage.setImageBitmap(bitmap);
-       // } else {
-           // Log.d("RESULTCODE", "RESULTCODE" + resultCode);
-           // Log.d("REQUESTCODE", "REQUEST_CODE" + requestCode);
-
     }
 
     /**

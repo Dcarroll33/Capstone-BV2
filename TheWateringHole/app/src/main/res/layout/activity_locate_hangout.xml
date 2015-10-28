@@ -12,7 +12,9 @@
         android:textIsSelectable="false"
         android:textSize="35dp"
         android:id="@+id/textView7"
-        android:layout_alignParentTop="true" />
+        android:textColor="#f4be2a"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
 
 

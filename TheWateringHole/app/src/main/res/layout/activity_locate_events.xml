@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:name="com.hw1.devlyn.thewateringhole1.FragmentLocateEvents"
-                android:id="@+id/fragment_main_activity"
+                android:id="@+id/fragment_locate_events"
                 android:layout_gravity="center" />
         </FrameLayout>
 

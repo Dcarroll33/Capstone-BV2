@@ -111,6 +111,8 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
         // Do a null check to confirm that we have not already instantiated the map.
         if (googleMap == null) {
             googleMap = ((MapView) rootView.findViewById(R.id.mapview)).getMap();
+            //googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             //googleMap.setMyLocationEnabled(true);
             if (googleMap != null) {
                 googleMap.setMyLocationEnabled(true);

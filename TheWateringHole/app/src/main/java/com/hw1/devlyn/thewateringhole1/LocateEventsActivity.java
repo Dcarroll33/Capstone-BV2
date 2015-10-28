@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +22,7 @@ import info.info.wateringhole.slidingmenu.adapter.NavDrawerListAdapter;
 import info.info.wateringhole.slidingmenu.model.NavDrawerItem;
 
 
-public class LocateEventsActivity extends ActionBarActivity  {
+public class LocateEventsActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -218,7 +219,7 @@ public class LocateEventsActivity extends ActionBarActivity  {
                 case 3:
                     Intent FindHangouts = new Intent(LocateEventsActivity.this, LocateHangoutActivity.class);
 
-                    /*startActivity(FindHangouts);*/
+                    startActivity(FindHangouts);
                     break;
                 /*Case 4 used for the Edit Profile item in the list and redirects the user to the
                 *profile activity page.

@@ -4,27 +4,29 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.hw1.devlyn.thewateringhole1.FragmentLocateFriends">
+    tools:context="com.hw1.devlyn.thewateringhole1.FragmentLocateFriends"
+    android:background="@android:color/transparent">
 
     <TextView android:text="@string/Locate__Friends" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/Locate_Friends"
         android:textSize="35dp"
+        android:textColor="#d9282e"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true">
+
+    </TextView>
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@+id/Locate_Friends"
-        android:layout_above="@+id/friends_profile_btn" />
-      <!-- <fragment
-         android:id="@+id/location_map"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"
-           android:layout_above="@+id/friends_profile_btn"
-           android:name="com.google.android.gms.maps.SupportMapFragment"/>-->
+        android:layout_above="@+id/friends_profile_btn"
+        android:layout_marginTop="150dp"
+        android:layout_marginBottom="150dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp" />
 
     <Button
         android:id="@+id/friends_profile_btn"

@@ -224,9 +224,9 @@ public class MainActivity extends AppCompatActivity {
                  *activity page.
                  */
                 case 0:
-                    Intent Home = new Intent(MainActivity.this, MainActivity.class);
+                    Intent home = new Intent(MainActivity.this, MainActivity.class);
 
-                    startActivity(Home);
+                    /*startActivity(home);*/
                     break;
                 /*Case 1 used for the FindPeople item in the list and redirects the user to the
                  *locate friends activity page.
@@ -250,13 +250,13 @@ public class MainActivity extends AppCompatActivity {
                 case 3:
                     Intent FindHangouts = new Intent(MainActivity.this, LocateHangoutActivity.class);
 
-                    /*startActivity(FindHangouts);*/
+                    startActivity(FindHangouts);
                     break;
                 /*Case 4 used for the Edit Profile item in the list and redirects the user to the
                  *profile activity page.
                  */
                 case 4:
-                    Intent EditProfile = new Intent(MainActivity.this, FragmentEditProfileActivity.class);
+                    Intent EditProfile = new Intent(MainActivity.this, EditProfileActivity.class);
                     /*EditProfile.putExtra("userId", currentUser);*/
 
                     startActivity(EditProfile);

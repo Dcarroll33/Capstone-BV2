@@ -206,7 +206,7 @@ public class LocateFriendsActivity extends AppCompatActivity {
                 case 1:
                     Intent FindPeople = new Intent(LocateFriendsActivity.this, LocateFriendsActivity.class);
 
-                    startActivity(FindPeople);
+                    /*startActivity(FindPeople);*/
                     break;
                 /*Case 2 used for the FindEvents item in the list and redirects the user to the
                 *locate event activity page.
