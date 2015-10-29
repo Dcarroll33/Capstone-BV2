@@ -98,8 +98,8 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getActivity().getIntent().getExtras();
-        //currentUser = args.getString("userId", currentUser);
-        //idUserProfile = args.getString("idUserProfile", idUserProfile);
+        currentUser = args.getString("userId", currentUser);
+        idUserProfile = args.getString("idUserProfile", idUserProfile);
         userName = args.getString("userName", userName);
         description = args.getString("description", description);
         events = args.getString("events", events);
@@ -115,8 +115,16 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View rootView = inflater
+                .inflate(R.layout.fragment_edit_profile_activity, container, false);
+
+        MyApplicationClass.MySQLAccess dao = ConnectDb.getDao();
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_edit_profile_activity, container, false);
+        //View rootView = inflater.inflate(R.layout.fragment_edit_profile_activity, container, false);
 
         getButtons(rootView);
 
@@ -163,11 +171,11 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         super.onAttach(activity);
     }
 
-    @Override
+    /*@Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
+    }*/
 
     /*This method is for the on screen clicks by the user depending on which button is pushed
         in this case the Events, Friends, Profile or Settings buttons. Once one button has been

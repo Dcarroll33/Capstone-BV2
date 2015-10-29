@@ -25,6 +25,13 @@ public class FragmentSettings extends Fragment implements  View.OnClickListener 
     /*Fields for the buttons to be used in this class.*/
     Button LocateFriends;
 
+    private String currentUser;
+    private String idUserProfile;
+    private String userName;
+    private String description;
+    private String events;
+    private String likes_dislikes;
+
     /**
      * Method to create a new instance of
      * this fragment using the provided parameters.
@@ -33,8 +40,8 @@ public class FragmentSettings extends Fragment implements  View.OnClickListener 
      * @param param2 Parameter 2.
      * @return A new instance of fragment FragmentEvents.
      */
-    public static FragmentEvents newInstance(String param1, String param2) {
-        FragmentEvents fragment = new FragmentEvents();
+    public static FragmentSettings newInstance(String param1, String param2) {
+        FragmentSettings fragment = new FragmentSettings();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -49,6 +56,15 @@ public class FragmentSettings extends Fragment implements  View.OnClickListener 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle args = getActivity().getIntent().getExtras();
+        currentUser = args.getString("userId", currentUser);
+        idUserProfile = args.getString("idUserProfile", idUserProfile);
+        userName = args.getString("userName", userName);
+        description = args.getString("description", description);
+        events = args.getString("events", events);
+        likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);

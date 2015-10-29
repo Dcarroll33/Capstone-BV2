@@ -9,12 +9,27 @@ import android.widget.Button;
 
 public class HangoutSetupActivity extends Activity implements View.OnClickListener {
 
+    String currentUser;
+    String idUserProfile;
+    String description;
+    String likes_dislikes;
+    String userName;
+    String events;
+
     Button Finish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hangout_setup);
+
+        Intent thisIntent = getIntent();
+        currentUser = thisIntent.getStringExtra("userId");
+        idUserProfile = thisIntent.getStringExtra("idUserProfile");
+        userName = thisIntent.getStringExtra("userName");
+        description = thisIntent.getStringExtra("description");
+        events = thisIntent.getStringExtra("events");
+        likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
 
         Finish = (Button) this.findViewById(R.id.finish_btn);
 

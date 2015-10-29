@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -87,6 +88,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
         mTitle = mDrawerTitle = getTitle();
+        getSupportActionBar().setTitle(mTitle);
 
         // load slide menu items
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
@@ -232,13 +234,48 @@ public class EditProfileActivity extends AppCompatActivity {
                 case 0:
                     Intent home = new Intent(EditProfileActivity.this, MainActivity.class);
 
+                    home.putExtra("userId", currentUser);
+                    home.putExtra("idUserProfile", idUserProfile);
+                    home.putExtra("userName", userName);
+                    home.putExtra("description", "" + description );
+                    home.putExtra("events", events);
+                    home.putExtra("likes_dislikes", likes_dislikes);
+
+                    android.app.Fragment MainActivityFrag = new android.app.Fragment();
+                    Bundle MainActivityBundle = new Bundle();
+                    MainActivityBundle.putString("currentUser", currentUser);
+                    MainActivityBundle.putString("idUserProfile", idUserProfile);
+                    MainActivityBundle.putString("userName", userName);
+                    MainActivityBundle.putString("description", description);
+                    MainActivityBundle.putString("events", events);
+                    MainActivityBundle.putString("likes_dislikes", likes_dislikes);
+                    MainActivityFrag.setArguments(MainActivityBundle);
+
                     startActivity(home);
+
                     break;
                 /*Case 1 used for the FindPeople item in the list and redirects the user to the
                  *locate friends activity page.
                  */
                 case 1:
                     Intent FindPeople = new Intent(EditProfileActivity.this, LocateFriendsActivity.class);
+
+                    FindPeople.putExtra("userId", currentUser);
+                    FindPeople.putExtra("idUserProfile", idUserProfile);
+                    FindPeople.putExtra("userName", userName);
+                    FindPeople.putExtra("description", "" + description);
+                    FindPeople.putExtra("events", events);
+                    FindPeople.putExtra("likes_dislikes", likes_dislikes);
+
+                    android.app.Fragment FindPeopleFrag = new android.app.Fragment();
+                    Bundle FindPeopleBundle = new Bundle();
+                    FindPeopleBundle.putString("currentUser", currentUser);
+                    FindPeopleBundle.putString("idUserProfile", idUserProfile);
+                    FindPeopleBundle.putString("userName", userName);
+                    FindPeopleBundle.putString("description", description);
+                    FindPeopleBundle.putString("events", events);
+                    FindPeopleBundle.putString("likes_dislikes", likes_dislikes);
+                    FindPeopleFrag.setArguments(FindPeopleBundle);
 
                     startActivity(FindPeople);
                     break;
@@ -247,6 +284,23 @@ public class EditProfileActivity extends AppCompatActivity {
                 */
                 case 2:
                     Intent FindEvents = new Intent(EditProfileActivity.this, LocateEventsActivity.class);
+
+                    FindEvents.putExtra("userId", currentUser);
+                    FindEvents.putExtra("idUserProfile", idUserProfile);
+                    FindEvents.putExtra("userName", userName);
+                    FindEvents.putExtra("description", "" + description);
+                    FindEvents.putExtra("events", events);
+                    FindEvents.putExtra("likes_dislikes", likes_dislikes);
+
+                    android.app.Fragment FindEventsFrag = new android.app.Fragment();
+                    Bundle FindEventsBundle = new Bundle();
+                    FindEventsBundle.putString("currentUser", currentUser);
+                    FindEventsBundle.putString("idUserProfile", idUserProfile);
+                    FindEventsBundle.putString("userName", userName);
+                    FindEventsBundle.putString("description", description);
+                    FindEventsBundle.putString("events", events);
+                    FindEventsBundle.putString("likes_dislikes", likes_dislikes);
+                    FindEventsFrag.setArguments(FindEventsBundle);
 
                     startActivity(FindEvents);
                     break;
@@ -262,9 +316,9 @@ public class EditProfileActivity extends AppCompatActivity {
                 *profile activity page.
                 */
                 case 4:
-                    Intent EditProfile = new Intent(EditProfileActivity.this, FragmentEditProfileActivity.class);
+                    Intent EditProfile = new Intent(EditProfileActivity.this, EditProfileActivity.class);
 
-                    startActivity(EditProfile);
+                    /*startActivity(EditProfile);*/
                     break;
 
                 /*Case 5 used for the Settings item in the list and redirects the user to the
@@ -272,6 +326,23 @@ public class EditProfileActivity extends AppCompatActivity {
                  */
                 case 5:
                     Intent Settings = new Intent(EditProfileActivity.this, SettingsActivity.class);
+
+                    Settings.putExtra("userId", currentUser);
+                    Settings.putExtra("idUserProfile", idUserProfile);
+                    Settings.putExtra("userName", userName);
+                    Settings.putExtra("description", "" + description);
+                    Settings.putExtra("events", events);
+                    Settings.putExtra("likes_dislikes", likes_dislikes);
+
+                    android.app.Fragment SettingsFrag = new android.app.Fragment();
+                    Bundle SettingsBundle = new Bundle();
+                    SettingsBundle.putString("currentUser", currentUser);
+                    SettingsBundle.putString("idUserProfile", idUserProfile);
+                    SettingsBundle.putString("userName", userName);
+                    SettingsBundle.putString("description", description);
+                    SettingsBundle.putString("events", events);
+                    SettingsBundle.putString("likes_dislikes", likes_dislikes);
+                    SettingsFrag.setArguments(SettingsBundle);
 
                     startActivity(Settings);
                     break;

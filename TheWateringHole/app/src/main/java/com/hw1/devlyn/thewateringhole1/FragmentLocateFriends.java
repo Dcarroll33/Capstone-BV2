@@ -41,6 +41,13 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
     private MapView mMapView;
     private GoogleMap googleMap;
 
+    private String currentUser;
+    private String idUserProfile;
+    private String userName;
+    private String description;
+    private String events;
+    private String likes_dislikes;
+
 
     /*Fields for the buttons to be used in this class.*/
     Button FriendsProfile;
@@ -67,11 +74,18 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
         // Required empty public constructor
     }
 
-    /*@Override
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle args = getActivity().getIntent().getExtras();
+        currentUser = args.getString("userId", currentUser);
+        idUserProfile = args.getString("idUserProfile", idUserProfile);
+        userName = args.getString("userName", userName);
+        description = args.getString("description", description);
+        events = args.getString("events", events);
+        likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
 
-    }*/
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

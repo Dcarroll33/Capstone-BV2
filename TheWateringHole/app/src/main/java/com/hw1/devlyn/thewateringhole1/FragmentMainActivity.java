@@ -138,12 +138,48 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             this.startActivity(main);
         }
         if (view == Events) {
-            Intent events = new Intent(getActivity(), EventsActivity.class);
+            Intent eventsInfo = new Intent(getActivity(), EventsActivity.class);
+
+            eventsInfo.putExtra("userId", currentUser);
+            eventsInfo.putExtra("idUserProfile", idUserProfile);
+            eventsInfo.putExtra("userName", userName);
+            eventsInfo.putExtra("description", "" + description);
+            eventsInfo.putExtra("events", events);
+            eventsInfo.putExtra("likes_dislikes", likes_dislikes);
+
+            Fragment fragment = new Fragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("currentUser", currentUser);
+            bundle.putString("idUserProfile", idUserProfile);
+            bundle.putString("userName", userName);
+            bundle.putString("description", description);
+            bundle.putString("events", events);
+            bundle.putString("likes_dislikes", likes_dislikes);
+            fragment.setArguments(bundle);
 
             Button b = (Button) view;
-            this.startActivity(events);
+            this.startActivity(eventsInfo);
+
         } else if (view == Friends) {
             Intent friends = new Intent(getActivity(), LocateFriendsActivity.class);
+
+            friends.putExtra("userId", currentUser);
+            friends.putExtra("idUserProfile", idUserProfile);
+            friends.putExtra("userName", userName);
+            friends.putExtra("description", "" + description);
+            friends.putExtra("events", events);
+            friends.putExtra("likes_dislikes", likes_dislikes);
+
+            Fragment fragment = new Fragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("currentUser", currentUser);
+            bundle.putString("idUserProfile", idUserProfile);
+            bundle.putString("userName", userName);
+            bundle.putString("description", description);
+            bundle.putString("events", events);
+            bundle.putString("likes_dislikes", likes_dislikes);
+            fragment.setArguments(bundle);
+
 
             Button b = (Button) view;
             this.startActivity(friends);
@@ -171,6 +207,23 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             this.startActivity(profile);
         } else if (view == Settings) {
             Intent settings = new Intent(getActivity(), SettingsActivity.class);
+
+            settings.putExtra("userId", currentUser);
+            settings.putExtra("idUserProfile", idUserProfile);
+            settings.putExtra("userName", userName);
+            settings.putExtra("description", "" + description);
+            settings.putExtra("events", events);
+            settings.putExtra("likes_dislikes", likes_dislikes);
+
+            Fragment fragment = new Fragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("currentUser", currentUser);
+            bundle.putString("idUserProfile", idUserProfile);
+            bundle.putString("userName", userName);
+            bundle.putString("description", description);
+            bundle.putString("events", events);
+            bundle.putString("likes_dislikes", likes_dislikes);
+            fragment.setArguments(bundle);
 
             Button b = (Button) view;
             this.startActivity(settings);
