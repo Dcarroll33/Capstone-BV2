@@ -31,6 +31,8 @@ public class LocateFriendsActivity extends AppCompatActivity {
     String likes_dislikes;
     String userName;
     String events;
+    double userLongitude;
+    double userLatitude;
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -65,6 +67,8 @@ public class LocateFriendsActivity extends AppCompatActivity {
         description = thisIntent.getStringExtra("description");
         events = thisIntent.getStringExtra("events");
         likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
+        userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
+        userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
 
         mTitle = mDrawerTitle = getTitle();
 

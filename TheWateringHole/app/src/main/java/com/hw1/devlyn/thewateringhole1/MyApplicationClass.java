@@ -120,6 +120,29 @@ public class MyApplicationClass extends Application {
             }
             return -1;
         }
+        public ArrayList<Double> getUserCoords(int userId) {
+            ArrayList<Double> userCoords = new ArrayList<>();
+            try {
+                preparedStatement = connect
+                        .prepareStatement("select * from userProfile where userId=?;"/*and userId=? and description=? and likes_dislikes=?"*/);
+                preparedStatement.setInt(1, userId);
+                //Log.d("MyApplicationClass", "idUserProfile" + profileInfo.set(1, String.valueOf(userId)));
+                ResultSet userCoordsResult =  preparedStatement.executeQuery();
+                userCoordsResult.next();
+
+                int userIdR = userCoordsResult.getInt(2);
+                double userLatitude = userCoordsResult.getDouble(8);
+                double userLongitude = userCoordsResult.getDouble(9);
+
+                userCoords.add(0, Double.valueOf(userIdR));
+                userCoords.add(1, userLatitude);
+                userCoords.add(2, userLongitude);
+
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+            return userCoords;
+        }
 
         public ArrayList<String> getUserProfileInfo(int userId){
             ArrayList<String> profileInfo = new ArrayList<>();
@@ -139,6 +162,7 @@ public class MyApplicationClass extends Application {
                 String descriptionR = getProfileResult.getString(4);
                 String eventsR = getProfileResult.getString(5);
                 String likes_dislikes_R = getProfileResult.getString(6);
+
 
                 profileInfo.add(0, String.valueOf(userIdR));
                 profileInfo.add(1, String.valueOf(idUserProfileR));

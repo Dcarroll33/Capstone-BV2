@@ -47,6 +47,8 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
     private String description;
     private String events;
     private String likes_dislikes;
+    private double userLongitude;
+    private double userLatitude;
 
 
     /*Fields for the buttons to be used in this class.*/
@@ -84,6 +86,9 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
         description = args.getString("description", description);
         events = args.getString("events", events);
         likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
+        userLongitude = args.getDouble("userLongitude",userLongitude);
+        userLatitude = args.getDouble("userLatitude",userLatitude);
+
 
     }
 
@@ -142,15 +147,17 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
                        // android.location.LocationListener locationListener;
                        // Location myLocation =  locationMan.getLastKnownLocation(provider);
                       // locationMan.getLastKnownLocation(provider);
-
-                        //double latitude = arg0.getLatitude();
-                        //double longitude = arg0.getLongitude();
+                        //double latitude = userLatitude;
+                        //double longitude = userLongitude;
                         //LatLng position = new LatLng(latitude, longitude);
                         //googleMap.animateCamera(CameraUpdateFactory.newLatLng(position));
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arg0.getLatitude(), arg0.getLongitude()), 18.0f));
                         //googleMap.animateCamera(CameraUpdateFactory.zoomTo(17));
                         googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                                 .position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("You are here!"));
+                        googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                                .position(new LatLng(userLatitude, userLongitude)).title("Dummy Person"));
+
                         googleMap.setOnMyLocationChangeListener(null);
                     }
                 });

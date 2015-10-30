@@ -28,6 +28,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
     private String description;
     private String events;
     private String likes_dislikes;
+    private Double userLongitude;
+    private Double userLatitude;
     /*Fields for the buttons to be used in this class.*/
     Button Events;
     Button Friends;
@@ -68,6 +70,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
         description = args.getString("description", description);
         events = args.getString("events", events);
         likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
+        userLongitude = args.getDouble("userLongitude");
+        userLatitude = args.getDouble("userLatitude");
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -169,6 +173,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             friends.putExtra("description", "" + description);
             friends.putExtra("events", events);
             friends.putExtra("likes_dislikes", likes_dislikes);
+            friends.putExtra("userLongitude", userLongitude);
+            friends.putExtra("userLatitude", userLatitude);
 
             Fragment fragment = new Fragment();
             Bundle bundle = new Bundle();
@@ -178,6 +184,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             bundle.putString("description", description);
             bundle.putString("events", events);
             bundle.putString("likes_dislikes", likes_dislikes);
+            bundle.putDouble("userLongitude", userLongitude);
+            bundle.putDouble("userLatitude", userLatitude);
             fragment.setArguments(bundle);
 
 

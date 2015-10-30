@@ -34,6 +34,8 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
 
     public ArrayList<String> load = null;
 
+    public ArrayList<Double> coords = null;
+
     private ArrayList<String> getProfileInfo = null;
 
 
@@ -83,6 +85,12 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                         profileInfoResult.add(4, likes_dislikes);*/
                         load = profileInfoResult;
                     }
+                    ArrayList<Double> userCoordsResult = dao.getUserCoords(userId);
+                    if (userCoordsResult != null){
+                        Log.d("ConnectDb", "userLongitude" + userCoordsResult.get(1) + "userLatitude" + userCoordsResult.get(2));
+
+                        coords = userCoordsResult;
+                    }
                     return 0;
                 } else {
                     Log.d("ConnectDb", "Login failed :'(");
@@ -117,6 +125,8 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                     getUserProfileResult.get(1);
                     getUserProfileResult.get(2);
                     getUserProfileResult.get(3);
+                    //getUserProfileResult.get(4);
+                    //getUserProfileResult.get(5);
                     load = getUserProfileResult;
                     return 0;
                 } else {
@@ -135,6 +145,10 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
 
     public int getUserId(){
         return userId;
+    }
+
+    public ArrayList<Double> getUserCoords() {
+        return coords;
     }
 
     public String getDescription() {

@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     String likes_dislikes;
     String userName;
     String events;
+    double userLongitude;
+    double userLatitude;
 
     /*These fields are used for the navigation slide out menu.*/
     private DrawerLayout mDrawerLayout;
@@ -69,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         description = thisIntent.getStringExtra("description");
         events = thisIntent.getStringExtra("events");
         likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
+        userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
+        userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
 
 
         Fragment fragment = new Fragment();
@@ -79,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putString("description", description);
                 bundle.putString("events", events);
                 bundle.putString("likes_dislikes", likes_dislikes);
+                bundle.putDouble("userLongitude", userLongitude);
+                bundle.putDouble("userLatitude", userLatitude);
                 fragment.setArguments(bundle);
 
 
@@ -240,6 +246,8 @@ public class MainActivity extends AppCompatActivity {
                     FindPeople.putExtra("description", "" + description);
                     FindPeople.putExtra("events", events);
                     FindPeople.putExtra("likes_dislikes", likes_dislikes);
+                    FindPeople.putExtra("userLongitude", userLongitude);
+                    FindPeople.putExtra("userLatitude", userLatitude);
 
                     android.app.Fragment FindPeopleFrag = new android.app.Fragment();
                     Bundle FindPeopleBundle = new Bundle();
@@ -249,6 +257,8 @@ public class MainActivity extends AppCompatActivity {
                     FindPeopleBundle.putString("description", description);
                     FindPeopleBundle.putString("events", events);
                     FindPeopleBundle.putString("likes_dislikes", likes_dislikes);
+                    FindPeopleBundle.putDouble("userLongitude", userLongitude);
+                    FindPeopleBundle.putDouble("userLatitude", userLatitude);
                     FindPeopleFrag.setArguments(FindPeopleBundle);
 
                     startActivity(FindPeople);

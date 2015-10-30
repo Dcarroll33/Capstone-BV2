@@ -310,7 +310,7 @@ public class LocateHangoutActivity extends AppCompatActivity {
                     EditProfileBundle.putString("likes_dislikes", likes_dislikes);
                     EditProfileFrag.setArguments(EditProfileBundle);
 
-                    startActivity(EditProfile);
+                    //startActivity(EditProfile);
                     break;
                 /*Case 5 used for the Settings item in the list and redirects the user to the
                  *settings activity page.
