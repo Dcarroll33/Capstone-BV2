@@ -60,6 +60,10 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
     private String description;
     private String events;
     private String likes_dislikes;
+    private Uri fileName;
+    private String userImage;
+    private String userImageUri;
+    private Uri userImageUriR;
     private double userLongitude;
     private double userLatitude;
 
@@ -109,6 +113,7 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
         userLongitude = args.getDouble("userLongitude");
         userLatitude = args.getDouble("userLatitude");
+        userImageUri = args.getString("userImageUri", userImageUri);
 
         MyApplicationClass.MySQLAccess dao = ConnectDb.getDao();
         if (getArguments() != null) {
@@ -128,8 +133,6 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        // Inflate the layout for this fragment
-        //View rootView = inflater.inflate(R.layout.fragment_edit_profile_activity, container, false);
 
         getButtons(rootView);
 
@@ -144,6 +147,8 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         UserName.setText(userName);
         Description.setText(description);
         Likes_Dislikes.setText(likes_dislikes);
+        userImageUriR = Uri.parse(userImageUri);
+        profileImage.setImageURI(userImageUriR);
 
         return rootView;
     }
@@ -191,9 +196,10 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
             description = Description.getText().toString();
             likes_dislikes = Likes_Dislikes.getText().toString();
             userName = UserName.getText().toString();
+            //userImage = fileName;
 
             try {
-                String[] params = {"save", currentUser, userName, description, likes_dislikes};
+                String[] params = {"save", currentUser, userName, description, likes_dislikes, userImage};
                 conDb.execute(params).get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -230,6 +236,23 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
                 // Log.d(TAG, String.valueOf(bitmap));
+                String scheme = uri.getScheme();
+                if (scheme.equals("file")) {
+                    fileName = uri;
+                }
+                else if (scheme.equals("content")) {
+                    String[] proj = { MediaStore.Images.Media.TITLE };
+                    Cursor cursor = getActivity().getContentResolver().query(uri, proj, null, null, null);
+                    if (cursor != null && cursor.getCount() != 0) {
+                        int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.TITLE);
+                        cursor.moveToFirst();
+                        fileName = uri;//cursor.getString(columnIndex);
+                    }
+                    if (cursor != null) {
+                        cursor.close();
+                    }
+                }
+                userImage = fileName.toString();
                 profileImage.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();

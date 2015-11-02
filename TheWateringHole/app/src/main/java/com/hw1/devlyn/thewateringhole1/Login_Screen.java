@@ -80,6 +80,7 @@ public class Login_Screen extends Activity implements View.OnClickListener {
             String description = myList.get(3);
             String events = myList.get(4);
             String likes_dislikes = myList.get(5);
+            String userImageUri = myList.get(6);
 
             ArrayList<Double> myList2 = conDb.getUserCoords();
             double userLatitude = myList2.get(1);
@@ -109,6 +110,7 @@ public class Login_Screen extends Activity implements View.OnClickListener {
                 login.putExtra("eventName", eventName);
                 login.putExtra("numParticipating", numParticipating);
                 login.putExtra("eventDescription", eventDescription);
+                login.putExtra("userImageUri", userImageUri);
 
                 this.startActivity(login);
             }else {

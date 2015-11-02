@@ -86,7 +86,7 @@ public class MyApplicationClass extends Application {
             return -1;
         }
 
-        public int userProfile(String userId, String name, String description, String likes_dislikes){
+        public int userProfile(String userId, String name, String description, String likes_dislikes, String userImage){
             try {
                 Log.d("UserProfile", "Got data: userId: " + userId + " desc: " + description + " likes-dislikes: " + likes_dislikes + "userName: " + name);
                 preparedStatement = connect
@@ -98,20 +98,22 @@ public class MyApplicationClass extends Application {
                 if (!userProfileResult.next()) {
 
                     preparedStatement = connect
-                            .prepareStatement("insert into userProfile (userName, description, likes_dislikes) values (?,?,?)");
+                            .prepareStatement("insert into userProfile (userName, description, likes_dislikes, userImage) values (?,?,?,?)");
                     preparedStatement.setString(1, name);
                     preparedStatement.setString(2, description);
                     preparedStatement.setString(3, likes_dislikes);
+                    preparedStatement.setString(4, userImage);
                     Log.d("SQLConnect", "added to DB");
                     return preparedStatement.executeUpdate();
                 } else {
                     preparedStatement = connect
-                            .prepareStatement("update userProfile set userName=?, description=?, likes_dislikes=? where idUserProfile=?");
+                            .prepareStatement("update userProfile set userName=?, description=?, likes_dislikes=?, userImage=? where idUserProfile=?");
 
                     preparedStatement.setString(1, name);
                     preparedStatement.setString(2, description);
                     preparedStatement.setString(3, likes_dislikes);
-                    preparedStatement.setString(4, userId);
+                    preparedStatement.setString(4, userImage);
+                    preparedStatement.setString(5, userId);
                     Log.d("UPDATE", "userId already exists");
                     return preparedStatement.executeUpdate();
                 }
@@ -223,6 +225,7 @@ public class MyApplicationClass extends Application {
                 String descriptionR = getProfileResult.getString(4);
                 String eventsR = getProfileResult.getString(5);
                 String likes_dislikes_R = getProfileResult.getString(6);
+                String userImageUri = getProfileResult.getString(7);
 
 
                 profileInfo.add(0, String.valueOf(userIdR));
@@ -231,6 +234,7 @@ public class MyApplicationClass extends Application {
                 profileInfo.add(3, descriptionR);
                 profileInfo.add(4, eventsR);
                 profileInfo.add(5, likes_dislikes_R);
+                profileInfo.add(6, userImageUri);
 
             } catch (SQLException e){
                 e.printStackTrace();

@@ -62,6 +62,7 @@ public class EditProfileActivity extends AppCompatActivity {
     String description;
     String events;
     String likes_dislikes;
+    String userImageUri;
 
     double userLongitude;
     double userLatitude;
@@ -81,6 +82,7 @@ public class EditProfileActivity extends AppCompatActivity {
         likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
         userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
         userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
+        userImageUri = thisIntent.getStringExtra("userImageUri");
 
         Fragment fragment = new Fragment();
             Bundle bundle = new Bundle();
@@ -92,6 +94,7 @@ public class EditProfileActivity extends AppCompatActivity {
             bundle.putString("likes_dislikes", likes_dislikes);
             bundle.putDouble("userLongitude", userLongitude);
             bundle.putDouble("userLatitude", userLatitude);
+            bundle.putString("userImageUri", userImageUri);
         fragment.setArguments(bundle);
 
 

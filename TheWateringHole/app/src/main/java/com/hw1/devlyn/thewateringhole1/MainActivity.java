@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private String eventNameInfo;
     private String numParticipatingInfo;
     private String eventDescriptionInfo;
+    private String userImageUri;
 
     /*These fields are used for the navigation slide out menu.*/
     private DrawerLayout mDrawerLayout;
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         eventNameInfo = thisIntent.getStringExtra("eventName");
         numParticipatingInfo = thisIntent.getStringExtra("numParticipating");
         eventDescriptionInfo = thisIntent.getStringExtra("eventDescription");
+        userImageUri = thisIntent.getStringExtra("userImageUri");
 
 
         Fragment fragment = new Fragment();
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putString("eventName", eventNameInfo);
                 bundle.putString("numParticipating", numParticipatingInfo);
                 bundle.putString("eventDescription", eventDescriptionInfo);
+                bundle.putString("userImageUri", userImageUri);
                 fragment.setArguments(bundle);
 
 
@@ -254,6 +257,7 @@ public class MainActivity extends AppCompatActivity {
                     FindPeople.putExtra("likes_dislikes", likes_dislikes);
                     FindPeople.putExtra("userLongitude", userLongitude);
                     FindPeople.putExtra("userLatitude", userLatitude);
+                    FindPeople.putExtra("userImageUri", userImageUri);
 
                     android.app.Fragment FindPeopleFrag = new android.app.Fragment();
                     Bundle FindPeopleBundle = new Bundle();
@@ -265,6 +269,7 @@ public class MainActivity extends AppCompatActivity {
                     FindPeopleBundle.putString("likes_dislikes", likes_dislikes);
                     FindPeopleBundle.putDouble("userLongitude", userLongitude);
                     FindPeopleBundle.putDouble("userLatitude", userLatitude);
+                    FindPeopleBundle.putString("userImageUri", userImageUri);
                     FindPeopleFrag.setArguments(FindPeopleBundle);
 
                     startActivity(FindPeople);

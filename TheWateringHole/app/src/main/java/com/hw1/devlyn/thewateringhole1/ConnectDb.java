@@ -95,7 +95,7 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
 
             } else if (strings[0] == "save") {
                 MyApplicationClass.MySQLAccess.readDataBase();
-                int saveResult = dao.userProfile(strings[1], strings[2], strings[3], strings[4]);
+                int saveResult = dao.userProfile(strings[1], strings[2], strings[3], strings[4], strings[5]);
                 if (saveResult != -1) {
                     Log.d("ConnectDb", "Save successful");
                     save = saveResult;

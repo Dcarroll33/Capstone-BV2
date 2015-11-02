@@ -33,6 +33,7 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
     private String eventNameInfo;
     private String numParticipatingInfo;
     private String eventDescriptionInfo;
+    private String userImageUri;
     /*Fields for the buttons to be used in this class.*/
     Button Events;
     Button Friends;
@@ -78,6 +79,7 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
         eventNameInfo = args.getString("eventName");
         numParticipatingInfo = args.getString("numParticipating", numParticipatingInfo);
         eventDescriptionInfo = args.getString("eventDescription");
+        userImageUri = args.getString("userImageUri");
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -191,6 +193,7 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             friends.putExtra("likes_dislikes", likes_dislikes);
             friends.putExtra("userLongitude", userLongitude);
             friends.putExtra("userLatitude", userLatitude);
+            friends.putExtra("userImageUri", userImageUri);
 
             Fragment fragment = new Fragment();
             Bundle bundle = new Bundle();
@@ -202,6 +205,7 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             bundle.putString("likes_dislikes", likes_dislikes);
             bundle.putDouble("userLongitude", userLongitude);
             bundle.putDouble("userLatitude", userLatitude);
+            bundle.putString("userImageUri", userImageUri);
             fragment.setArguments(bundle);
 
 
@@ -217,6 +221,7 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             profile.putExtra("likes_dislikes", likes_dislikes);
             profile.putExtra("userLongitude", userLongitude);
             profile.putExtra("userLatitude", userLatitude);
+            profile.putExtra("userImageUri", userImageUri);
 
             Fragment fragment = new Fragment();
             Bundle bundle = new Bundle();
@@ -228,6 +233,7 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             bundle.putString("likes_dislikes", likes_dislikes);
             bundle.putDouble("userLongitude", userLongitude);
             bundle.putDouble("userLatitude", userLatitude);
+            bundle.putString("userImageUri", userImageUri);
             fragment.setArguments(bundle);
 
 
