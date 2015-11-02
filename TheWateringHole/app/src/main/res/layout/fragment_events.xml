@@ -17,7 +17,7 @@
         android:textColor="#f4be2a" />
 
     <Button
-        android:id="@+id/locate_events_btn"
+        android:id="@+id/save_btn"
 
         android:text="@string/SaveEvent"
         android:textColor="#fdfdfc"
@@ -66,8 +66,8 @@
         android:id="@+id/numParticipants"
         android:hint="Number of Participants"
         android:layout_below="@+id/eventDescription"
-        android:layout_alignLeft="@+id/locate_events_btn"
-        android:layout_alignStart="@+id/locate_events_btn"
+        android:layout_alignLeft="@+id/save_btn"
+        android:layout_alignStart="@+id/save_btn"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:textColor="#f4be2a"

@@ -26,17 +26,13 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
 
     private int eventSave = -1;
 
-    private String idUserProfile = null;
-
     private String description = null;
-
-    private String likes_dislikes = null;
 
     public ArrayList<String> load = null;
 
     public ArrayList<Double> coords = null;
 
-    private ArrayList<String> getProfileInfo = null;
+    private ArrayList<String> userEventInfo = null;
 
 
     /*private ArrayList<String> getUserProfileResult =  null;
@@ -79,10 +75,6 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                     ArrayList<String> profileInfoResult = dao.getUserProfileInfo(userId);
                     if (profileInfoResult != null){
                         Log.d("ConnectDb", "User info passed! Desc:" + profileInfoResult.get(3) + "Like:" + profileInfoResult.get(5));
-                        /*profileInfoResult.add(1, profileInfoResult.get(1));
-                        profileInfoResult.add(2, profileInfoResult.get(2));
-                        profileInfoResult.add(3, description);
-                        profileInfoResult.add(4, likes_dislikes);*/
                         load = profileInfoResult;
                     }
                     ArrayList<Double> userCoordsResult = dao.getUserCoords(userId);
@@ -90,6 +82,10 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                         Log.d("ConnectDb", "userLongitude" + userCoordsResult.get(1) + "userLatitude" + userCoordsResult.get(2));
 
                         coords = userCoordsResult;
+                    }
+                    ArrayList<String> userEventInfoResult = dao.userEventInfo(userId);
+                    if (userEventInfoResult != null){
+                        userEventInfo = userEventInfoResult;
                     }
                     return 0;
                 } else {
@@ -109,7 +105,7 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                 }
             } else if (strings[0] == "eventSave") {
                 MyApplicationClass.MySQLAccess.readDataBase();
-                int eventResult = dao.userEvents(strings[1], strings[2], strings[3]);
+                int eventResult = dao.eventInfo(strings[1], strings[2], strings[3], strings[4]);
                 if (eventResult != -1) {
                     Log.d("ConnectDb", "Event saved");
                     eventSave = eventResult;
@@ -125,8 +121,6 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                     getUserProfileResult.get(1);
                     getUserProfileResult.get(2);
                     getUserProfileResult.get(3);
-                    //getUserProfileResult.get(4);
-                    //getUserProfileResult.get(5);
                     load = getUserProfileResult;
                     return 0;
                 } else {
@@ -159,6 +153,10 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
         return load;
     }
 
+    public ArrayList<String> userEventInfo() {
+       return userEventInfo;
+    }
+
     public int getSave(){
         return save;
     }
@@ -166,4 +164,5 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
     public int getEventSave(){
         return eventSave;
     }
+
 }

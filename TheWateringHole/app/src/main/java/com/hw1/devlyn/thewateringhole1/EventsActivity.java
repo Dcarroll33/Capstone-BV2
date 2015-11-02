@@ -3,6 +3,7 @@ package com.hw1.devlyn.thewateringhole1;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -24,12 +25,17 @@ import info.info.wateringhole.slidingmenu.model.NavDrawerItem;
 
 public class EventsActivity extends AppCompatActivity {
 
-    String currentUser;
-    String idUserProfile;
-    String description;
-    String likes_dislikes;
-    String userName;
-    String events;
+    private String currentUser;
+    private String idUserProfile;
+    private String description;
+    private String likes_dislikes;
+    private String userName;
+    private String events;
+    private String eventDescriptionInfo;
+    private String numParticipatingInfo;
+    private String eventNameInfo;
+    private double userLongitude;
+    private double userLatitude;
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -63,6 +69,26 @@ public class EventsActivity extends AppCompatActivity {
         description = thisIntent.getStringExtra("description");
         events = thisIntent.getStringExtra("events");
         likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
+        userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
+        userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
+        eventNameInfo = thisIntent.getStringExtra("eventName");
+        numParticipatingInfo = thisIntent.getStringExtra("numParticipating");
+        eventDescriptionInfo = thisIntent.getStringExtra("eventDescription");
+
+        Fragment fragment = new Fragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("currentUser", currentUser);
+            bundle.putString("idUserProfile", idUserProfile);
+            bundle.putString("userName", userName);
+            bundle.putString("description", description);
+            bundle.putString("events", events);
+            bundle.putString("likes_dislikes", likes_dislikes);
+            bundle.putDouble("userLongitude", userLongitude);
+            bundle.putDouble("userLatitude", userLatitude);
+            bundle.putString("eventName", eventNameInfo);
+            bundle.putString("numParticipating", numParticipatingInfo);
+            bundle.putString("eventDescription", eventDescriptionInfo);
+        fragment.setArguments(bundle);
 
         mTitle = mDrawerTitle = getTitle();
 
@@ -240,6 +266,8 @@ public class EventsActivity extends AppCompatActivity {
                     FindPeople.putExtra("description", "" + description);
                     FindPeople.putExtra("events", events);
                     FindPeople.putExtra("likes_dislikes", likes_dislikes);
+                    FindPeople.putExtra("userLongitude", userLongitude);
+                    FindPeople.putExtra("userLatitude", userLatitude);
 
                     android.app.Fragment FindPeopleFrag = new android.app.Fragment();
                     Bundle FindPeopleBundle = new Bundle();
@@ -249,6 +277,8 @@ public class EventsActivity extends AppCompatActivity {
                     FindPeopleBundle.putString("description", description);
                     FindPeopleBundle.putString("events", events);
                     FindPeopleBundle.putString("likes_dislikes", likes_dislikes);
+                    FindPeopleBundle.putDouble("userLongitude", userLongitude);
+                    FindPeopleBundle.putDouble("userLatitude", userLatitude);
                     FindPeopleFrag.setArguments(FindPeopleBundle);
 
                     startActivity(FindPeople);

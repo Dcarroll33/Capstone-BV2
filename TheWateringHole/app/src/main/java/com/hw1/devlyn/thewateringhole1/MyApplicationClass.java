@@ -76,15 +76,15 @@ public class MyApplicationClass extends Application {
                         ResultSet userResult =  preparedStatement.executeQuery();
                     if (!userResult.next()) {
                          return -1;
-                    }else{
+                    }else {
                         Log.d("CheckPoint", "UserResult" + userResult.getInt("idUsers"));
-                return userResult.getInt("idUsers");
-            }
+                        return userResult.getInt("idUsers");
+                    }
             } catch (SQLException e){
                 e.printStackTrace();
-                }
-                return -1;
             }
+            return -1;
+        }
 
         public int userProfile(String userId, String name, String description, String likes_dislikes){
             try {
@@ -144,13 +144,74 @@ public class MyApplicationClass extends Application {
             return userCoords;
         }
 
+        public int eventInfo(String userId, String eventName, String numParticipating, String eventDescription){
+            try {
+                preparedStatement = connect
+                        .prepareStatement("select * from events where userId=?");
+                preparedStatement.setString(1, userId);
+                Log.d("lol", "About to execute prepstatement1");
+                ResultSet eventInfoResult =  preparedStatement.executeQuery();
+                Log.d("SELECT", "inside select");
+                if (!eventInfoResult.next()) {
+
+                    preparedStatement = connect
+                            .prepareStatement("insert into events (eventName, numParticipating, description) values (?,?,?)");
+                    preparedStatement.setString(1, eventName);
+                    preparedStatement.setString(2, numParticipating);
+                    preparedStatement.setString(3, eventDescription);
+                    Log.d("SQLConnect", "added to DB");
+                    return preparedStatement.executeUpdate();
+                } else {
+                    preparedStatement = connect
+                            .prepareStatement("update events set eventName=?, numParticipating=?, description=? where userId=?");
+
+                    preparedStatement.setString(1, eventName);
+                    preparedStatement.setString(2, numParticipating);
+                    preparedStatement.setString(3, eventDescription);
+                    preparedStatement.setString(4, userId);
+                    //Log.d("UPDATE", "userId already exists");
+                    return preparedStatement.executeUpdate();
+                }
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+            return -1;
+        }
+
+        public ArrayList<String> userEventInfo(int userId){
+            ArrayList<String> eventInfo = new ArrayList<>();
+            try {
+                preparedStatement = connect
+                        .prepareStatement("select * from events where userId=?;");
+                preparedStatement.setInt(1, userId);
+                ResultSet getEventResult =  preparedStatement.executeQuery();
+                getEventResult.next();
+
+                int eventUserIdR = getEventResult.getInt(1);
+                int idevents = getEventResult.getInt(2);
+                String eventNameR = getEventResult.getString(3);
+                int numParticipatingR = getEventResult.getInt(6);
+                String descriptionR = getEventResult.getString(7);
+
+
+                eventInfo.add(0, String.valueOf(eventUserIdR));
+                eventInfo.add(1, String.valueOf(idevents));
+                eventInfo.add(2, eventNameR);
+                eventInfo.add(3, String.valueOf(numParticipatingR));
+                eventInfo.add(4, descriptionR);
+
+            } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return eventInfo;
+        }
+
         public ArrayList<String> getUserProfileInfo(int userId){
             ArrayList<String> profileInfo = new ArrayList<>();
             try {
                 preparedStatement = connect
                         .prepareStatement("select * from userProfile where userId=?;"/*and userId=? and description=? and likes_dislikes=?"*/);
                 preparedStatement.setInt(1, userId);
-                //Log.d("MyApplicationClass", "idUserProfile" + profileInfo.set(1, String.valueOf(userId)));
                 ResultSet getProfileResult =  preparedStatement.executeQuery();
                 getProfileResult.next();
 
@@ -172,44 +233,11 @@ public class MyApplicationClass extends Application {
                 profileInfo.add(5, likes_dislikes_R);
 
             } catch (SQLException e){
-            e.printStackTrace();
-        }
-        return profileInfo;
-        }
-
-        public int userEvents(String eventName, String eventDescription, String numParticipating){
-            try {
-                Log.d("userEvent", "eventName: " + eventName + " description: " + eventDescription);
-                preparedStatement = connect
-                        .prepareStatement("select * from events where eventName =?");
-                preparedStatement.setString(1, eventName);
-                Log.d("lol", "About to execute prepstatement1");
-                ResultSet userProfileResult =  preparedStatement.executeQuery();
-                Log.d("SELECT", "inside select");
-                if (!userProfileResult.next()) {
-
-                    preparedStatement = connect
-                            .prepareStatement("insert into events (eventName, description, numParticipating) values (?,?,?)");
-                    preparedStatement.setString(1, eventName);
-                    preparedStatement.setString(2, eventDescription);
-                    preparedStatement.setString(3, numParticipating);
-                    Log.d("SQLConnect", "added to DB");
-                    return preparedStatement.executeUpdate();
-                } else {
-                    preparedStatement = connect
-                            .prepareStatement("update events set eventName=?, description=?, numParticipating=? where (select * from users where idusers=?)");
-                    preparedStatement.setString(1, eventName);
-                    preparedStatement.setString(2, eventDescription);
-                    preparedStatement.setString(3, numParticipating);
-                    Log.d("UPDATE", "userId already exists");
-                    return preparedStatement.executeUpdate();
-                }
-            } catch (SQLException e){
                 e.printStackTrace();
             }
-            return -1;
-
+            return profileInfo;
         }
+
         // Closes the resultSet
         private static void close() {
             try {

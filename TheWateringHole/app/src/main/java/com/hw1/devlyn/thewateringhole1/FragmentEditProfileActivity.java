@@ -25,6 +25,9 @@ import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -51,20 +54,20 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
 
     private ImageView profileImage;
 
-    String currentUser;
-    String idUserProfile;
-    String userName;
-    String description;
-    String events;
-    String likes_dislikes;
-    String name;
+    private String currentUser;
+    private String idUserProfile;
+    private String userName;
+    private String description;
+    private String events;
+    private String likes_dislikes;
+    private double userLongitude;
+    private double userLatitude;
 
     Button Save;
     Button UploadImage;
     Button Load;
 
     ConnectDb conDb = new ConnectDb();
-    //ConnectDb conDb2 = new ConnectDb();
 
     private static final int REQUEST_CODE = 1;
     private Bitmap bitmap;
@@ -104,6 +107,8 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         description = args.getString("description", description);
         events = args.getString("events", events);
         likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
+        userLongitude = args.getDouble("userLongitude");
+        userLatitude = args.getDouble("userLatitude");
 
         MyApplicationClass.MySQLAccess dao = ConnectDb.getDao();
         if (getArguments() != null) {
@@ -197,10 +202,10 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
             }
             int save = conDb.getSave();
             if (save > -1) {
-                Log.d("EDIT PROFILE", "Sent: " + description + ", " + likes_dislikes + "," + name);
+                Log.d("EDIT PROFILE", "Sent: " + description + ", " + likes_dislikes);
                 Toast.makeText(getActivity(), "Updated Profile!", Toast.LENGTH_SHORT).show();
             } else if (save == -1) {
-                Log.d("Description", "Sent: " + description + ", " + "Likes/Dislikes " + likes_dislikes + "," + name);
+                Log.d("Description", "Sent: " + description + ", " + "Likes/Dislikes " + likes_dislikes);
                 Toast.makeText(getActivity(), "Save Unsuccessful", Toast.LENGTH_SHORT).show();
 
             }
@@ -210,12 +215,6 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
             intent.setType("image/jpeg");
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-            //Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            //startActivityForResult(i, PICK_IMAGE_REQUEST);
-            /*Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_PICK);
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);*/
         }
     }
 

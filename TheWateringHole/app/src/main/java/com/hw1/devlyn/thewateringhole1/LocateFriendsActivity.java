@@ -25,14 +25,14 @@ import info.info.wateringhole.slidingmenu.model.NavDrawerItem;
 
 public class LocateFriendsActivity extends AppCompatActivity {
 
-    String currentUser;
-    String idUserProfile;
-    String description;
-    String likes_dislikes;
-    String userName;
-    String events;
-    double userLongitude;
-    double userLatitude;
+    private String currentUser;
+    private String idUserProfile;
+    private String description;
+    private String likes_dislikes;
+    private String userName;
+    private String events;
+    private double userLongitude;
+    private double userLatitude;
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;

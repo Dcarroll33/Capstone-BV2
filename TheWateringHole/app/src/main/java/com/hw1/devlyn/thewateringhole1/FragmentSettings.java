@@ -31,6 +31,8 @@ public class FragmentSettings extends Fragment implements  View.OnClickListener 
     private String description;
     private String events;
     private String likes_dislikes;
+    private double userLongitude;
+    private double userLatitude;
 
     /**
      * Method to create a new instance of
@@ -64,6 +66,8 @@ public class FragmentSettings extends Fragment implements  View.OnClickListener 
         description = args.getString("description", description);
         events = args.getString("events", events);
         likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
+        userLongitude = args.getDouble("userLongitude", userLongitude);
+        userLatitude = args.getDouble("userLatitude", userLatitude);
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -79,7 +83,7 @@ public class FragmentSettings extends Fragment implements  View.OnClickListener 
 
         getButtons(rootView);
 
-        LocateFriends = (Button) rootView.findViewById(R.id.locate_events_btn);
+        //LocateFriends = (Button) rootView.findViewById(R.id.locate_events_btn);
 
         return rootView;
     }

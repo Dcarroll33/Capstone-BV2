@@ -25,19 +25,19 @@ import info.info.wateringhole.slidingmenu.model.NavDrawerItem;
 import static com.hw1.devlyn.thewateringhole1.R.*;
 
 public class MainActivity extends AppCompatActivity {
-    /*Fields for the buttons to be used in this class.*/
-    Button Events;
-    Button Friends;
-    Button Profile;
-    Button Settings;
-    String currentUser;
-    String idUserProfile;
-    String description;
-    String likes_dislikes;
-    String userName;
-    String events;
-    double userLongitude;
-    double userLatitude;
+
+    /*Fields for the data that is being passed in from the bundle.*/
+    private String currentUser;
+    private String idUserProfile;
+    private String description;
+    private String likes_dislikes;
+    private String userName;
+    private String events;
+    private double userLongitude;
+    private double userLatitude;
+    private String eventNameInfo;
+    private String numParticipatingInfo;
+    private String eventDescriptionInfo;
 
     /*These fields are used for the navigation slide out menu.*/
     private DrawerLayout mDrawerLayout;
@@ -73,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
         likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
         userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
         userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
+        eventNameInfo = thisIntent.getStringExtra("eventName");
+        numParticipatingInfo = thisIntent.getStringExtra("numParticipating");
+        eventDescriptionInfo = thisIntent.getStringExtra("eventDescription");
 
 
         Fragment fragment = new Fragment();
@@ -85,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putString("likes_dislikes", likes_dislikes);
                 bundle.putDouble("userLongitude", userLongitude);
                 bundle.putDouble("userLatitude", userLatitude);
+                bundle.putString("eventName", eventNameInfo);
+                bundle.putString("numParticipating", numParticipatingInfo);
+                bundle.putString("eventDescription", eventDescriptionInfo);
                 fragment.setArguments(bundle);
 
 
@@ -324,6 +330,8 @@ public class MainActivity extends AppCompatActivity {
                     EditProfile.putExtra("description", "" + description);
                     EditProfile.putExtra("events", events);
                     EditProfile.putExtra("likes_dislikes", likes_dislikes);
+                    EditProfile.putExtra("userLongitude", userLongitude);
+                    EditProfile.putExtra("userLatitude", userLatitude);
 
                     android.app.Fragment EditProfileFrag = new android.app.Fragment();
                     Bundle EditProfileBundle = new Bundle();
@@ -333,6 +341,8 @@ public class MainActivity extends AppCompatActivity {
                     EditProfileBundle.putString("description", description);
                     EditProfileBundle.putString("events", events);
                     EditProfileBundle.putString("likes_dislikes", likes_dislikes);
+                    EditProfileBundle.putDouble("userLongitude", userLongitude);
+                    EditProfileBundle.putDouble("userLatitude", userLatitude);
                     EditProfileFrag.setArguments(EditProfileBundle);
 
                     startActivity(EditProfile);

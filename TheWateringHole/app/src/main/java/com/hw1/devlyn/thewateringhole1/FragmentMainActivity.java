@@ -28,8 +28,11 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
     private String description;
     private String events;
     private String likes_dislikes;
-    private Double userLongitude;
-    private Double userLatitude;
+    private double userLongitude;
+    private double userLatitude;
+    private String eventNameInfo;
+    private String numParticipatingInfo;
+    private String eventDescriptionInfo;
     /*Fields for the buttons to be used in this class.*/
     Button Events;
     Button Friends;
@@ -72,6 +75,9 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
         likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
         userLongitude = args.getDouble("userLongitude");
         userLatitude = args.getDouble("userLatitude");
+        eventNameInfo = args.getString("eventName");
+        numParticipatingInfo = args.getString("numParticipating", numParticipatingInfo);
+        eventDescriptionInfo = args.getString("eventDescription");
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -150,6 +156,11 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             eventsInfo.putExtra("description", "" + description);
             eventsInfo.putExtra("events", events);
             eventsInfo.putExtra("likes_dislikes", likes_dislikes);
+            eventsInfo.putExtra("userLongitude", userLongitude);
+            eventsInfo.putExtra("userLatitude", userLatitude);
+            eventsInfo.putExtra("eventName", eventNameInfo);
+            eventsInfo.putExtra("numParticipating", numParticipatingInfo);
+            eventsInfo.putExtra("eventDescription", eventDescriptionInfo);
 
             Fragment fragment = new Fragment();
             Bundle bundle = new Bundle();
@@ -159,6 +170,11 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             bundle.putString("description", description);
             bundle.putString("events", events);
             bundle.putString("likes_dislikes", likes_dislikes);
+            bundle.putDouble("userLongitude", userLongitude);
+            bundle.putDouble("userLatitude", userLatitude);
+            bundle.putString("eventName", eventNameInfo);
+            bundle.putString("numParticipating", numParticipatingInfo);
+            bundle.putString("eventDescription", eventDescriptionInfo);
             fragment.setArguments(bundle);
 
             Button b = (Button) view;
@@ -199,6 +215,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             profile.putExtra("description", "" + description);
             profile.putExtra("events", events);
             profile.putExtra("likes_dislikes", likes_dislikes);
+            profile.putExtra("userLongitude", userLongitude);
+            profile.putExtra("userLatitude", userLatitude);
 
             Fragment fragment = new Fragment();
             Bundle bundle = new Bundle();
@@ -208,6 +226,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             bundle.putString("description", description);
             bundle.putString("events", events);
             bundle.putString("likes_dislikes", likes_dislikes);
+            bundle.putDouble("userLongitude", userLongitude);
+            bundle.putDouble("userLatitude", userLatitude);
             fragment.setArguments(bundle);
 
 
@@ -222,6 +242,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             settings.putExtra("description", "" + description);
             settings.putExtra("events", events);
             settings.putExtra("likes_dislikes", likes_dislikes);
+            settings.putExtra("userLongitude", userLongitude);
+            settings.putExtra("userLatitude", userLatitude);
 
             Fragment fragment = new Fragment();
             Bundle bundle = new Bundle();
@@ -231,6 +253,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             bundle.putString("description", description);
             bundle.putString("events", events);
             bundle.putString("likes_dislikes", likes_dislikes);
+            bundle.putDouble("userLongitude", userLongitude);
+            bundle.putDouble("userLatitude", userLatitude);
             fragment.setArguments(bundle);
 
             Button b = (Button) view;

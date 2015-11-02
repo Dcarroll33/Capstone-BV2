@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 
@@ -33,9 +34,14 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
     private String description;
     private String events;
     private String likes_dislikes;
+    private String eventNameInfo;
+    private String numParticipatingInfo;
+    private String eventDescriptionInfo;
+    private double userLongitude;
+    private double userLatitude;
 
     /*Fields for the buttons to be used in this class.*/
-    Button LocateEvents;
+    Button saveEvent;
     EditText eventDescription;
     EditText eventTitle;
     EditText numParticipants;
@@ -74,6 +80,11 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
         description = args.getString("description", description);
         events = args.getString("events", events);
         likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
+        eventNameInfo= args.getString("eventName", eventNameInfo);
+        numParticipatingInfo = args.getString("numParticipating", numParticipatingInfo);
+        eventDescriptionInfo = args.getString("eventDescription", eventDescriptionInfo);
+        userLongitude = args.getDouble("userLongitude", userLongitude);
+        userLatitude = args.getDouble("userLatitude", userLatitude);
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -89,10 +100,14 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
 
         getButtons(rootView);
 
-        LocateEvents = (Button) rootView.findViewById(R.id.locate_events_btn);
+        saveEvent = (Button) rootView.findViewById(R.id.save_btn);
         eventDescription = (EditText) rootView.findViewById(R.id.eventDescription);
         eventTitle = (EditText) rootView.findViewById(R.id.eventName);
         numParticipants = (EditText) rootView.findViewById(R.id.numParticipants);
+
+        eventTitle.setText(eventNameInfo);
+        eventDescription.setText(eventDescriptionInfo);
+        numParticipants.setText(numParticipatingInfo);
 
         return rootView;
     }
@@ -136,20 +151,20 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
         clicked depending on their relationship the screen will switch to the appropriate screen.*/
     @Override
     public void onClick(View view) {
-        if (view == LocateEvents) {
+        if (view == saveEvent) {
             /*Intent events = new Intent(getActivity(), LocateEventsActivity.class);
 
             Button b = (Button) view;
             this.startActivity(events);*/
-            description = eventDescription.getText().toString();
             title = eventTitle.getText().toString();
             numPeople = numParticipants.getText().toString();
+            description = eventDescription.getText().toString();
 
             /*if (description != null && likes_dislikes != null){*/
 
             ConnectDb conDb = new ConnectDb();
             try {
-                String[] params = {"eventSave" /*,String.valueOf(conDb.getUserId())*/, title, description, numPeople};
+                String[] params = {"eventSave", currentUser, title, numPeople, description};
                 conDb.execute(params).get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -158,10 +173,8 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
             }
             int eventSave = conDb.getEventSave();
             if (eventSave > -1) {
-                Log.d("EDIT PROFILE", "Sent: " + description + "name" + title + "numPeople" + numPeople);
                 Toast.makeText(getActivity(), "Event Saved!", Toast.LENGTH_SHORT).show();
             } else if (eventSave == -1) {
-                Log.d("Description", "Sent: " + description + "name" + title + "numPeople" + numPeople);
                 Toast.makeText(getActivity(), "Save Unsuccessful", Toast.LENGTH_SHORT).show();
 
             }

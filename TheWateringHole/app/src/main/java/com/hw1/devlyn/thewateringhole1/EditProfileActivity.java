@@ -63,6 +63,9 @@ public class EditProfileActivity extends AppCompatActivity {
     String events;
     String likes_dislikes;
 
+    double userLongitude;
+    double userLatitude;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +79,20 @@ public class EditProfileActivity extends AppCompatActivity {
         description = thisIntent.getStringExtra("description");
         events = thisIntent.getStringExtra("events");
         likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
+        userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
+        userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
+
+        Fragment fragment = new Fragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("currentUser", currentUser);
+            bundle.putString("idUserProfile", idUserProfile);
+            bundle.putString("userName", userName);
+            bundle.putString("description", description);
+            bundle.putString("events", events);
+            bundle.putString("likes_dislikes", likes_dislikes);
+            bundle.putDouble("userLongitude", userLongitude);
+            bundle.putDouble("userLatitude", userLatitude);
+        fragment.setArguments(bundle);
 
 
         Description = (EditText) this.findViewById(R.id.Description);
@@ -266,6 +283,8 @@ public class EditProfileActivity extends AppCompatActivity {
                     FindPeople.putExtra("description", "" + description);
                     FindPeople.putExtra("events", events);
                     FindPeople.putExtra("likes_dislikes", likes_dislikes);
+                    FindPeople.putExtra("userLongitude", userLongitude);
+                    FindPeople.putExtra("userLatitude", userLatitude);
 
                     android.app.Fragment FindPeopleFrag = new android.app.Fragment();
                     Bundle FindPeopleBundle = new Bundle();
@@ -275,6 +294,8 @@ public class EditProfileActivity extends AppCompatActivity {
                     FindPeopleBundle.putString("description", description);
                     FindPeopleBundle.putString("events", events);
                     FindPeopleBundle.putString("likes_dislikes", likes_dislikes);
+                    FindPeopleBundle.putDouble("userLongitude", userLongitude);
+                    FindPeopleBundle.putDouble("userLatitude", userLatitude);
                     FindPeopleFrag.setArguments(FindPeopleBundle);
 
                     startActivity(FindPeople);
