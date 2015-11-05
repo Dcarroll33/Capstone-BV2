@@ -28,62 +28,91 @@ import java.util.ArrayList;
 import info.info.wateringhole.slidingmenu.adapter.NavDrawerListAdapter;
 import info.info.wateringhole.slidingmenu.model.NavDrawerItem;
 
-
+/*This is the EditProfileActivity that is the base activity for the FragmentEditProfileActivity. The
+    navigation drawer for this activity is constructed within this class, as well as the fragment and
+    bundle that pass the information to the FragmentEditProfileActivity.
+ */
 public class EditProfileActivity extends AppCompatActivity {
+    /*Field for the navigation drawer layout.*/
     private DrawerLayout mDrawerLayout;
+    /*Field for the listView that displays the items within the navigation drawer.*/
     private ListView mDrawerList;
+    /*Field for the navigation drawer button to open and close the navigation drawer.*/
     private ActionBarDrawerToggle mDrawerToggle;
 
-    // nav drawer title
+    /*Field for the navigation drawer title.*/
     private CharSequence mDrawerTitle;
 
-    // used to store app title
+    /*Field to store the app title.*/
     private CharSequence mTitle;
 
-    // slide menu items
+    /*Field for navigation drawer menu items.*/
     private String[] navMenuTitles;
+
+    /*Field for the icons that are used for the menu items.*/
     private TypedArray navMenuIcons;
 
+    /*Field for the navigation drawer items that are in an ArrayList.*/
     private ArrayList<NavDrawerItem> navDrawerItems;
+
+    /*Field for the navigation drawer adapter.*/
     private NavDrawerListAdapter adapter;
 
+    /*Field for the REQUEST_CODE needed to access the picture gallery.*/
     private static final int REQUEST_CODE = 1;
+
+    /*Field for the bitmap that is needed to grab the image data from the picture gallery.*/
     private Bitmap bitmap;
 
-    EditText Description;
-    EditText Likes_Dislikes;
-    EditText UserName;
+    /*EditTexts that are within the EditProfileActivity layout that display description,
+        likes/dislikes and username.
+     */
+    private EditText Description;
+    private EditText Likes_Dislikes;
+    private EditText UserName;
 
-    Button Save;
+    /*Buttons that are within the EditProfileActivity layout.*/
+    private Button Save;
 
-    String currentUser;
-    String idUserProfile;
-    String userName;
-    String description;
-    String events;
-    String likes_dislikes;
-    String userImageUri;
+    /*Strings that are needed to assign the values from the bundle that is being passed to the
+        EditProfileActivity.
+     */
+    private String currentUser;
+    private String idUserProfile;
+    private String userName;
+    private String description;
+    private String events;
+    private String likes_dislikes;
+    private String userImageUri;
 
-    double userLongitude;
-    double userLatitude;
-
+    /*Doubles that are needed for the user's longitude and latitude.*/
+    private double userLongitude;
+    private double userLatitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+
+        /*This is an intent used to receive the information that is being passed from an intent in
+            FragmentMainActivity to this activity.
+         */
         Intent thisIntent = getIntent();
         Log.d("MainAct", "Inside editProfile");
-        currentUser = thisIntent.getStringExtra("userId");
-        idUserProfile = thisIntent.getStringExtra("idUserProfile");
-        userName = thisIntent.getStringExtra("userName");
-        description = thisIntent.getStringExtra("description");
-        events = thisIntent.getStringExtra("events");
-        likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
-        userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
-        userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
-        userImageUri = thisIntent.getStringExtra("userImageUri");
+            currentUser = thisIntent.getStringExtra("userId");
+            idUserProfile = thisIntent.getStringExtra("idUserProfile");
+            userName = thisIntent.getStringExtra("userName");
+            description = thisIntent.getStringExtra("description");
+            events = thisIntent.getStringExtra("events");
+            likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
+            userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
+            userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
+            userImageUri = thisIntent.getStringExtra("userImageUri");
 
+        /*This is creating a Fragment object where a bundle is created to store the values of the
+            data. This fragment can then be accessed from within FragmentEditProfile to retrieve the
+            data and use it throughout the activity.
+         */
         Fragment fragment = new Fragment();
             Bundle bundle = new Bundle();
             bundle.putString("currentUser", currentUser);
@@ -97,7 +126,9 @@ public class EditProfileActivity extends AppCompatActivity {
             bundle.putString("userImageUri", userImageUri);
         fragment.setArguments(bundle);
 
-
+        /*This is where the EditTexts that are within the FragmentEditProfile are located and
+            assigned to the the fields that were set up earlier.
+          */
         Description = (EditText) this.findViewById(R.id.Description);
         Likes_Dislikes = (EditText) this.findViewById(R.id.Likes_Dislikes);
         UserName = (EditText) this.findViewById(R.id.Username);
