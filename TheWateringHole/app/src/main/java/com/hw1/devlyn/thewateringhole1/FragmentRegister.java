@@ -16,7 +16,8 @@ import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
 
-
+/*FragmentRegister is used to allow the user to interact with the buttons and editText's that are
+  within the fragment. This is used alongside the registerActivity.*/
 public class FragmentRegister extends Fragment implements  View.OnClickListener {
     // the fragment initialization parameters
     private static final String ARG_PARAM1 = "param1";

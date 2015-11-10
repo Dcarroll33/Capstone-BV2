@@ -30,7 +30,7 @@ public class FragmentFriends extends Fragment implements  View.OnClickListener {
     private String events;
     private String likes_dislikes;
 
-    /*Fields for the buttons to be used in this class.*/
+    /*Field for the button to be used in this class.*/
     Button LocateFriends;
 
     /**

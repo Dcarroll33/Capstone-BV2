@@ -34,21 +34,6 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
 
     private ArrayList<String> userEventInfo = null;
 
-
-    /*private ArrayList<String> getUserProfileResult =  null;
-    private String likes_dislikes = null;*/
-
-    private HttpClient httpclient;
-
-    private HttpPost httppost;
-
-    private ArrayList<NameValuePair> nameValuePairs;
-
-    private HttpResponse response;
-
-    private Bitmap bitmap;
-
-
     public static MyApplicationClass.MySQLAccess dao = new MyApplicationClass.MySQLAccess();
 
     public static MyApplicationClass.MySQLAccess getDao() {

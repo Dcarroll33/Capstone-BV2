@@ -32,6 +32,10 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Created by drcar on 9/20/2015.
+ * FragmentEditProfileActivity is the fragment that is called from EditProfileActivity. This
+ * fragment allows for the buttons and editTexts that the user interacts with to be accessible
+ * alongside the navigation drawer. The fragment implements View.OnClickListener to detect button
+ * clicks.
  */
 public class FragmentEditProfileActivity extends Fragment implements View.OnClickListener {
 
@@ -46,7 +50,7 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
 
     private OnFragmentInteractionListener mListener;
 
-    /*Fields for the buttons to be used in this class.*/
+    /*Fields for the editTexts to be used in this class.*/
 
     EditText Description;
     EditText Likes_Dislikes;
@@ -54,6 +58,7 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
 
     private ImageView profileImage;
 
+    /*Fields for the items that are being passed in through the bundle.*/
     private String currentUser;
     private String idUserProfile;
     private String userName;
@@ -67,14 +72,16 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
     private double userLongitude;
     private double userLatitude;
 
+    /*Fields for the buttons that are in the fragment.*/
     Button Save;
     Button UploadImage;
-    Button Load;
+    //Button Load;
 
+    /*Initializing a new ConnectDb() object to a ConnectDb type variable.*/
     ConnectDb conDb = new ConnectDb();
 
-    private static final int REQUEST_CODE = 1;
-    private Bitmap bitmap;
+    //private static final int REQUEST_CODE = 1;
+    //private Bitmap bitmap;
 
     private static AsyncTask<String, Void, String> dbCon;
     private int PICK_IMAGE_REQUEST = 1;
@@ -101,6 +108,7 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         // Required empty public constructor
     }
 
+    /*onCreate method that retrieves the values of the items from the bundle that is passed in.*/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,9 +130,12 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         }
     }
 
+    /* onCreateView method that allows the buttons and editTexts for this fragment to be detected
+       by using rootView. The rootView is referenced once the fragment is inflated.*/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        /*This is where the fragment is inflated.*/
         View rootView = inflater
                 .inflate(R.layout.fragment_edit_profile_activity, container, false);
 
@@ -141,18 +152,26 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         UserName = (EditText) rootView.findViewById(R.id.Username);
         Save = (Button) rootView.findViewById(R.id.save_btn);
         UploadImage = (Button) rootView.findViewById(R.id.uploadImage);
-        Load = (Button) rootView.findViewById(R.id.load_btn);
+        //Load = (Button) rootView.findViewById(R.id.load_btn);
         profileImage = (ImageView) rootView.findViewById(R.id.profileImage);
 
+        /*This is where the editText fields are set with the Strings or Uri from whatever is passed
+           in from the bundle.*/
         UserName.setText(userName);
         Description.setText(description);
         Likes_Dislikes.setText(likes_dislikes);
+
+        /*The userImageUri is parsed through here because the entire image file path needs to be
+          exact. This is so the image can be found and set in the imageView.
+         */
         userImageUriR = Uri.parse(userImageUri);
         profileImage.setImageURI(userImageUriR);
 
         return rootView;
     }
 
+    /*This getButtons method is used to find all the buttons that are within the View of the fragment.
+      Used to make button detection more efficient. */
     public void getButtons(View v){
         if(v instanceof ViewGroup) {
             ViewGroup vg = (ViewGroup) v;
@@ -197,7 +216,10 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
             likes_dislikes = Likes_Dislikes.getText().toString();
             userName = UserName.getText().toString();
             //userImage = fileName;
-
+            /*Try catch block used to create a String array that contains the fields that are used
+              in the activity. The String array params then gets passed into my conDb to be updated
+              in the database.
+             */
             try {
                 String[] params = {"save", currentUser, userName, description, likes_dislikes, userImage};
                 conDb.execute(params).get();
@@ -208,14 +230,17 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
             }
             int save = conDb.getSave();
             if (save > -1) {
-                Log.d("EDIT PROFILE", "Sent: " + description + ", " + likes_dislikes);
                 Toast.makeText(getActivity(), "Updated Profile!", Toast.LENGTH_SHORT).show();
             } else if (save == -1) {
-                Log.d("Description", "Sent: " + description + ", " + "Likes/Dislikes " + likes_dislikes);
                 Toast.makeText(getActivity(), "Save Unsuccessful", Toast.LENGTH_SHORT).show();
 
             }
         }
+
+        /*This if statement is for if the upload image button is clicked. When the button is clicked
+          and intent is fired to pull up the device's image gallery, from which the user can choose
+          and image.
+         */
         if (view == UploadImage) {
             Intent intent = new Intent();
             intent.setType("image/jpeg");
@@ -224,6 +249,10 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         }
     }
 
+    /*onActivityResult is used to grab the data from the image that the user has chosen. Once the
+      data has been retrieved, a bitmap is used to store that data. The uri from that data is then
+      pulled to get the scheme of the filepath.
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -237,6 +266,10 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
                 // Log.d(TAG, String.valueOf(bitmap));
                 String scheme = uri.getScheme();
+
+                /*This if, else if statement is used to check to see if the uri contains "file" or
+                  "content" and if it does send the cursor through to get the columnIndex.
+                 */
                 if (scheme.equals("file")) {
                     fileName = uri;
                 }

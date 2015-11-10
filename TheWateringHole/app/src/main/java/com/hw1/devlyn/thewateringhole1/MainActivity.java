@@ -59,28 +59,30 @@ public class MainActivity extends AppCompatActivity {
     private NavDrawerListAdapter adapter;
 
 
-
+    /*onCreate method that retrieves the values from the intent that is being passed in from the
+      LoginActivity.*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         Intent thisIntent = getIntent();
-        currentUser = thisIntent.getStringExtra("userId");
-        idUserProfile = thisIntent.getStringExtra("idUserProfile");
-        userName = thisIntent.getStringExtra("userName");
-        description = thisIntent.getStringExtra("description");
-        events = thisIntent.getStringExtra("events");
-        likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
-        userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
-        userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
-        eventNameInfo = thisIntent.getStringExtra("eventName");
-        numParticipatingInfo = thisIntent.getStringExtra("numParticipating");
-        eventDescriptionInfo = thisIntent.getStringExtra("eventDescription");
-        userImageUri = thisIntent.getStringExtra("userImageUri");
+            currentUser = thisIntent.getStringExtra("userId");
+            idUserProfile = thisIntent.getStringExtra("idUserProfile");
+            userName = thisIntent.getStringExtra("userName");
+            description = thisIntent.getStringExtra("description");
+            events = thisIntent.getStringExtra("events");
+            likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
+            userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
+            userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
+            eventNameInfo = thisIntent.getStringExtra("eventName");
+            numParticipatingInfo = thisIntent.getStringExtra("numParticipating");
+            eventDescriptionInfo = thisIntent.getStringExtra("eventDescription");
+            userImageUri = thisIntent.getStringExtra("userImageUri");
 
-
+        /* This is where a new fragment object is initialized*/
         Fragment fragment = new Fragment();
+                /*A bundle is created here, where the values from the intent are then passed in to.*/
                 Bundle bundle = new Bundle();
                 bundle.putString("currentUser", currentUser);
                 bundle.putString("idUserProfile", idUserProfile);

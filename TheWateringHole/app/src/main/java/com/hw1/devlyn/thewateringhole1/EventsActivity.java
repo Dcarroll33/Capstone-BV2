@@ -21,10 +21,10 @@ import java.util.ArrayList;
 
 import info.info.wateringhole.slidingmenu.adapter.NavDrawerListAdapter;
 import info.info.wateringhole.slidingmenu.model.NavDrawerItem;
-
-
+/*EventsActivity used so the user can create an event from within the activity.*/
 public class EventsActivity extends AppCompatActivity {
 
+    /*Fields used to store the values from the intent that is passed in from MainActivity.*/
     private String currentUser;
     private String idUserProfile;
     private String description;
@@ -57,24 +57,31 @@ public class EventsActivity extends AppCompatActivity {
 
     Button locate;
 
+    /*onCreate method that uses and intent, fragment and bundle to pass the values from the user
+      back and forth through this activity and others that are connected.*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
 
+        /*Intent created to store the values that are retrieved from the MainActivity.*/
         Intent thisIntent = getIntent();
-        currentUser = thisIntent.getStringExtra("userId");
-        idUserProfile = thisIntent.getStringExtra("idUserProfile");
-        userName = thisIntent.getStringExtra("userName");
-        description = thisIntent.getStringExtra("description");
-        events = thisIntent.getStringExtra("events");
-        likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
-        userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
-        userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
-        eventNameInfo = thisIntent.getStringExtra("eventName");
-        numParticipatingInfo = thisIntent.getStringExtra("numParticipating");
-        eventDescriptionInfo = thisIntent.getStringExtra("eventDescription");
+            currentUser = thisIntent.getStringExtra("userId");
+            idUserProfile = thisIntent.getStringExtra("idUserProfile");
+            userName = thisIntent.getStringExtra("userName");
+            description = thisIntent.getStringExtra("description");
+            events = thisIntent.getStringExtra("events");
+            likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
+            userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
+            userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
+            eventNameInfo = thisIntent.getStringExtra("eventName");
+            numParticipatingInfo = thisIntent.getStringExtra("numParticipating");
+            eventDescriptionInfo = thisIntent.getStringExtra("eventDescription");
 
+        /*This is creating a Fragment object where a bundle is created to store the values of the
+            data. This fragment can then be accessed from within FragmentEditProfile to retrieve the
+            data and use it throughout the activity.
+         */
         Fragment fragment = new Fragment();
             Bundle bundle = new Bundle();
             bundle.putString("currentUser", currentUser);
