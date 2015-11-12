@@ -53,6 +53,7 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
 
     /*Fields for the buttons to be used in this class.*/
     Button FriendsProfile;
+    Button AddFriend;
 
 
     /**
@@ -111,6 +112,7 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
         getButtons(rootView);
 
         FriendsProfile = (Button) rootView.findViewById(R.id.friends_profile_btn);
+        AddFriend = (Button) rootView.findViewById(R.id.addFriend);
         return rootView;
         }
 
@@ -236,10 +238,37 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
     @Override
     public void onClick(View view) {
         if (view == FriendsProfile) {
-            Intent events = new Intent(getActivity(), FriendsProfileActivity.class);
+            Intent friendsProfile = new Intent(getActivity(), FriendsProfileActivity.class);
 
             Button b = (Button) view;
-            this.startActivity(events);
+            this.startActivity(friendsProfile);
+        }
+        if (view == AddFriend) {
+            Intent addFriend = new Intent(getActivity(), FriendsActivity.class);
+            addFriend.putExtra("userId", currentUser);
+            addFriend.putExtra("idUserProfile", idUserProfile);
+            addFriend.putExtra("userName", userName);
+            addFriend.putExtra("description", "" + description);
+            addFriend.putExtra("events", events);
+            addFriend.putExtra("likes_dislikes", likes_dislikes);
+            addFriend.putExtra("userLongitude", userLongitude);
+            addFriend.putExtra("userLatitude", userLatitude);
+            //addFriend.putExtra("userImageUri", userImageUri);
+
+            android.app.Fragment fragment = new android.app.Fragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("currentUser", currentUser);
+            bundle.putString("idUserProfile", idUserProfile);
+            bundle.putString("userName", userName);
+            bundle.putString("description", description);
+            bundle.putString("events", events);
+            bundle.putString("likes_dislikes", likes_dislikes);
+            bundle.putDouble("userLongitude", userLongitude);
+            bundle.putDouble("userLatitude", userLatitude);
+            //bundle.putString("userImageUri", userImageUri);
+            fragment.setArguments(bundle);
+            Button b = (Button) view;
+            this.startActivity(addFriend);
         }
     }
     /**

@@ -26,6 +26,8 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
 
     private int eventSave = -1;
 
+    private int friendSave = -1;
+
     private String description = null;
 
     public ArrayList<String> load = null;
@@ -111,6 +113,15 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                 } else {
                     return -1;
                 }
+            } else if (strings[0] == "add") {
+                MyApplicationClass.MySQLAccess.readDataBase();
+                int friendResult = dao.friendInfo(strings[1], strings[2] /*strings[3]*/);
+                if(friendResult != -1) {
+                    Log.d("Friend added", "Friend added");
+                    friendSave = friendResult;
+                    return friendSave;
+                }
+
             }
         } catch (Exception e) {
             Log.e("upload failed", e.toString());
@@ -150,4 +161,7 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
         return eventSave;
     }
 
+    public int getFriendSave() {
+        return friendSave;
+    }
 }

@@ -22,7 +22,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@+id/Locate_Friends"
-        android:layout_above="@+id/friends_profile_btn"
+        android:layout_above="@+id/addFriend"
         android:layout_marginTop="150dp"
         android:layout_marginBottom="150dp"
         android:layout_marginLeft="50dp"
@@ -47,4 +47,18 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
- </RelativeLayout>
+
+    <Button
+        android:layout_width="240dp"
+        android:layout_height="50dp"
+        android:text="Add Friend"
+        android:id="@+id/addFriend"
+        android:background="@drawable/button"
+        android:textColor="#FEFFFA"
+        android:textSize="30sp"
+        android:layout_above="@+id/friends_profile_btn"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

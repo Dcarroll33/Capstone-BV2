@@ -9,6 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.concurrent.ExecutionException;
 
 
 public class FragmentFriends extends Fragment implements  View.OnClickListener {
@@ -29,9 +33,17 @@ public class FragmentFriends extends Fragment implements  View.OnClickListener {
     private String description;
     private String events;
     private String likes_dislikes;
+    String friendUserName;
+    String friendEmail;
+    double userLongitude;
+    double userLatitude;
 
     /*Field for the button to be used in this class.*/
     Button LocateFriends;
+    Button Add;
+
+    EditText friendUserNameText;
+    EditText friendUserEmail;
 
     /**
      * Method to create a new instance of
@@ -65,6 +77,8 @@ public class FragmentFriends extends Fragment implements  View.OnClickListener {
         description = args.getString("description", description);
         events = args.getString("events", events);
         likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
+        userLongitude = args.getDouble("userLongitude", userLongitude);
+        userLatitude = args.getDouble("userLatitude", userLatitude);
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -81,6 +95,10 @@ public class FragmentFriends extends Fragment implements  View.OnClickListener {
         getButtons(rootView);
 
         LocateFriends = (Button) rootView.findViewById(R.id.locate_friends_btn);
+        Add = (Button) rootView.findViewById(R.id.add);
+
+        friendUserNameText = (EditText) rootView.findViewById(R.id.friendUserName);
+        friendUserEmail = (EditText) rootView.findViewById(R.id.friendEmail);
 
         return rootView;
     }
@@ -124,11 +142,31 @@ public class FragmentFriends extends Fragment implements  View.OnClickListener {
         clicked depending on their relationship the screen will switch to the appropriate screen.*/
     @Override
     public void onClick(View view) {
+        ConnectDb conDb = new ConnectDb();
         if (view == LocateFriends) {
             Intent events = new Intent(getActivity(), LocateFriendsActivity.class);
 
             Button b = (Button) view;
             this.startActivity(events);
+        }
+        if (view == Add) {
+            friendUserName = friendUserNameText.getText().toString();
+            friendEmail = friendUserEmail.getText().toString();
+            String[] params = {"add", friendEmail, friendUserName};
+            try {
+                conDb.execute(params).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            int friendInfo = conDb.getFriendSave();
+            if (friendInfo > -1) {
+                Toast.makeText(getActivity(), "Added Friend!", Toast.LENGTH_SHORT).show();
+            } else if (friendInfo == -1) {
+                Toast.makeText(getActivity(), "Couldn't add Friend", Toast.LENGTH_SHORT).show();
+
+            }
         }
     }
     /**

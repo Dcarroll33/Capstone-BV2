@@ -242,6 +242,40 @@ public class MyApplicationClass extends Application {
             return profileInfo;
         }
 
+        public int friendInfo(/*String userId,*/ String friendEmail, String friendUserName){
+            try {
+                preparedStatement = connect
+                        .prepareStatement("select * from friends where userId=?");
+                preparedStatement.setString(1, friendEmail);//userId);
+                Log.d("lol", "About to execute prepstatement1");
+                ResultSet friendInfoResult =  preparedStatement.executeQuery();
+                Log.d("SELECT", "inside select");
+                if (!friendInfoResult.next()) {
+
+                    preparedStatement = connect
+                            .prepareStatement("insert into friends (friendEmail, friendUserName) values (?,?)");
+                    //preparedStatement.setString(1, userId);
+                    preparedStatement.setString(1, friendEmail);
+                    preparedStatement.setString(2, friendUserName);
+                    Log.d("SQLConnect", "added to DB");
+                    return preparedStatement.executeUpdate();
+                } else {
+                    preparedStatement = connect
+                            .prepareStatement("update friends set friendEmail=?, friendUserName=? where userId=?");
+
+                    //preparedStatement.setString(1, userId);
+                    preparedStatement.setString(1, friendEmail);
+                    //preparedStatement.setString(3, eventDescription);
+                    preparedStatement.setString(2, friendUserName);
+                    //Log.d("UPDATE", "userId already exists");
+                    return preparedStatement.executeUpdate();
+                }
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+            return -1;
+        }
+
         // Closes the resultSet
         private static void close() {
             try {
