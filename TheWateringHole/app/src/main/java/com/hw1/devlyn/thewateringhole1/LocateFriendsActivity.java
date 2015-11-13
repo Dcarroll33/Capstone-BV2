@@ -4,6 +4,7 @@ package com.hw1.devlyn.thewateringhole1;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -33,6 +34,8 @@ public class LocateFriendsActivity extends AppCompatActivity {
     private String events;
     private double userLongitude;
     private double userLatitude;
+    private double friendLongitude;
+    private double friendLatitude;
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -69,6 +72,28 @@ public class LocateFriendsActivity extends AppCompatActivity {
         likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
         userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
         userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
+        friendLongitude = thisIntent.getDoubleExtra("friendLongitude", friendLongitude);
+        friendLatitude = thisIntent.getDoubleExtra("friendLatitude", friendLatitude);
+
+        /* This is where a new fragment object is initialized*/
+        Fragment fragment = new Fragment();
+                /*A bundle is created here, where the values from the intent are then passed in to.*/
+        Bundle bundle = new Bundle();
+        bundle.putString("currentUser", currentUser);
+        bundle.putString("idUserProfile", idUserProfile);
+        bundle.putString("userName", userName);
+        bundle.putString("description", description);
+        bundle.putString("events", events);
+        bundle.putString("likes_dislikes", likes_dislikes);
+        bundle.putDouble("userLongitude", userLongitude);
+        bundle.putDouble("userLatitude", userLatitude);
+        bundle.putDouble("friendLongitude", friendLongitude);
+        bundle.putDouble("friendLatitude", friendLatitude);
+        /*bundle.putString("eventName", eventNameInfo);
+        bundle.putString("numParticipating", numParticipatingInfo);
+        bundle.putString("eventDescription", eventDescriptionInfo);
+        bundle.putString("userImageUri", userImageUri);*/
+        fragment.setArguments(bundle);
 
         mTitle = mDrawerTitle = getTitle();
 

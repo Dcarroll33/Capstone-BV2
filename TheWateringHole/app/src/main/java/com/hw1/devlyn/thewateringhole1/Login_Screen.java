@@ -86,6 +86,11 @@ public class Login_Screen extends Activity implements View.OnClickListener {
             double userLatitude = myList2.get(1);
             double userLongitude = myList2.get(2);
 
+            ArrayList<Double> friendCoords = conDb.getFriendCoords();
+            double friendLongitude = friendCoords.get(1);
+            double friendLatitude = friendCoords.get(2);
+
+
             ArrayList<String> eventInfo = conDb.userEventInfo();
             String idevents = eventInfo.get(1);
             String eventName = eventInfo.get(2);
@@ -98,19 +103,21 @@ public class Login_Screen extends Activity implements View.OnClickListener {
                 Toast.makeText(getBaseContext(), "Logged in", Toast.LENGTH_SHORT).show();
 
                 Intent login = new Intent(this, MainActivity.class );
-                login.putExtra("userId", userId);
-                login.putExtra("idUserProfile", idUserProfile);
-                login.putExtra("userName", userNameP);
-                login.putExtra("description", "" + description );
-                login.putExtra("events", events);
-                login.putExtra("likes_dislikes", likes_dislikes);
-                login.putExtra("userLongitude", userLongitude);
-                login.putExtra("userLatitude", userLatitude);
-                login.putExtra("idevents", idevents);
-                login.putExtra("eventName", eventName);
-                login.putExtra("numParticipating", numParticipating);
-                login.putExtra("eventDescription", eventDescription);
-                login.putExtra("userImageUri", userImageUri);
+                    login.putExtra("userId", userId);
+                    login.putExtra("idUserProfile", idUserProfile);
+                    login.putExtra("userName", userNameP);
+                    login.putExtra("description", "" + description );
+                    login.putExtra("events", events);
+                    login.putExtra("likes_dislikes", likes_dislikes);
+                    login.putExtra("userLongitude", userLongitude);
+                    login.putExtra("userLatitude", userLatitude);
+                    login.putExtra("friendLongitude", friendLongitude);
+                    login.putExtra("friendLatitude", friendLatitude);
+                    login.putExtra("idevents", idevents);
+                    login.putExtra("eventName", eventName);
+                    login.putExtra("numParticipating", numParticipating);
+                    login.putExtra("eventDescription", eventDescription);
+                    login.putExtra("userImageUri", userImageUri);
 
                 this.startActivity(login);
             }else {

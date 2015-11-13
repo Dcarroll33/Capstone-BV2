@@ -20,6 +20,8 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
 
     private int result = -1;
 
+    private int idfriends = -1;
+
     private int userId = -1;
 
     private int save = -1;
@@ -34,7 +36,11 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
 
     public ArrayList<Double> coords = null;
 
+    public ArrayList<Double> friendCoords = null;
+
     private ArrayList<String> userEventInfo = null;
+
+    private ArrayList<Double> friendCurrentLocation = null;
 
     public static MyApplicationClass.MySQLAccess dao = new MyApplicationClass.MySQLAccess();
 
@@ -60,25 +66,30 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                     //return 0;
                     //MyApplicationClass.MySQLAccess.readDataBase();
                     ArrayList<String> profileInfoResult = dao.getUserProfileInfo(userId);
-                    if (profileInfoResult != null){
+                    if (profileInfoResult != null) {
                         Log.d("ConnectDb", "User info passed! Desc:" + profileInfoResult.get(3) + "Like:" + profileInfoResult.get(5));
                         load = profileInfoResult;
                     }
                     ArrayList<Double> userCoordsResult = dao.getUserCoords(userId);
-                    if (userCoordsResult != null){
+                    if (userCoordsResult != null) {
                         Log.d("ConnectDb", "userLongitude" + userCoordsResult.get(1) + "userLatitude" + userCoordsResult.get(2));
-
                         coords = userCoordsResult;
                     }
-                    ArrayList<String> userEventInfoResult = dao.userEventInfo(userId);
-                    if (userEventInfoResult != null){
-                        userEventInfo = userEventInfoResult;
+                    ArrayList<Double> friendCoordsResult = dao.getFriendCoords(userId);
+                    if (friendCoordsResult != null) {
+                        Log.d("ConnectDB", "friendLongitude" + friendCoordsResult.get(1) + " friendLatitude" + friendCoordsResult.get(2));
+                        friendCoords = friendCoordsResult;
                     }
-                    return 0;
-                } else {
+                ArrayList<String> userEventInfoResult = dao.userEventInfo(userId);
+                if (userEventInfoResult != null) {
+                    userEventInfo = userEventInfoResult;
+                }
+                return 0;
+            } else {
                     Log.d("ConnectDb", "Login failed :'(");
                     return -1;
                 }
+
 
             } else if (strings[0] == "save") {
                 MyApplicationClass.MySQLAccess.readDataBase();
@@ -122,6 +133,18 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                     return friendSave;
                 }
 
+            } else if (strings[0] == "currentLocation") {
+                MyApplicationClass.MySQLAccess.readDataBase();
+                ArrayList<Double> friendLocation = dao.setFriendCoords(Integer.parseInt(strings[1]), Double.parseDouble(strings[2]), Double.parseDouble(strings[3])/*, strings[3]*/);
+                if ( friendLocation != null){
+                    //friendLocation.add(1, Double.valueOf(strings[1]));
+                    friendLocation.add(Double.valueOf(strings[2]));
+                    friendLocation.add(Double.valueOf(strings[3]));
+                    friendCurrentLocation = friendLocation;
+                    return 0;
+                } else {
+                    return -1;
+                }
             }
         } catch (Exception e) {
             Log.e("upload failed", e.toString());
@@ -139,6 +162,14 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
 
     public ArrayList<Double> getUserCoords() {
         return coords;
+    }
+
+    public ArrayList<Double> getFriendCoords(){
+        return friendCoords;
+    }
+
+    public ArrayList<Double> setFriendCoords(){
+        return friendCurrentLocation;
     }
 
     public String getDescription() {

@@ -21,12 +21,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class FragmentLocateFriends extends Fragment implements  View.OnClickListener  {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,6 +53,12 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
     private String likes_dislikes;
     private double userLongitude;
     private double userLatitude;
+    private double friendLongitude;
+    private double friendLatitude;
+    private double currentLongitude;
+    private double currentLatitude;
+
+    ConnectDb conDb = new ConnectDb();
 
 
     /*Fields for the buttons to be used in this class.*/
@@ -87,8 +97,10 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
         description = args.getString("description", description);
         events = args.getString("events", events);
         likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
-        userLongitude = args.getDouble("userLongitude",userLongitude);
-        userLatitude = args.getDouble("userLatitude",userLatitude);
+        userLongitude = args.getDouble("userLongitude", userLongitude);
+        userLatitude = args.getDouble("userLatitude", userLatitude);
+        friendLongitude = args.getDouble("friendLongitude", friendLongitude);
+        friendLatitude = args.getDouble("friendLatitude", friendLatitude);
 
 
     }
@@ -141,24 +153,34 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
 
                     @Override
                     public void onMyLocationChange(Location arg0) {
-                       //LocationManager locationMan = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-                        //Criteria bestFit = new Criteria();
 
-                        //Get name of best provider
-                        //String provider = locationMan.getBestProvider(bestFit, true);
-                       // android.location.LocationListener locationListener;
-                       // Location myLocation =  locationMan.getLastKnownLocation(provider);
-                      // locationMan.getLastKnownLocation(provider);
-                        //double latitude = userLatitude;
-                        //double longitude = userLongitude;
-                        //LatLng position = new LatLng(latitude, longitude);
-                        //googleMap.animateCamera(CameraUpdateFactory.newLatLng(position));
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arg0.getLatitude(), arg0.getLongitude()), 18.0f));
                         //googleMap.animateCamera(CameraUpdateFactory.zoomTo(17));
                         googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                                 .position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("You are here!"));
                         googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
                                 .position(new LatLng(userLatitude, userLongitude)).title("Dummy Person"));
+                        googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
+                                .position(new LatLng(friendLatitude, friendLongitude)).title("Logan"));
+                        
+                        currentLongitude = arg0.getLongitude();
+                        currentLatitude = arg0.getLatitude();
+
+                        try {
+                            String[] params = {"currentLocation", currentUser, String.valueOf(currentLongitude), String.valueOf(currentLatitude)};
+                            conDb.execute(params).get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+                        ArrayList<Double> friendLocation = conDb.setFriendCoords();
+                        if (friendLocation != null) {
+                            Toast.makeText(getActivity(), "User Location Updated", Toast.LENGTH_SHORT).show();
+                        } else if (friendLocation == null) {
+                            Toast.makeText(getActivity(), "Location Update Failed", Toast.LENGTH_SHORT).show();
+
+                        }
 
                         googleMap.setOnMyLocationChangeListener(null);
                     }

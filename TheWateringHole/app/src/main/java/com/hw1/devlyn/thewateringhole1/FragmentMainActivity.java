@@ -30,6 +30,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
     private String likes_dislikes;
     private double userLongitude;
     private double userLatitude;
+    private double friendLongitude;
+    private double friendLatitude;
     private String eventNameInfo;
     private String numParticipatingInfo;
     private String eventDescriptionInfo;
@@ -76,6 +78,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
         likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
         userLongitude = args.getDouble("userLongitude");
         userLatitude = args.getDouble("userLatitude");
+        friendLongitude = args.getDouble("friendLongitude");
+        friendLatitude = args.getDouble("friendLatitude");
         eventNameInfo = args.getString("eventName");
         numParticipatingInfo = args.getString("numParticipating", numParticipatingInfo);
         eventDescriptionInfo = args.getString("eventDescription");
@@ -193,6 +197,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             friends.putExtra("likes_dislikes", likes_dislikes);
             friends.putExtra("userLongitude", userLongitude);
             friends.putExtra("userLatitude", userLatitude);
+            friends.putExtra("friendLongitude", friendLongitude);
+            friends.putExtra("friendLatitude", friendLatitude);
             friends.putExtra("userImageUri", userImageUri);
 
             Fragment fragment = new Fragment();
@@ -205,6 +211,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             bundle.putString("likes_dislikes", likes_dislikes);
             bundle.putDouble("userLongitude", userLongitude);
             bundle.putDouble("userLatitude", userLatitude);
+            bundle.putDouble("friendLongitude", friendLongitude);
+            bundle.putDouble("friendLatitude", friendLatitude);
             bundle.putString("userImageUri", userImageUri);
             fragment.setArguments(bundle);
 

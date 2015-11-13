@@ -58,42 +58,42 @@ public class MyApplicationClass extends Application {
                 Log.d("Before Connect", "Connecting to DB");
                 connect = DriverManager
                         .getConnection(DBCON, USERNAME, USERPSWD);
-                Log.d("Connected","Reading DB");
+                Log.d("Connected", "Reading DB");
             } catch (Exception e) {
-                Log.e("MAC","Error occured! Error was" + e.getMessage());
+                Log.e("MAC", "Error occured! Error was" + e.getMessage());
                 e.getStackTrace();
                 throw e;
             }
 
         }
 
-        public int loginUser(String userName, String userPswd){
+        public int loginUser(String userName, String userPswd) {
             try {
                 preparedStatement = connect
                         .prepareStatement("select * from users where userName=? and password=?");
-                        preparedStatement.setString(1, userName);
-                        preparedStatement.setString(2, userPswd);
-                        ResultSet userResult =  preparedStatement.executeQuery();
-                    if (!userResult.next()) {
-                         return -1;
-                    }else {
-                        Log.d("CheckPoint", "UserResult" + userResult.getInt("idUsers"));
-                        return userResult.getInt("idUsers");
-                    }
-            } catch (SQLException e){
+                preparedStatement.setString(1, userName);
+                preparedStatement.setString(2, userPswd);
+                ResultSet userResult = preparedStatement.executeQuery();
+                if (!userResult.next()) {
+                    return -1;
+                } else {
+                    Log.d("CheckPoint", "UserResult" + userResult.getInt("idUsers"));
+                    return userResult.getInt("idUsers");
+                }
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             return -1;
         }
 
-        public int userProfile(String userId, String name, String description, String likes_dislikes, String userImage){
+        public int userProfile(String userId, String name, String description, String likes_dislikes, String userImage) {
             try {
                 Log.d("UserProfile", "Got data: userId: " + userId + " desc: " + description + " likes-dislikes: " + likes_dislikes + "userName: " + name);
                 preparedStatement = connect
                         .prepareStatement("select * from userProfile where userId=?");
                 preparedStatement.setString(1, userId);
                 Log.d("lol", "About to execute prepstatement1");
-                ResultSet userProfileResult =  preparedStatement.executeQuery();
+                ResultSet userProfileResult = preparedStatement.executeQuery();
                 Log.d("SELECT", "inside select");
                 if (!userProfileResult.next()) {
 
@@ -117,11 +117,12 @@ public class MyApplicationClass extends Application {
                     Log.d("UPDATE", "userId already exists");
                     return preparedStatement.executeUpdate();
                 }
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             return -1;
         }
+
         public ArrayList<Double> getUserCoords(int userId) {
             ArrayList<Double> userCoords = new ArrayList<>();
             try {
@@ -129,7 +130,7 @@ public class MyApplicationClass extends Application {
                         .prepareStatement("select * from userProfile where userId=?;"/*and userId=? and description=? and likes_dislikes=?"*/);
                 preparedStatement.setInt(1, userId);
                 //Log.d("MyApplicationClass", "idUserProfile" + profileInfo.set(1, String.valueOf(userId)));
-                ResultSet userCoordsResult =  preparedStatement.executeQuery();
+                ResultSet userCoordsResult = preparedStatement.executeQuery();
                 userCoordsResult.next();
 
                 int userIdR = userCoordsResult.getInt(2);
@@ -140,19 +141,19 @@ public class MyApplicationClass extends Application {
                 userCoords.add(1, userLatitude);
                 userCoords.add(2, userLongitude);
 
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             return userCoords;
         }
 
-        public int eventInfo(String userId, String eventName, String numParticipating, String eventDescription){
+        public int eventInfo(String userId, String eventName, String numParticipating, String eventDescription) {
             try {
                 preparedStatement = connect
                         .prepareStatement("select * from events where userId=?");
                 preparedStatement.setString(1, userId);
                 Log.d("lol", "About to execute prepstatement1");
-                ResultSet eventInfoResult =  preparedStatement.executeQuery();
+                ResultSet eventInfoResult = preparedStatement.executeQuery();
                 Log.d("SELECT", "inside select");
                 if (!eventInfoResult.next()) {
 
@@ -174,19 +175,19 @@ public class MyApplicationClass extends Application {
                     //Log.d("UPDATE", "userId already exists");
                     return preparedStatement.executeUpdate();
                 }
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             return -1;
         }
 
-        public ArrayList<String> userEventInfo(int userId){
+        public ArrayList<String> userEventInfo(int userId) {
             ArrayList<String> eventInfo = new ArrayList<>();
             try {
                 preparedStatement = connect
                         .prepareStatement("select * from events where userId=?;");
                 preparedStatement.setInt(1, userId);
-                ResultSet getEventResult =  preparedStatement.executeQuery();
+                ResultSet getEventResult = preparedStatement.executeQuery();
                 getEventResult.next();
 
                 int eventUserIdR = getEventResult.getInt(1);
@@ -202,19 +203,19 @@ public class MyApplicationClass extends Application {
                 eventInfo.add(3, String.valueOf(numParticipatingR));
                 eventInfo.add(4, descriptionR);
 
-            } catch (SQLException e){
-            e.printStackTrace();
-        }
-        return eventInfo;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return eventInfo;
         }
 
-        public ArrayList<String> getUserProfileInfo(int userId){
+        public ArrayList<String> getUserProfileInfo(int userId) {
             ArrayList<String> profileInfo = new ArrayList<>();
             try {
                 preparedStatement = connect
                         .prepareStatement("select * from userProfile where userId=?;"/*and userId=? and description=? and likes_dislikes=?"*/);
                 preparedStatement.setInt(1, userId);
-                ResultSet getProfileResult =  preparedStatement.executeQuery();
+                ResultSet getProfileResult = preparedStatement.executeQuery();
                 getProfileResult.next();
 
                 Log.d("MyApplication", "getProfileResult is :" + getProfileResult);
@@ -236,19 +237,19 @@ public class MyApplicationClass extends Application {
                 profileInfo.add(5, likes_dislikes_R);
                 profileInfo.add(6, userImageUri);
 
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             return profileInfo;
         }
 
-        public int friendInfo(/*String userId,*/ String friendEmail, String friendUserName){
+        public int friendInfo(/*String userId*/ String friendEmail, String friendUserName) {
             try {
                 preparedStatement = connect
                         .prepareStatement("select * from friends where userId=?");
                 preparedStatement.setString(1, friendEmail);//userId);
                 Log.d("lol", "About to execute prepstatement1");
-                ResultSet friendInfoResult =  preparedStatement.executeQuery();
+                ResultSet friendInfoResult = preparedStatement.executeQuery();
                 Log.d("SELECT", "inside select");
                 if (!friendInfoResult.next()) {
 
@@ -270,11 +271,81 @@ public class MyApplicationClass extends Application {
                     //Log.d("UPDATE", "userId already exists");
                     return preparedStatement.executeUpdate();
                 }
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             return -1;
         }
+
+        public ArrayList<Double> getFriendCoords(int userId) {
+            ArrayList<Double> friendCoords = new ArrayList<>();
+            try {
+                preparedStatement = connect
+                        .prepareStatement("select * from friends where userId=?;"/*and userId=? and description=? and likes_dislikes=?"*/);
+                preparedStatement.setInt(1, userId);
+                //Log.d("MyApplicationClass", "idUserProfile" + profileInfo.set(1, String.valueOf(userId)));
+                ResultSet friendCoordsResult = preparedStatement.executeQuery();
+                friendCoordsResult.next();
+
+                int userIdR = friendCoordsResult.getInt(3);
+                double friendLongitude = friendCoordsResult.getDouble(7);
+                double friendLatitude = friendCoordsResult.getDouble(8);
+
+                friendCoords.add(0, Double.valueOf(userIdR));
+                friendCoords.add(1, friendLongitude);
+                friendCoords.add(2, friendLatitude);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return friendCoords;
+        }
+
+        public ArrayList<Double> setFriendCoords(int userId, double currentLongitude, double currentLatitude) {
+            ArrayList<Double> currentLocation = new ArrayList<>();
+            try {
+                preparedStatement = connect
+                        .prepareStatement("select * from friends where userId=?;");
+                preparedStatement.setDouble(1, userId);
+                //preparedStatement.setString(1, userId);
+
+                ResultSet currentLocationR = preparedStatement.executeQuery();
+                currentLocationR.next();
+
+                //int userIdR = currentLocationR.getInt(3);
+                //double currentLongitudeR = currentLongitude;
+                //double currentLatitudeR = currentLatitude;
+
+                //currentLocation.add(0, Double.valueOf(userIdR));
+                //currentLocation.add(1, currentLongitudeR);
+                //currentLocation.add(2, currentLatitudeR);
+
+                if (!currentLocationR.next()) {
+
+                    preparedStatement = connect
+                            .prepareStatement("insert into friends (friendLongitude, friendLatitude) values (?,?)");
+                    //preparedStatement.setString(1, userId);
+                    preparedStatement.setDouble(1, currentLongitude);
+                    preparedStatement.setDouble(2, currentLatitude);
+                    Log.d("SQLConnect", "added to DB");
+                } else {
+                    preparedStatement = connect
+                            .prepareStatement("update friends set friendLongitude=?, friendLatitude=? where userId=?");
+
+                    preparedStatement.setDouble(1, currentLongitude);
+                    //preparedStatement.setString(3, eventDescription);
+                    preparedStatement.setDouble(2, currentLatitude);
+                    preparedStatement.setInt(3, userId);
+                    //Log.d("UPDATE", "userId already exists");
+                    preparedStatement.executeUpdate();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return currentLocation;
+        }
+
+
 
         // Closes the resultSet
         private static void close() {
@@ -295,6 +366,6 @@ public class MyApplicationClass extends Application {
 
             }
         }
-
     }
 }
+

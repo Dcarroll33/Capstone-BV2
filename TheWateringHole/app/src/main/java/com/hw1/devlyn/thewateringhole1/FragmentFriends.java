@@ -152,7 +152,7 @@ public class FragmentFriends extends Fragment implements  View.OnClickListener {
         if (view == Add) {
             friendUserName = friendUserNameText.getText().toString();
             friendEmail = friendUserEmail.getText().toString();
-            String[] params = {"add", friendEmail, friendUserName};
+            String[] params = {"add", /*currentUser,*/ friendEmail, friendUserName};
             try {
                 conDb.execute(params).get();
             } catch (InterruptedException e) {
