@@ -34,8 +34,10 @@ public class LocateFriendsActivity extends AppCompatActivity {
     private String events;
     private double userLongitude;
     private double userLatitude;
-    private double friendLongitude;
-    private double friendLatitude;
+    private ArrayList<String> friendsList;
+    //private String friendUserName;
+    //private String friendLongitude;
+    //private String friendLatitude;
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -72,8 +74,10 @@ public class LocateFriendsActivity extends AppCompatActivity {
         likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
         userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
         userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
-        friendLongitude = thisIntent.getDoubleExtra("friendLongitude", friendLongitude);
-        friendLatitude = thisIntent.getDoubleExtra("friendLatitude", friendLatitude);
+        friendsList = thisIntent.getStringArrayListExtra("friendsList");
+        //friendUserName = thisIntent.getStringExtra("friendUserName");
+        //friendLongitude = thisIntent.getStringExtra("friendLongitude");
+        //friendLatitude = thisIntent.getStringExtra("friendLatitude");
 
         /* This is where a new fragment object is initialized*/
         Fragment fragment = new Fragment();
@@ -87,8 +91,10 @@ public class LocateFriendsActivity extends AppCompatActivity {
         bundle.putString("likes_dislikes", likes_dislikes);
         bundle.putDouble("userLongitude", userLongitude);
         bundle.putDouble("userLatitude", userLatitude);
-        bundle.putDouble("friendLongitude", friendLongitude);
-        bundle.putDouble("friendLatitude", friendLatitude);
+        bundle.putStringArrayList("friendsList", friendsList);
+        //bundle.putString("friendUserName", friendUserName);
+        //bundle.putString("friendLongitude", friendLongitude);
+        //bundle.putString("friendLatitude", friendLatitude);
         /*bundle.putString("eventName", eventNameInfo);
         bundle.putString("numParticipating", numParticipatingInfo);
         bundle.putString("eventDescription", eventDescriptionInfo);

@@ -86,9 +86,11 @@ public class Login_Screen extends Activity implements View.OnClickListener {
             double userLatitude = myList2.get(1);
             double userLongitude = myList2.get(2);
 
-            ArrayList<Double> friendCoords = conDb.getFriendCoords();
-            double friendLongitude = friendCoords.get(1);
-            double friendLatitude = friendCoords.get(2);
+            ArrayList<String> friendCoords = conDb.getFriendCoords();
+            //int friendId = friendCoords.get(Integer.parseInt(0));
+            //String friendUserName = friendCoords.get(0);
+            //String friendLongitude = friendCoords.get(1);
+            //String friendLatitude = friendCoords.get(2);
 
 
             ArrayList<String> eventInfo = conDb.userEventInfo();
@@ -111,8 +113,10 @@ public class Login_Screen extends Activity implements View.OnClickListener {
                     login.putExtra("likes_dislikes", likes_dislikes);
                     login.putExtra("userLongitude", userLongitude);
                     login.putExtra("userLatitude", userLatitude);
-                    login.putExtra("friendLongitude", friendLongitude);
-                    login.putExtra("friendLatitude", friendLatitude);
+                    login.putExtra("friendsList", friendCoords);
+                    //login.putExtra("friendUserName", friendUserName);
+                    //login.putExtra("friendLongitude", friendLongitude);
+                    //login.putExtra("friendLatitude", friendLatitude);
                     login.putExtra("idevents", idevents);
                     login.putExtra("eventName", eventName);
                     login.putExtra("numParticipating", numParticipating);

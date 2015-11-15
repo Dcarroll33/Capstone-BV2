@@ -35,8 +35,10 @@ public class MainActivity extends AppCompatActivity {
     private String events;
     private double userLongitude;
     private double userLatitude;
-    private double friendLongitude;
-    private double friendLatitude;
+    private ArrayList<String> friendsList;
+    private String friendUserName;
+    private String friendLongitude;
+    private String friendLatitude;
     private String eventNameInfo;
     private String numParticipatingInfo;
     private String eventDescriptionInfo;
@@ -77,8 +79,10 @@ public class MainActivity extends AppCompatActivity {
             likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
             userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
             userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
-            friendLongitude = thisIntent.getDoubleExtra("friendLongitude", friendLongitude);
-            friendLatitude = thisIntent.getDoubleExtra("friendLatitude", friendLatitude);
+            friendsList = thisIntent.getStringArrayListExtra("friendsList");
+            //friendUserName = thisIntent.getStringExtra("friendUserName");
+            //friendLongitude = thisIntent.getStringExtra("friendLongitude");
+            //friendLatitude = thisIntent.getStringExtra("friendLatitude");
             eventNameInfo = thisIntent.getStringExtra("eventName");
             numParticipatingInfo = thisIntent.getStringExtra("numParticipating");
             eventDescriptionInfo = thisIntent.getStringExtra("eventDescription");
@@ -96,8 +100,9 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putString("likes_dislikes", likes_dislikes);
                 bundle.putDouble("userLongitude", userLongitude);
                 bundle.putDouble("userLatitude", userLatitude);
-                bundle.putDouble("friendLongitude", friendLongitude);
-                bundle.putDouble("friendLatitude", friendLatitude);
+                bundle.putString("friendUserName", friendUserName);
+                bundle.putString("friendLongitude", friendLongitude);
+                bundle.putString("friendLatitude", friendLatitude);
                 bundle.putString("eventName", eventNameInfo);
                 bundle.putString("numParticipating", numParticipatingInfo);
                 bundle.putString("eventDescription", eventDescriptionInfo);

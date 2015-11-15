@@ -36,11 +36,13 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
 
     public ArrayList<Double> coords = null;
 
-    public ArrayList<Double> friendCoords = null;
+    public ArrayList<String> friendCoords = null;
 
     private ArrayList<String> userEventInfo = null;
 
     private ArrayList<Double> friendCurrentLocation = null;
+
+    private ArrayList<Double> currentUserLocation = null;
 
     public static MyApplicationClass.MySQLAccess dao = new MyApplicationClass.MySQLAccess();
 
@@ -75,22 +77,20 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                         Log.d("ConnectDb", "userLongitude" + userCoordsResult.get(1) + "userLatitude" + userCoordsResult.get(2));
                         coords = userCoordsResult;
                     }
-                    ArrayList<Double> friendCoordsResult = dao.getFriendCoords(userId);
+                    ArrayList<String> friendCoordsResult = dao.getFriendCoords(userId);
                     if (friendCoordsResult != null) {
-                        Log.d("ConnectDB", "friendLongitude" + friendCoordsResult.get(1) + " friendLatitude" + friendCoordsResult.get(2));
+                        Log.d("ConnectDB", "friendLongitude" + friendCoordsResult.get(0) + " friendLatitude" + friendCoordsResult.get(1));
                         friendCoords = friendCoordsResult;
                     }
-                ArrayList<String> userEventInfoResult = dao.userEventInfo(userId);
-                if (userEventInfoResult != null) {
-                    userEventInfo = userEventInfoResult;
-                }
-                return 0;
-            } else {
+                    ArrayList<String> userEventInfoResult = dao.userEventInfo(userId);
+                    if (userEventInfoResult != null) {
+                        userEventInfo = userEventInfoResult;
+                    }
+                    return 0;
+                 } else {
                     Log.d("ConnectDb", "Login failed :'(");
                     return -1;
-                }
-
-
+                 }
             } else if (strings[0] == "save") {
                 MyApplicationClass.MySQLAccess.readDataBase();
                 int saveResult = dao.userProfile(strings[1], strings[2], strings[3], strings[4], strings[5]);
@@ -133,19 +133,32 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                     return friendSave;
                 }
 
-            } else if (strings[0] == "currentLocation") {
+            } else if (strings[0] == "friendLocation") {
                 MyApplicationClass.MySQLAccess.readDataBase();
-                ArrayList<Double> friendLocation = dao.setFriendCoords(Integer.parseInt(strings[1]), Double.parseDouble(strings[2]), Double.parseDouble(strings[3])/*, strings[3]*/);
-                if ( friendLocation != null){
-                    //friendLocation.add(1, Double.valueOf(strings[1]));
-                    friendLocation.add(Double.valueOf(strings[2]));
-                    friendLocation.add(Double.valueOf(strings[3]));
+                ArrayList<Double> friendLocation = dao.setFriendCoords(strings[1], Double.parseDouble(strings[2]), Double.parseDouble(strings[3])/*, strings[3]*/);
+                    if (friendLocation != null){
+                        friendLocation.add(0, Double.valueOf(strings[1]));
+                    friendLocation.add(1, Double.valueOf(strings[2]));
+                    friendLocation.add(2, Double.valueOf(strings[3]));
                     friendCurrentLocation = friendLocation;
                     return 0;
                 } else {
                     return -1;
                 }
+
+        } else if (strings[0] == "currentLocation") {
+            MyApplicationClass.MySQLAccess.readDataBase();
+            ArrayList<Double> currentLocation = dao.setCurrentCoords(strings[1], Double.parseDouble(strings[2]), Double.parseDouble(strings[3]));
+            if (currentLocation != null){
+                currentLocation.add(0, Double.valueOf(strings[1]));
+                currentLocation.add(1, Double.valueOf(strings[2]));
+                currentLocation.add(2, Double.valueOf(strings[3]));
+                currentUserLocation = currentLocation;
+                return 0;
+            } else {
+                return -1;
             }
+        }
         } catch (Exception e) {
             Log.e("upload failed", e.toString());
         }
@@ -164,12 +177,16 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
         return coords;
     }
 
-    public ArrayList<Double> getFriendCoords(){
+    public ArrayList<String> getFriendCoords(){
         return friendCoords;
     }
 
     public ArrayList<Double> setFriendCoords(){
         return friendCurrentLocation;
+    }
+
+    public ArrayList<Double> setCurrentCoords(){
+        return currentUserLocation;
     }
 
     public String getDescription() {
