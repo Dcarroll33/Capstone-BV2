@@ -121,7 +121,7 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
         userLongitude = args.getDouble("userLongitude");
         userLatitude = args.getDouble("userLatitude");
-        userImageUri = args.getString("userImageUri", userImageUri);
+        //userImageUri = args.getString("userImageUri", userImageUri);
 
         MyApplicationClass.MySQLAccess dao = ConnectDb.getDao();
         if (getArguments() != null) {
@@ -153,7 +153,7 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         Save = (Button) rootView.findViewById(R.id.save_btn);
         UploadImage = (Button) rootView.findViewById(R.id.uploadImage);
         //Load = (Button) rootView.findViewById(R.id.load_btn);
-        profileImage = (ImageView) rootView.findViewById(R.id.profileImage);
+        //profileImage = (ImageView) rootView.findViewById(R.id.profileImage);
 
         /*This is where the editText fields are set with the Strings or Uri from whatever is passed
            in from the bundle.*/
@@ -164,8 +164,8 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         /*The userImageUri is parsed through here because the entire image file path needs to be
           exact. This is so the image can be found and set in the imageView.
          */
-        userImageUriR = Uri.parse(userImageUri);
-        profileImage.setImageURI(userImageUriR);
+        //userImageUriR = Uri.parse(userImageUri);
+        //profileImage.setImageURI(userImageUriR);
 
         return rootView;
     }
@@ -221,7 +221,7 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
               in the database.
              */
             try {
-                String[] params = {"save", currentUser, userName, description, likes_dislikes, userImage};
+                String[] params = {"save", currentUser, userName, description, likes_dislikes /*userImage*/};
                 conDb.execute(params).get();
             } catch (InterruptedException e) {
                 e.printStackTrace();

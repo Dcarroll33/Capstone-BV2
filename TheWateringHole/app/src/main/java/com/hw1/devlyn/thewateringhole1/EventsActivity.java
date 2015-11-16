@@ -14,10 +14,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import info.info.wateringhole.slidingmenu.adapter.NavDrawerListAdapter;
 import info.info.wateringhole.slidingmenu.model.NavDrawerItem;
@@ -31,14 +33,16 @@ public class EventsActivity extends AppCompatActivity {
     private String likes_dislikes;
     private String userName;
     private String events;
-    private String eventDescriptionInfo;
-    private String numParticipatingInfo;
-    private String eventNameInfo;
+    private ArrayList<String> eventInfo;
+    private String eventDesc;
+    private String numPart;
+    private String eventName;
     private double userLongitude;
     private double userLatitude;
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
+    private ListView eventsList;
     private ActionBarDrawerToggle mDrawerToggle;
 
     // nav drawer title
@@ -74,9 +78,10 @@ public class EventsActivity extends AppCompatActivity {
             likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
             userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
             userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
-            eventNameInfo = thisIntent.getStringExtra("eventName");
+            eventInfo = thisIntent.getStringArrayListExtra("eventInfo");
+            /*eventNameInfo = thisIntent.getStringExtra("eventName");
             numParticipatingInfo = thisIntent.getStringExtra("numParticipating");
-            eventDescriptionInfo = thisIntent.getStringExtra("eventDescription");
+            eventDescriptionInfo = thisIntent.getStringExtra("eventDescription");*/
 
         /*This is creating a Fragment object where a bundle is created to store the values of the
             data. This fragment can then be accessed from within FragmentEditProfile to retrieve the
@@ -92,10 +97,25 @@ public class EventsActivity extends AppCompatActivity {
             bundle.putString("likes_dislikes", likes_dislikes);
             bundle.putDouble("userLongitude", userLongitude);
             bundle.putDouble("userLatitude", userLatitude);
-            bundle.putString("eventName", eventNameInfo);
+            bundle.putStringArrayList("eventInfo", eventInfo);
+            /*bundle.putString("eventName", eventNameInfo);
             bundle.putString("numParticipating", numParticipatingInfo);
-            bundle.putString("eventDescription", eventDescriptionInfo);
+            bundle.putString("eventDescription", eventDescriptionInfo);*/
         fragment.setArguments(bundle);
+
+        eventsList = (ListView) findViewById(R.id.eventsList);
+
+
+        // This is the array adapter, it takes the context of the activity as a
+        // first parameter, the type of list view as a second parameter and your
+        // array as a third parameter.
+        for(int i = 0 ; i < eventInfo.size(); i = i + 1) {
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                    this,
+                    android.R.layout.simple_list_item_1,
+                    eventInfo);
+            eventsList.setAdapter(arrayAdapter);
+        }
 
         mTitle = mDrawerTitle = getTitle();
 

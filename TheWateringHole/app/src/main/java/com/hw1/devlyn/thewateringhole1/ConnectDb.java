@@ -74,7 +74,7 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                     }
                     ArrayList<Double> userCoordsResult = dao.getUserCoords(userId);
                     if (userCoordsResult != null) {
-                        Log.d("ConnectDb", "userLongitude" + userCoordsResult.get(1) + "userLatitude" + userCoordsResult.get(2));
+                        Log.d("ConnectDb", "userLongitude" + userCoordsResult.get(0) + "userLatitude" + userCoordsResult.get(1));
                         coords = userCoordsResult;
                     }
                     ArrayList<String> friendCoordsResult = dao.getFriendCoords(userId);
@@ -93,7 +93,7 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                  }
             } else if (strings[0] == "save") {
                 MyApplicationClass.MySQLAccess.readDataBase();
-                int saveResult = dao.userProfile(strings[1], strings[2], strings[3], strings[4], strings[5]);
+                int saveResult = dao.userProfile(strings[1], strings[2], strings[3], strings[4]/*, strings[5]*/);
                 if (saveResult != -1) {
                     Log.d("ConnectDb", "Save successful");
                     save = saveResult;
@@ -126,7 +126,7 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                 }
             } else if (strings[0] == "add") {
                 MyApplicationClass.MySQLAccess.readDataBase();
-                int friendResult = dao.friendInfo(strings[1], strings[2] /*strings[3]*/);
+                int friendResult = dao.addFriend(strings[1], strings[2], strings[3]);
                 if(friendResult != -1) {
                     Log.d("Friend added", "Friend added");
                     friendSave = friendResult;
@@ -135,9 +135,9 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
 
             } else if (strings[0] == "friendLocation") {
                 MyApplicationClass.MySQLAccess.readDataBase();
-                ArrayList<Double> friendLocation = dao.setFriendCoords(strings[1], Double.parseDouble(strings[2]), Double.parseDouble(strings[3])/*, strings[3]*/);
-                    if (friendLocation != null){
-                        friendLocation.add(0, Double.valueOf(strings[1]));
+                ArrayList<Double> friendLocation = dao.setFriendCoords(strings[1], Double.parseDouble(strings[2]), Double.parseDouble(strings[3]));
+                if (friendLocation != null){
+                    friendLocation.add(0, Double.valueOf(strings[1]));
                     friendLocation.add(1, Double.valueOf(strings[2]));
                     friendLocation.add(2, Double.valueOf(strings[3]));
                     friendCurrentLocation = friendLocation;

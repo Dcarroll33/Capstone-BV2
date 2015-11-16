@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private double userLongitude;
     private double userLatitude;
     private ArrayList<String> friendsList;
+    private ArrayList<String> eventInfo;
     private String friendUserName;
     private String friendLongitude;
     private String friendLatitude;
@@ -80,13 +81,9 @@ public class MainActivity extends AppCompatActivity {
             userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
             userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
             friendsList = thisIntent.getStringArrayListExtra("friendsList");
-            //friendUserName = thisIntent.getStringExtra("friendUserName");
-            //friendLongitude = thisIntent.getStringExtra("friendLongitude");
-            //friendLatitude = thisIntent.getStringExtra("friendLatitude");
-            eventNameInfo = thisIntent.getStringExtra("eventName");
-            numParticipatingInfo = thisIntent.getStringExtra("numParticipating");
-            eventDescriptionInfo = thisIntent.getStringExtra("eventDescription");
-            userImageUri = thisIntent.getStringExtra("userImageUri");
+            eventInfo = thisIntent.getStringArrayListExtra("eventInfo");
+
+            //userImageUri = thisIntent.getStringExtra("userImageUri");
 
         /* This is where a new fragment object is initialized*/
         Fragment fragment = new Fragment();
@@ -106,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putString("eventName", eventNameInfo);
                 bundle.putString("numParticipating", numParticipatingInfo);
                 bundle.putString("eventDescription", eventDescriptionInfo);
-                bundle.putString("userImageUri", userImageUri);
+                //bundle.putString("userImageUri", userImageUri);
                 fragment.setArguments(bundle);
 
 

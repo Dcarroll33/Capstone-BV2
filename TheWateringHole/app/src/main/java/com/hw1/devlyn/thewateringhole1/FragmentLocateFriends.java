@@ -161,6 +161,9 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arg0.getLatitude(), arg0.getLongitude()), 18.0f));
                         googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
                                 .position(new LatLng(userLatitude, userLongitude)).title("You are here!"));
+                        /*For loop to skip to the next row in friends table in database. The i + 3 pulls the friendsName, friendsLongitude and friendLatitude from the friends table.
+                            Markers are placed at each friends location until there are no more friends in the table.
+                        */
                         for(int i = 0 ; i < friendsList.size(); i = i + 3) {
                             googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
                                     .position(new LatLng(Double.valueOf(friendsList.get(i+2)), Double.valueOf(friendsList.get(i+1)))).title(friendsList.get(i)));
@@ -171,14 +174,13 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
 
                         try {
                             String[] currentLocation = {"currentLocation", currentUser, String.valueOf(currentLongitude), String.valueOf(currentLatitude)};
-
                             conDb.execute(currentLocation).get();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         }
-                        ArrayList<Double> currentLocation = conDb2.setCurrentCoords();
+                        ArrayList<Double> currentLocation = conDb.setCurrentCoords();
                         if (currentLocation != null) {
                             Toast.makeText(getActivity(), "User Location Updated", Toast.LENGTH_SHORT).show();
                         } else if (currentLocation == null) {
@@ -193,42 +195,6 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
             }
         }
     }
-
-//}
-
-//public void executeMap(){
-        //googleMap.setMyLocationEnabled(true);
-        //googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-
-        //@Override
-       // public void onMyLocationChange (Location arg0){
-
-
-            //googleMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("It's Me!"));
-        //}
-    //});
-
-
-
-        //LocationManager locationMan = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        //Criteria bestFit = new Criteria();
-
-        //Get name of best provider
-        //String provider = locationMan.getBestProvider(bestFit, true);
-        //android.location.LocationListener locationListener;
-        //locationMan.requestLocationUpdates(provider, 1000, 0, getActivity());
-        //Location myLocation =  locationMan.getLastKnownLocation(provider);//locationMan.getLastKnownLocation(provider);
-
-        //double latitude = myLocation.getLatitude();
-        //double longitude = myLocation.getLongitude();
-        //LatLng position = new LatLng(latitude, longitude);
-
-        //googleMap.animateCamera(CameraUpdateFactory.newLatLng(position));
-        //googleMap.animateCamera(CameraUpdateFactory.zoomTo(18));
-        //googleMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!"));
-
-   // }
-
 
     public void getButtons(View v){
         if(v instanceof ViewGroup) {

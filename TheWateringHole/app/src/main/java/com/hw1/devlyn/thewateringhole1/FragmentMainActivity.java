@@ -33,13 +33,14 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
     private double userLongitude;
     private double userLatitude;
     private ArrayList<String> friendsList;
+    private ArrayList<String> eventInfo;
     //private String friendUserName;
     //private String friendLongitude;
     //private String friendLatitude;
-    private String eventNameInfo;
+    /*private String eventNameInfo;
     private String numParticipatingInfo;
     private String eventDescriptionInfo;
-    private String userImageUri;
+    private String userImageUri;*/
     /*Fields for the buttons to be used in this class.*/
     Button Events;
     Button Friends;
@@ -83,13 +84,14 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
         userLongitude = args.getDouble("userLongitude");
         userLatitude = args.getDouble("userLatitude");
         friendsList = args.getStringArrayList("friendsList");
+        eventInfo = args.getStringArrayList("eventInfo");
         //friendUserName = args.getString("friendUserName");
         //friendLongitude = args.getString("friendLongitude");
         //friendLatitude = args.getString("friendLatitude");
-        eventNameInfo = args.getString("eventName");
+        /*eventNameInfo = args.getString("eventName");
         numParticipatingInfo = args.getString("numParticipating", numParticipatingInfo);
-        eventDescriptionInfo = args.getString("eventDescription");
-        userImageUri = args.getString("userImageUri");
+        eventDescriptionInfo = args.getString("eventDescription");*/
+        //userImageUri = args.getString("userImageUri");
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -170,9 +172,10 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             eventsInfo.putExtra("likes_dislikes", likes_dislikes);
             eventsInfo.putExtra("userLongitude", userLongitude);
             eventsInfo.putExtra("userLatitude", userLatitude);
-            eventsInfo.putExtra("eventName", eventNameInfo);
+            eventsInfo.putExtra("eventInfo", eventInfo);
+            /*eventsInfo.putExtra("eventName", eventNameInfo);
             eventsInfo.putExtra("numParticipating", numParticipatingInfo);
-            eventsInfo.putExtra("eventDescription", eventDescriptionInfo);
+            eventsInfo.putExtra("eventDescription", eventDescriptionInfo)*/;
 
             Fragment fragment = new Fragment();
             Bundle bundle = new Bundle();
@@ -184,9 +187,10 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             bundle.putString("likes_dislikes", likes_dislikes);
             bundle.putDouble("userLongitude", userLongitude);
             bundle.putDouble("userLatitude", userLatitude);
-            bundle.putString("eventName", eventNameInfo);
+            bundle.putStringArrayList("eventInfo", eventInfo);
+            /*bundle.putString("eventName", eventNameInfo);
             bundle.putString("numParticipating", numParticipatingInfo);
-            bundle.putString("eventDescription", eventDescriptionInfo);
+            bundle.putString("eventDescription", eventDescriptionInfo);*/
             fragment.setArguments(bundle);
 
             Button b = (Button) view;
@@ -207,7 +211,7 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             //friends.putExtra("friendUserName", friendUserName);
             //friends.putExtra("friendLongitude", friendLongitude);
             //friends.putExtra("friendLatitude", friendLatitude);
-            friends.putExtra("userImageUri", userImageUri);
+            //friends.putExtra("userImageUri", userImageUri);
 
             Fragment fragment = new Fragment();
             Bundle bundle = new Bundle();
@@ -223,7 +227,7 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             //bundle.putString("friendUserName", friendUserName);
             //bundle.putString("friendLongitude", friendLongitude);
             //bundle.putString("friendLatitude", friendLatitude);
-            bundle.putString("userImageUri", userImageUri);
+            //bundle.putString("userImageUri", userImageUri);
             fragment.setArguments(bundle);
 
 
@@ -239,7 +243,7 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             profile.putExtra("likes_dislikes", likes_dislikes);
             profile.putExtra("userLongitude", userLongitude);
             profile.putExtra("userLatitude", userLatitude);
-            profile.putExtra("userImageUri", userImageUri);
+            //profile.putExtra("userImageUri", userImageUri);
 
             Fragment fragment = new Fragment();
             Bundle bundle = new Bundle();
@@ -251,7 +255,7 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             bundle.putString("likes_dislikes", likes_dislikes);
             bundle.putDouble("userLongitude", userLongitude);
             bundle.putDouble("userLatitude", userLatitude);
-            bundle.putString("userImageUri", userImageUri);
+            //bundle.putString("userImageUri", userImageUri);
             fragment.setArguments(bundle);
 
 

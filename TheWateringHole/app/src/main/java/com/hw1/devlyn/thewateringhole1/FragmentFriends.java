@@ -152,7 +152,7 @@ public class FragmentFriends extends Fragment implements  View.OnClickListener {
         if (view == Add) {
             friendUserName = friendUserNameText.getText().toString();
             friendEmail = friendUserEmail.getText().toString();
-            String[] params = {"add", /*currentUser,*/ friendEmail, friendUserName};
+            String[] params = {"add", currentUser, friendEmail, friendUserName};
             try {
                 conDb.execute(params).get();
             } catch (InterruptedException e) {
@@ -161,10 +161,12 @@ public class FragmentFriends extends Fragment implements  View.OnClickListener {
                 e.printStackTrace();
             }
             int friendInfo = conDb.getFriendSave();
-            if (friendInfo > -1) {
+            if(friendInfo == -2) {
+                Toast.makeText(getActivity(), "Friend already added!", Toast.LENGTH_SHORT).show();
+            } else if (friendInfo > -1) {
                 Toast.makeText(getActivity(), "Added Friend!", Toast.LENGTH_SHORT).show();
-            } else if (friendInfo == -1) {
-                Toast.makeText(getActivity(), "Couldn't add Friend", Toast.LENGTH_SHORT).show();
+            } else if (friendInfo == -3) {
+                Toast.makeText(getActivity(), "Friend does not exists!", Toast.LENGTH_SHORT).show();
 
             }
         }

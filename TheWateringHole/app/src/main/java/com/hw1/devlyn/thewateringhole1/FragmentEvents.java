@@ -34,9 +34,10 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
     private String description;
     private String events;
     private String likes_dislikes;
-    private String eventNameInfo;
-    private String numParticipatingInfo;
-    private String eventDescriptionInfo;
+    private ArrayList<String> eventInfo;
+    private String eventName;
+    private String numPart;
+    private String eventDesc;
     private double userLongitude;
     private double userLatitude;
 
@@ -80,9 +81,10 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
         description = args.getString("description", description);
         events = args.getString("events", events);
         likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
-        eventNameInfo= args.getString("eventName", eventNameInfo);
+        eventInfo = args.getStringArrayList("eventInfo");
+        /*eventNameInfo= args.getString("eventName", eventNameInfo);
         numParticipatingInfo = args.getString("numParticipating", numParticipatingInfo);
-        eventDescriptionInfo = args.getString("eventDescription", eventDescriptionInfo);
+        eventDescriptionInfo = args.getString("eventDescription", eventDescriptionInfo);*/
         userLongitude = args.getDouble("userLongitude", userLongitude);
         userLatitude = args.getDouble("userLatitude", userLatitude);
 
@@ -101,13 +103,17 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
         getButtons(rootView);
 
         saveEvent = (Button) rootView.findViewById(R.id.save_btn);
-        eventDescription = (EditText) rootView.findViewById(R.id.eventDescription);
+        /*eventDescription = (EditText) rootView.findViewById(R.id.eventDescription);
         eventTitle = (EditText) rootView.findViewById(R.id.eventName);
-        numParticipants = (EditText) rootView.findViewById(R.id.numParticipants);
+        numParticipants = (EditText) rootView.findViewById(R.id.numParticipants);*/
 
-        eventTitle.setText(eventNameInfo);
-        eventDescription.setText(eventDescriptionInfo);
-        numParticipants.setText(numParticipatingInfo);
+        /*eventName = eventInfo.get(2);
+        numPart   = eventInfo.get(3);
+        eventDesc = eventInfo.get(4);
+
+        eventTitle.setText(eventName);
+        eventDescription.setText(eventDesc);
+        numParticipants.setText(numPart);*/
 
         return rootView;
     }

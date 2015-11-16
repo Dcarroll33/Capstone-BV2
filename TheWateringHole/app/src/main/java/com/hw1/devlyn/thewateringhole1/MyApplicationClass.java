@@ -2,6 +2,7 @@ package com.hw1.devlyn.thewateringhole1;
 
 import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -86,7 +87,7 @@ public class MyApplicationClass extends Application {
             return -1;
         }
 
-        public int userProfile(String userId, String name, String description, String likes_dislikes, String userImage) {
+        public int userProfile(String userId, String name, String description, String likes_dislikes/*, String userImage*/) {
             try {
                 Log.d("UserProfile", "Got data: userId: " + userId + " desc: " + description + " likes-dislikes: " + likes_dislikes + "userName: " + name);
                 preparedStatement = connect
@@ -98,22 +99,22 @@ public class MyApplicationClass extends Application {
                 if (!userProfileResult.next()) {
 
                     preparedStatement = connect
-                            .prepareStatement("insert into userProfile (userName, description, likes_dislikes, userImage) values (?,?,?,?)");
+                            .prepareStatement("insert into userProfile (userName, description, likes_dislikes) values (?,?,?)");/*userImage*/
                     preparedStatement.setString(1, name);
                     preparedStatement.setString(2, description);
                     preparedStatement.setString(3, likes_dislikes);
-                    preparedStatement.setString(4, userImage);
+                    //preparedStatement.setString(4, userImage);
                     Log.d("SQLConnect", "added to DB");
                     return preparedStatement.executeUpdate();
                 } else {
                     preparedStatement = connect
-                            .prepareStatement("update userProfile set userName=?, description=?, likes_dislikes=?, userImage=? where idUserProfile=?");
+                            .prepareStatement("update userProfile set userName=?, description=?, likes_dislikes=? where userId=?"); /*userImage=?*/
 
                     preparedStatement.setString(1, name);
                     preparedStatement.setString(2, description);
                     preparedStatement.setString(3, likes_dislikes);
-                    preparedStatement.setString(4, userImage);
-                    preparedStatement.setString(5, userId);
+                    //preparedStatement.setString(4, userImage);
+                    preparedStatement.setString(4, userId);
                     Log.d("UPDATE", "userId already exists");
                     return preparedStatement.executeUpdate();
                 }
@@ -127,19 +128,20 @@ public class MyApplicationClass extends Application {
             ArrayList<Double> userCoords = new ArrayList<>();
             try {
                 preparedStatement = connect
-                        .prepareStatement("select * from userProfile where userId=?;"/*and userId=? and description=? and likes_dislikes=?"*/);
+                        .prepareStatement("select userLongitude, userLatitude from userProfile where userId in (select userId from userProfile where userId=?)");
                 preparedStatement.setInt(1, userId);
                 //Log.d("MyApplicationClass", "idUserProfile" + profileInfo.set(1, String.valueOf(userId)));
                 ResultSet userCoordsResult = preparedStatement.executeQuery();
                 userCoordsResult.next();
 
-                int userIdR = userCoordsResult.getInt(2);
-                double userLatitude = userCoordsResult.getDouble(8);
-                double userLongitude = userCoordsResult.getDouble(9);
+                //int userIdR = userCoordsResult.getInt(2);
+                //double userLatitude = userCoordsResult.getDouble(2);//9
+                double userLongitude = userCoordsResult.getDouble(1);//10
+                double userLatitude = userCoordsResult.getDouble(2);//9
 
-                userCoords.add(0, Double.valueOf(userIdR));
+                //userCoords.add(0, Double.valueOf(userIdR));
+                userCoords.add(0, userLongitude);
                 userCoords.add(1, userLatitude);
-                userCoords.add(2, userLongitude);
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -185,12 +187,20 @@ public class MyApplicationClass extends Application {
             ArrayList<String> eventInfo = new ArrayList<>();
             try {
                 preparedStatement = connect
-                        .prepareStatement("select * from events where userId=?;");
+                        .prepareStatement("select eventName from events where userId in (select userId from events where userId=?)");//"select * from events where userId=?;");description, numParticipating
                 preparedStatement.setInt(1, userId);
                 ResultSet getEventResult = preparedStatement.executeQuery();
-                getEventResult.next();
+                //getEventResult.next();
 
-                int eventUserIdR = getEventResult.getInt(1);
+                int numberOfColumns = getEventResult.getMetaData().getColumnCount();
+                while (getEventResult.next()) {
+                    int i = 1;
+                    while(i <= numberOfColumns) {
+                        eventInfo.add(getEventResult.getString(i++));
+                    }
+                }
+
+                /*int eventUserIdR = getEventResult.getInt(1);
                 int idevents = getEventResult.getInt(2);
                 String eventNameR = getEventResult.getString(3);
                 int numParticipatingR = getEventResult.getInt(6);
@@ -201,7 +211,7 @@ public class MyApplicationClass extends Application {
                 eventInfo.add(1, String.valueOf(idevents));
                 eventInfo.add(2, eventNameR);
                 eventInfo.add(3, String.valueOf(numParticipatingR));
-                eventInfo.add(4, descriptionR);
+                eventInfo.add(4, descriptionR);*/
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -243,34 +253,68 @@ public class MyApplicationClass extends Application {
             return profileInfo;
         }
 
-        public int friendInfo(/*String userId,*/ String friendEmail, String friendUserName) {
+        public int addFriend(String userId, String friendEmail, String friendUserName) {
             try {
-                preparedStatement = connect
-                        .prepareStatement("select * from friends where userId=?");
-                preparedStatement.setString(1, friendEmail);//userId;
-                Log.d("lol", "About to execute prepstatement1");
-                ResultSet friendInfoResult = preparedStatement.executeQuery();
-                Log.d("SELECT", "inside select");
-                if (!friendInfoResult.next()) {
-
+                ResultSet friendInfoResult;
+                if(!friendEmail.isEmpty() && friendUserName.isEmpty()) {
                     preparedStatement = connect
-                            .prepareStatement("insert into friends (friendEmail, friendUserName) values (?,?)");
-                    //preparedStatement.setString(1, userId);
+                            .prepareStatement("select * from userProfile where userEmail=?");
                     preparedStatement.setString(1, friendEmail);
-                    preparedStatement.setString(2, friendUserName);
+                    Log.d("lol", "About to execute prepstatement1");
+                    friendInfoResult = preparedStatement.executeQuery();
+                    Log.d("SELECT", "inside select");
+                } else if (friendEmail.isEmpty() && !friendUserName.isEmpty()) {
+                    preparedStatement = connect
+                            .prepareStatement("select * from userProfile where userName=?");
+                    preparedStatement.setString(1, friendUserName);
+                    Log.d("lol", "About to execute prepstatement1");
+                    friendInfoResult = preparedStatement.executeQuery();
+                    Log.d("SELECT", "inside select");
+                } else {
+                    preparedStatement = connect
+                            .prepareStatement("select * from userProfile where userName=? and userEmail=?");
+                    preparedStatement.setString(1, friendUserName);
+                    preparedStatement.setString(2, friendEmail);
+                    Log.d("lol", "About to execute prepstatement1");
+                     friendInfoResult = preparedStatement.executeQuery();
+                    Log.d("SELECT", "inside select");
+                }
+                if(!friendInfoResult.next()){
+                    return -3;
+                }
+                PreparedStatement preparedStatement2 = connect
+                        .prepareStatement("select * from friends where userId=? and friendsWith=?");
+                friendInfoResult.next();
+                String friendUserId = friendInfoResult.getString(2);
+                String friendLongitude = friendInfoResult.getString(10);
+                String friendLatitude = friendInfoResult.getString(9);
+                preparedStatement2.setString(1, userId);
+                preparedStatement2.setString(2, friendUserId);
+                ResultSet friendInfo = preparedStatement2.executeQuery();
+
+                if (!friendInfo.next() ) {
+                    preparedStatement = connect
+                            .prepareStatement("insert into friends (userId, friendsWith, friendEmail, friendUserName, friendLatitude, friendLongitude) values (?,?,?,?,?,?)");
+                    preparedStatement.setString(1, userId);
+                    preparedStatement.setString(2, friendUserId);
+                    preparedStatement.setString(3, friendEmail);
+                    preparedStatement.setString(4, friendUserName);
+                    preparedStatement.setString(5, friendLatitude);
+                    preparedStatement.setString(6, friendLongitude);
                     Log.d("SQLConnect", "added to DB");
                     return preparedStatement.executeUpdate();
                 } else {
+                    //String friendUserId = friendInfoResult.getString(2);
                     preparedStatement = connect
-                            .prepareStatement("update friends set friendEmail=?, friendUserName=? where userId=?");
+                            .prepareStatement("update friends set friendsWith=?, friendEmail=?, friendUserName=? where userId=?");
 
                     //preparedStatement.setString(1, userId);
-                    preparedStatement.setString(1, friendEmail);
-                    //preparedStatement.setString(3, eventDescription);
-                    preparedStatement.setString(2, friendUserName);
+                    /*preparedStatement.setString(1, friendUserId);
+                    preparedStatement.setString(2, friendEmail);
+                    preparedStatement.setString(3, friendUserName);
+                    preparedStatement.setString(4, userId);*/
                     //preparedStatement.setString(3, userId);
-                    //Log.d("UPDATE", "userId already exists");
-                    return preparedStatement.executeUpdate();
+                    return -2;//preparedStatement.executeUpdate();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

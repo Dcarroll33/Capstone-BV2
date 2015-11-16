@@ -92,13 +92,7 @@ public class LocateFriendsActivity extends AppCompatActivity {
         bundle.putDouble("userLongitude", userLongitude);
         bundle.putDouble("userLatitude", userLatitude);
         bundle.putStringArrayList("friendsList", friendsList);
-        //bundle.putString("friendUserName", friendUserName);
-        //bundle.putString("friendLongitude", friendLongitude);
-        //bundle.putString("friendLatitude", friendLatitude);
-        /*bundle.putString("eventName", eventNameInfo);
-        bundle.putString("numParticipating", numParticipatingInfo);
-        bundle.putString("eventDescription", eventDescriptionInfo);
-        bundle.putString("userImageUri", userImageUri);*/
+        //bundle.putString("userImageUri", userImageUri);*/
         fragment.setArguments(bundle);
 
         mTitle = mDrawerTitle = getTitle();

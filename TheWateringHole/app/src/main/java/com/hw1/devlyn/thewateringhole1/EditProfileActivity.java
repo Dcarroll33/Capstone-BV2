@@ -107,7 +107,7 @@ public class EditProfileActivity extends AppCompatActivity {
             likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
             userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
             userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
-            userImageUri = thisIntent.getStringExtra("userImageUri");
+            //userImageUri = thisIntent.getStringExtra("userImageUri");
 
         /*This is creating a Fragment object where a bundle is created to store the values of the
             data. This fragment can then be accessed from within FragmentEditProfile to retrieve the
@@ -123,7 +123,7 @@ public class EditProfileActivity extends AppCompatActivity {
             bundle.putString("likes_dislikes", likes_dislikes);
             bundle.putDouble("userLongitude", userLongitude);
             bundle.putDouble("userLatitude", userLatitude);
-            bundle.putString("userImageUri", userImageUri);
+            //bundle.putString("userImageUri", userImageUri);
         fragment.setArguments(bundle);
 
         /*This is where the EditTexts that are within the FragmentEditProfile are located and

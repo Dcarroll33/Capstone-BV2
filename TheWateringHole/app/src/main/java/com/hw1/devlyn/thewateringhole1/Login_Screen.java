@@ -76,6 +76,7 @@ public class Login_Screen extends Activity implements View.OnClickListener {
 
             ArrayList<String> myList = conDb.getUserProfileInfo();
             String idUserProfile = myList.get(1);
+            //String userId = myList.get(2);
             String userNameP = myList.get(2);
             String description = myList.get(3);
             String events = myList.get(4);
@@ -83,29 +84,21 @@ public class Login_Screen extends Activity implements View.OnClickListener {
             String userImageUri = myList.get(6);
 
             ArrayList<Double> myList2 = conDb.getUserCoords();
+            double userLongitude = myList2.get(0);
             double userLatitude = myList2.get(1);
-            double userLongitude = myList2.get(2);
 
             ArrayList<String> friendCoords = conDb.getFriendCoords();
-            //int friendId = friendCoords.get(Integer.parseInt(0));
-            //String friendUserName = friendCoords.get(0);
-            //String friendLongitude = friendCoords.get(1);
-            //String friendLatitude = friendCoords.get(2);
-
 
             ArrayList<String> eventInfo = conDb.userEventInfo();
-            String idevents = eventInfo.get(1);
-            String eventName = eventInfo.get(2);
-            String numParticipating = eventInfo.get(3);
-            String eventDescription = eventInfo.get(4);
+
             /*This is a check to make sure the userId is valid and if it is then we have logged in
                 successfully. This also starts an intent for the MainActivity and stores the userId,
                 description and likes_dislikes as extras to pass to MainActivity. */
             if(!userId.equals("-1")){
                 Toast.makeText(getBaseContext(), "Logged in", Toast.LENGTH_SHORT).show();
 
-                Intent login = new Intent(this, MainActivity.class );
-                    login.putExtra("userId", userId);
+                Intent login = new Intent(this, MainActivity.class);
+                login.putExtra("userId", userId);
                     login.putExtra("idUserProfile", idUserProfile);
                     login.putExtra("userName", userNameP);
                     login.putExtra("description", "" + description );
@@ -114,14 +107,15 @@ public class Login_Screen extends Activity implements View.OnClickListener {
                     login.putExtra("userLongitude", userLongitude);
                     login.putExtra("userLatitude", userLatitude);
                     login.putExtra("friendsList", friendCoords);
+                    login.putExtra("eventInfo", eventInfo);
                     //login.putExtra("friendUserName", friendUserName);
                     //login.putExtra("friendLongitude", friendLongitude);
                     //login.putExtra("friendLatitude", friendLatitude);
-                    login.putExtra("idevents", idevents);
+                    /*login.putExtra("idevents", idevents);
                     login.putExtra("eventName", eventName);
                     login.putExtra("numParticipating", numParticipating);
-                    login.putExtra("eventDescription", eventDescription);
-                    login.putExtra("userImageUri", userImageUri);
+                    login.putExtra("eventDescription", eventDescription);*/
+                    //login.putExtra("userImageUri", userImageUri);
 
                 this.startActivity(login);
             }else {
