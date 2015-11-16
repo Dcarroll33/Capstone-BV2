@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -69,6 +70,7 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
     private String userImage;
     private String userImageUri;
     private Uri userImageUriR;
+    private ArrayList<String> userProfileInfo;
     private double userLongitude;
     private double userLatitude;
 
@@ -119,6 +121,7 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         description = args.getString("description", description);
         events = args.getString("events", events);
         likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
+        userProfileInfo = args.getStringArrayList("userProfileInfo");
         userLongitude = args.getDouble("userLongitude");
         userLatitude = args.getDouble("userLatitude");
         //userImageUri = args.getString("userImageUri", userImageUri);
@@ -157,6 +160,10 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
 
         /*This is where the editText fields are set with the Strings or Uri from whatever is passed
            in from the bundle.*/
+        userName = userProfileInfo.get(2);
+        description = userProfileInfo.get(4);
+        likes_dislikes = userProfileInfo.get(6);
+
         UserName.setText(userName);
         Description.setText(description);
         Likes_Dislikes.setText(likes_dislikes);

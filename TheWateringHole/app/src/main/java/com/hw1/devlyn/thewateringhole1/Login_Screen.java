@@ -74,14 +74,8 @@ public class Login_Screen extends Activity implements View.OnClickListener {
             }
             String userId = String.valueOf(conDb.getUserId());
 
-            ArrayList<String> myList = conDb.getUserProfileInfo();
-            String idUserProfile = myList.get(1);
-            //String userId = myList.get(2);
-            String userNameP = myList.get(2);
-            String description = myList.get(3);
-            String events = myList.get(4);
-            String likes_dislikes = myList.get(5);
-            String userImageUri = myList.get(6);
+            ArrayList<String> userProfileInfo = conDb.getUserProfileInfo();
+            //String userImageUri = myList.get(6);*/
 
             ArrayList<Double> myList2 = conDb.getUserCoords();
             double userLongitude = myList2.get(0);
@@ -99,22 +93,11 @@ public class Login_Screen extends Activity implements View.OnClickListener {
 
                 Intent login = new Intent(this, MainActivity.class);
                 login.putExtra("userId", userId);
-                    login.putExtra("idUserProfile", idUserProfile);
-                    login.putExtra("userName", userNameP);
-                    login.putExtra("description", "" + description );
-                    login.putExtra("events", events);
-                    login.putExtra("likes_dislikes", likes_dislikes);
+                    login.putExtra("userProfileInfo", userProfileInfo);
                     login.putExtra("userLongitude", userLongitude);
                     login.putExtra("userLatitude", userLatitude);
                     login.putExtra("friendsList", friendCoords);
                     login.putExtra("eventInfo", eventInfo);
-                    //login.putExtra("friendUserName", friendUserName);
-                    //login.putExtra("friendLongitude", friendLongitude);
-                    //login.putExtra("friendLatitude", friendLatitude);
-                    /*login.putExtra("idevents", idevents);
-                    login.putExtra("eventName", eventName);
-                    login.putExtra("numParticipating", numParticipating);
-                    login.putExtra("eventDescription", eventDescription);*/
                     //login.putExtra("userImageUri", userImageUri);
 
                 this.startActivity(login);

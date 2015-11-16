@@ -284,7 +284,6 @@ public class MyApplicationClass extends Application {
                 }
                 PreparedStatement preparedStatement2 = connect
                         .prepareStatement("select * from friends where userId=? and friendsWith=?");
-                friendInfoResult.next();
                 String friendUserId = friendInfoResult.getString(2);
                 String friendLongitude = friendInfoResult.getString(10);
                 String friendLatitude = friendInfoResult.getString(9);
@@ -308,12 +307,6 @@ public class MyApplicationClass extends Application {
                     preparedStatement = connect
                             .prepareStatement("update friends set friendsWith=?, friendEmail=?, friendUserName=? where userId=?");
 
-                    //preparedStatement.setString(1, userId);
-                    /*preparedStatement.setString(1, friendUserId);
-                    preparedStatement.setString(2, friendEmail);
-                    preparedStatement.setString(3, friendUserName);
-                    preparedStatement.setString(4, userId);*/
-                    //preparedStatement.setString(3, userId);
                     return -2;//preparedStatement.executeUpdate();
                 }
             } catch (SQLException e) {
@@ -398,6 +391,13 @@ public class MyApplicationClass extends Application {
                     preparedStatement = connect
                             .prepareStatement("update userProfile set userLongitude=?, userLatitude=? where idUserProfile=?");
 
+                    preparedStatement.setDouble(1, currentLongitude);
+                    preparedStatement.setDouble(2, currentLatitude);
+                    preparedStatement.setString(3, userId);
+                    preparedStatement.executeUpdate();
+
+                    preparedStatement = connect
+                            .prepareStatement("update friends set friendLongitude=?, friendLatitude=? where friendsWith=?");
                     preparedStatement.setDouble(1, currentLongitude);
                     preparedStatement.setDouble(2, currentLatitude);
                     preparedStatement.setString(3, userId);

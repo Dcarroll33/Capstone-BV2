@@ -103,10 +103,6 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
         userLongitude = args.getDouble("userLongitude", userLongitude);
         userLatitude = args.getDouble("userLatitude", userLatitude);
         friendsList = args.getStringArrayList("friendsList");
-        //friendUserName = args.getString("friendUserName", friendUserName);
-        //friendLongitude = args.getString("friendLongitude", friendLongitude);
-        //friendLatitude = args.getString("friendLatitude", friendLatitude);
-
     }
 
     @Override
@@ -231,6 +227,27 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
     public void onClick(View view) {
         if (view == FriendsProfile) {
             Intent friendsProfile = new Intent(getActivity(), FriendsProfileActivity.class);
+            friendsProfile.putExtra("userId", currentUser);
+            friendsProfile.putExtra("idUserProfile", idUserProfile);
+            friendsProfile.putExtra("userName", userName);
+            friendsProfile.putExtra("description", "" + description);
+            friendsProfile.putExtra("events", events);
+            friendsProfile.putExtra("likes_dislikes", likes_dislikes);
+            friendsProfile.putExtra("userLongitude", userLongitude);
+            friendsProfile.putExtra("userLatitude", userLatitude);
+
+            android.app.Fragment fragment = new android.app.Fragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("currentUser", currentUser);
+            bundle.putString("idUserProfile", idUserProfile);
+            bundle.putString("userName", userName);
+            bundle.putString("description", description);
+            bundle.putString("events", events);
+            bundle.putString("likes_dislikes", likes_dislikes);
+            bundle.putDouble("userLongitude", userLongitude);
+            bundle.putDouble("userLatitude", userLatitude);
+            //bundle.putString("userImageUri", userImageUri);
+            fragment.setArguments(bundle);
 
             Button b = (Button) view;
             this.startActivity(friendsProfile);

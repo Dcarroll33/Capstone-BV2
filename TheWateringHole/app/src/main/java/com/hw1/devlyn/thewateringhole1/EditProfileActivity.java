@@ -84,6 +84,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private String events;
     private String likes_dislikes;
     private String userImageUri;
+    private ArrayList<String> userProfileInfo;
 
     /*Doubles that are needed for the user's longitude and latitude.*/
     private double userLongitude;
@@ -100,11 +101,7 @@ public class EditProfileActivity extends AppCompatActivity {
         Intent thisIntent = getIntent();
         Log.d("MainAct", "Inside editProfile");
             currentUser = thisIntent.getStringExtra("userId");
-            idUserProfile = thisIntent.getStringExtra("idUserProfile");
-            userName = thisIntent.getStringExtra("userName");
-            description = thisIntent.getStringExtra("description");
-            events = thisIntent.getStringExtra("events");
-            likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
+            userProfileInfo = thisIntent.getStringArrayListExtra("userProfileInfo");
             userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
             userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
             //userImageUri = thisIntent.getStringExtra("userImageUri");
@@ -116,11 +113,7 @@ public class EditProfileActivity extends AppCompatActivity {
         Fragment fragment = new Fragment();
             Bundle bundle = new Bundle();
             bundle.putString("currentUser", currentUser);
-            bundle.putString("idUserProfile", idUserProfile);
-            bundle.putString("userName", userName);
-            bundle.putString("description", description);
-            bundle.putString("events", events);
-            bundle.putString("likes_dislikes", likes_dislikes);
+            bundle.putStringArrayList("userProfileInfo", userProfileInfo);
             bundle.putDouble("userLongitude", userLongitude);
             bundle.putDouble("userLatitude", userLatitude);
             //bundle.putString("userImageUri", userImageUri);
