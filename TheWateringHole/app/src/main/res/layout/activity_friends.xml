@@ -6,7 +6,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.hw1.devlyn.thewateringhole1.FriendsActivity"
-    android:background="#ffbd32ff">
+    android:background="@drawable/friends_activity_background">
 
 
     <android.support.v4.widget.DrawerLayout

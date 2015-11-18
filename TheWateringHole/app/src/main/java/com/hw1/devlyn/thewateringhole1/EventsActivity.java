@@ -1,5 +1,8 @@
 package com.hw1.devlyn.thewateringhole1;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -8,8 +11,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.internal.widget.AdapterViewCompat;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +30,7 @@ import java.util.List;
 import info.info.wateringhole.slidingmenu.adapter.NavDrawerListAdapter;
 import info.info.wateringhole.slidingmenu.model.NavDrawerItem;
 /*EventsActivity used so the user can create an event from within the activity.*/
-public class EventsActivity extends AppCompatActivity {
+public class EventsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     /*Fields used to store the values from the intent that is passed in from MainActivity.*/
     private String currentUser;
@@ -34,6 +40,8 @@ public class EventsActivity extends AppCompatActivity {
     private String userName;
     private String events;
     private ArrayList<String> eventInfo;
+    private ArrayList<String> userProfileInfo;
+    private ArrayList<String> friendsList;
     private String eventDesc;
     private String numPart;
     private String eventName;
@@ -43,6 +51,7 @@ public class EventsActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ListView eventsList;
+    private ListView eventInfoList;
     private ActionBarDrawerToggle mDrawerToggle;
 
     // nav drawer title
@@ -71,17 +80,12 @@ public class EventsActivity extends AppCompatActivity {
         /*Intent created to store the values that are retrieved from the MainActivity.*/
         Intent thisIntent = getIntent();
             currentUser = thisIntent.getStringExtra("userId");
-            idUserProfile = thisIntent.getStringExtra("idUserProfile");
-            userName = thisIntent.getStringExtra("userName");
-            description = thisIntent.getStringExtra("description");
-            events = thisIntent.getStringExtra("events");
-            likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
             userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
             userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
             eventInfo = thisIntent.getStringArrayListExtra("eventInfo");
-            /*eventNameInfo = thisIntent.getStringExtra("eventName");
-            numParticipatingInfo = thisIntent.getStringExtra("numParticipating");
-            eventDescriptionInfo = thisIntent.getStringExtra("eventDescription");*/
+            userProfileInfo = thisIntent.getStringArrayListExtra("userProfileInfo");
+            friendsList = thisIntent.getStringArrayListExtra("friendsList");
+
 
         /*This is creating a Fragment object where a bundle is created to store the values of the
             data. This fragment can then be accessed from within FragmentEditProfile to retrieve the
@@ -98,18 +102,18 @@ public class EventsActivity extends AppCompatActivity {
             bundle.putDouble("userLongitude", userLongitude);
             bundle.putDouble("userLatitude", userLatitude);
             bundle.putStringArrayList("eventInfo", eventInfo);
-            /*bundle.putString("eventName", eventNameInfo);
-            bundle.putString("numParticipating", numParticipatingInfo);
-            bundle.putString("eventDescription", eventDescriptionInfo);*/
+            bundle.putStringArrayList("userProfileInfo", userProfileInfo);
+            bundle.putStringArrayList("friendsList", friendsList);
         fragment.setArguments(bundle);
 
         eventsList = (ListView) findViewById(R.id.eventsList);
+        eventsList.setOnItemClickListener(this);
 
 
         // This is the array adapter, it takes the context of the activity as a
         // first parameter, the type of list view as a second parameter and your
         // array as a third parameter.
-        for(int i = 0 ; i < eventInfo.size(); i = i + 1) {
+        for(int i = 0 ; i <= eventInfo.size(); i = i + 3) {
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                     this,
                     android.R.layout.simple_list_item_1,
@@ -189,6 +193,32 @@ public class EventsActivity extends AppCompatActivity {
             displayView(0);
         }
     }
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        CharSequence[] items = eventInfo.toArray(new CharSequence[eventInfo.size()]);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        if(id == 0) {
+            String title = eventInfo.get(0);
+            builder.setTitle(title);
+            //builder.setItems(eventInfo.get())
+        } else if (id == 1) {
+            String title = eventInfo.get(1);
+            builder.setTitle(title);
+        } else if (id == 2) {
+            String title = eventInfo.get(2);
+            builder.setTitle(title);
+        }
+        //builder.setTitle(String.valueOf(id));
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                // Do something with the selection
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -243,7 +273,6 @@ public class EventsActivity extends AppCompatActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-
     /**
      * Slide menu item click listener
      * */
@@ -263,20 +292,18 @@ public class EventsActivity extends AppCompatActivity {
                 case 0:
                     Intent home = new Intent(EventsActivity.this, MainActivity.class);
                     home.putExtra("userId", currentUser);
-                    home.putExtra("idUserProfile", idUserProfile);
-                    home.putExtra("userName", userName);
-                    home.putExtra("description", "" + description );
-                    home.putExtra("events", events);
-                    home.putExtra("likes_dislikes", likes_dislikes);
+                    home.putStringArrayListExtra("userProfileInfo", userProfileInfo);
+                    home.putStringArrayListExtra("friendsList", friendsList);
+                    home.putStringArrayListExtra("eventInfo", eventInfo);
+                    home.putExtra("userLongitude", userLongitude);
+                    home.putExtra("userLatitude", userLatitude);
 
                     android.app.Fragment MainActivityFrag = new android.app.Fragment();
                     Bundle MainActivityBundle = new Bundle();
                     MainActivityBundle.putString("currentUser", currentUser);
-                    MainActivityBundle.putString("idUserProfile", idUserProfile);
-                    MainActivityBundle.putString("userName", userName);
-                    MainActivityBundle.putString("description", description);
-                    MainActivityBundle.putString("events", events);
-                    MainActivityBundle.putString("likes_dislikes", likes_dislikes);
+                    MainActivityBundle.putStringArrayList("userProfileInfo", userProfileInfo);
+                    MainActivityBundle.putStringArrayList("eventInfo", eventInfo);
+                    MainActivityBundle.putStringArrayList("friendsList", friendsList);
                     MainActivityFrag.setArguments(MainActivityBundle);
 
                     startActivity(home);
@@ -288,24 +315,22 @@ public class EventsActivity extends AppCompatActivity {
                     Intent FindPeople = new Intent(EventsActivity.this, LocateFriendsActivity.class);
 
                     FindPeople.putExtra("userId", currentUser);
-                    FindPeople.putExtra("idUserProfile", idUserProfile);
-                    FindPeople.putExtra("userName", userName);
-                    FindPeople.putExtra("description", "" + description);
-                    FindPeople.putExtra("events", events);
-                    FindPeople.putExtra("likes_dislikes", likes_dislikes);
+                    FindPeople.putStringArrayListExtra("userProfileInfo", userProfileInfo);
+                    FindPeople.putStringArrayListExtra("friendsList", friendsList);
+                    FindPeople.putStringArrayListExtra("eventInfo", eventInfo);
                     FindPeople.putExtra("userLongitude", userLongitude);
                     FindPeople.putExtra("userLatitude", userLatitude);
+                    //FindPeople.putExtra("userImageUri", userImageUri);*/
 
                     android.app.Fragment FindPeopleFrag = new android.app.Fragment();
                     Bundle FindPeopleBundle = new Bundle();
                     FindPeopleBundle.putString("currentUser", currentUser);
-                    FindPeopleBundle.putString("idUserProfile", idUserProfile);
-                    FindPeopleBundle.putString("userName", userName);
-                    FindPeopleBundle.putString("description", description);
-                    FindPeopleBundle.putString("events", events);
-                    FindPeopleBundle.putString("likes_dislikes", likes_dislikes);
+                    FindPeopleBundle.putStringArrayList("userProfileInfo", userProfileInfo);
+                    FindPeopleBundle.putStringArrayList("friendsList", friendsList);
+                    FindPeopleBundle.putStringArrayList("eventInfo", eventInfo);
                     FindPeopleBundle.putDouble("userLongitude", userLongitude);
                     FindPeopleBundle.putDouble("userLatitude", userLatitude);
+                    //FindPeopleBundle.putString("userImageUri", userImageUri);
                     FindPeopleFrag.setArguments(FindPeopleBundle);
 
                     startActivity(FindPeople);
@@ -314,9 +339,9 @@ public class EventsActivity extends AppCompatActivity {
                 *locate event activity page.
                 */
                 case 2:
-                    Intent FindEvents = new Intent(EventsActivity.this, LocateEventsActivity.class);
+                    Intent Events = new Intent(EventsActivity.this, EventsActivity.class);
 
-                    FindEvents.putExtra("userId", currentUser);
+                    /*FindEvents.putExtra("userId", currentUser);
                     FindEvents.putExtra("idUserProfile", idUserProfile);
                     FindEvents.putExtra("userName", userName);
                     FindEvents.putExtra("description", "" + description);
@@ -331,9 +356,9 @@ public class EventsActivity extends AppCompatActivity {
                     FindEventsBundle.putString("description", description);
                     FindEventsBundle.putString("events", events);
                     FindEventsBundle.putString("likes_dislikes", likes_dislikes);
-                    FindEventsFrag.setArguments(FindEventsBundle);
+                    FindEventsFrag.setArguments(FindEventsBundle);*/
 
-                    startActivity(FindEvents);
+                    //startActivity(Events);
                     break;
                 /*Case 3 used for the FindHangouts item in the list and redirects the user to the
                  *locate hangouts activity page.
@@ -367,20 +392,20 @@ public class EventsActivity extends AppCompatActivity {
                     Intent EditProfile = new Intent(EventsActivity.this, EditProfileActivity.class);
 
                     EditProfile.putExtra("userId", currentUser);
-                    EditProfile.putExtra("idUserProfile", idUserProfile);
-                    EditProfile.putExtra("userName", userName);
-                    EditProfile.putExtra("description", "" + description);
-                    EditProfile.putExtra("events", events);
-                    EditProfile.putExtra("likes_dislikes", likes_dislikes);
+                    EditProfile.putStringArrayListExtra("userProfileInfo", userProfileInfo);
+                    EditProfile.putStringArrayListExtra("eventInfo", eventInfo);
+                    EditProfile.putStringArrayListExtra("friendsList", friendsList);
+                    EditProfile.putExtra("userLongitude", userLongitude);
+                    EditProfile.putExtra("userLatitude", userLatitude);
 
                     android.app.Fragment EditProfileFrag = new android.app.Fragment();
                     Bundle EditProfileBundle = new Bundle();
                     EditProfileBundle.putString("currentUser", currentUser);
-                    EditProfileBundle.putString("idUserProfile", idUserProfile);
-                    EditProfileBundle.putString("userName", userName);
-                    EditProfileBundle.putString("description", description);
-                    EditProfileBundle.putString("events", events);
-                    EditProfileBundle.putString("likes_dislikes", likes_dislikes);
+                    EditProfileBundle.putStringArrayList("userProfileInfo", userProfileInfo);
+                    EditProfileBundle.putStringArrayList("eventInfo", eventInfo);
+                    EditProfileBundle.putStringArrayList("friendsList", friendsList);
+                    EditProfileBundle.putDouble("userLongitude", userLongitude);
+                    EditProfileBundle.putDouble("userLatitude", userLatitude);
                     EditProfileFrag.setArguments(EditProfileBundle);
 
                     startActivity(EditProfile);
@@ -392,20 +417,20 @@ public class EventsActivity extends AppCompatActivity {
                     Intent Settings = new Intent(EventsActivity.this, SettingsActivity.class);
 
                     Settings.putExtra("userId", currentUser);
-                    Settings.putExtra("idUserProfile", idUserProfile);
-                    Settings.putExtra("userName", userName);
-                    Settings.putExtra("description", "" + description);
-                    Settings.putExtra("events", events);
-                    Settings.putExtra("likes_dislikes", likes_dislikes);
+                    Settings.putStringArrayListExtra("eventInfo", eventInfo);
+                    Settings.putStringArrayListExtra("userProfileInfo", userProfileInfo);
+                    Settings.putStringArrayListExtra("friendsList", friendsList);
+                    Settings.putExtra("userLongitude", userLongitude);
+                    Settings.putExtra("userLatitude", userLatitude);
 
                     android.app.Fragment SettingsFrag = new android.app.Fragment();
                     Bundle SettingsBundle = new Bundle();
                     SettingsBundle.putString("currentUser", currentUser);
-                    SettingsBundle.putString("idUserProfile", idUserProfile);
-                    SettingsBundle.putString("userName", userName);
-                    SettingsBundle.putString("description", description);
-                    SettingsBundle.putString("events", events);
-                    SettingsBundle.putString("likes_dislikes", likes_dislikes);
+                    SettingsBundle.putStringArrayList("eventInfo", eventInfo);
+                    SettingsBundle.putStringArrayList("userProfileInfo", userProfileInfo);
+                    SettingsBundle.putStringArrayList("friendsList", friendsList);
+                    SettingsBundle.putDouble("userLongitude", userLongitude);
+                    SettingsBundle.putDouble("userLatitude", userLatitude);
                     SettingsFrag.setArguments(SettingsBundle);
 
                     startActivity(Settings);

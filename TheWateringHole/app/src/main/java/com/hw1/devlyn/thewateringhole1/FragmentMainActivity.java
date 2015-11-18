@@ -190,27 +190,20 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             Intent friends = new Intent(getActivity(), LocateFriendsActivity.class);
 
             friends.putExtra("userId", currentUser);
-            friends.putExtra("idUserProfile", idUserProfile);
-            friends.putExtra("userName", userName);
-            friends.putExtra("description", "" + description);
-            friends.putExtra("events", events);
-            friends.putExtra("likes_dislikes", likes_dislikes);
             friends.putExtra("userLongitude", userLongitude);
             friends.putExtra("userLatitude", userLatitude);
             friends.putExtra("friendsList", friendsList);
+            friends.putExtra("userProfileInfo", userProfileInfo);
+            friends.putExtra("eventInfo", eventInfo);
             //friends.putExtra("userImageUri", userImageUri);
 
             Fragment fragment = new Fragment();
             Bundle bundle = new Bundle();
             bundle.putString("currentUser", currentUser);
-            bundle.putString("idUserProfile", idUserProfile);
-            bundle.putString("userName", userName);
-            bundle.putString("description", description);
-            bundle.putString("events", events);
-            bundle.putString("likes_dislikes", likes_dislikes);
             bundle.putDouble("userLongitude", userLongitude);
             bundle.putDouble("userLatitude", userLatitude);
             bundle.putStringArrayList("friendsList", friendsList);
+            bundle.putStringArrayList("userProfileInfo", userProfileInfo);
             //bundle.putString("userImageUri", userImageUri);
             fragment.setArguments(bundle);
 

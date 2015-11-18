@@ -8,6 +8,11 @@
 <string name="login">Login</string>
 <string name="register">Register</string>
 
+    <!--String values for location updates!-->
+    <string name="lbl_you_are_at">YOU ARE AT</string>
+    <string name="btn_get_location">GET MY LOCATION</string>
+    <string name="btn_start_location_updates">START LOCATION UPDATES</string>
+    <string name="btn_stop_location_updates">STOP LOCATION UPDATES</string>
 
 <!--These are the string names used for buttons throughout the applciation-->
 <string name="locate_events">Locate Events</string>
@@ -80,6 +85,7 @@
 <string name="hangout_page_title">Hangout Page</string>
 <string name="title_activity_slide_out_menu">SlideOutMenuActivity</string>
 <string name="main_menu_title">The Watering Hole</string>
+<string name="event_info_title">Event Info</string>
 
 <!--Slide out menu string values-->
 

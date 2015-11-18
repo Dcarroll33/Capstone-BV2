@@ -200,19 +200,6 @@ public class MyApplicationClass extends Application {
                     }
                 }
 
-                /*int eventUserIdR = getEventResult.getInt(1);
-                int idevents = getEventResult.getInt(2);
-                String eventNameR = getEventResult.getString(3);
-                int numParticipatingR = getEventResult.getInt(6);
-                String descriptionR = getEventResult.getString(7);
-
-
-                eventInfo.add(0, String.valueOf(eventUserIdR));
-                eventInfo.add(1, String.valueOf(idevents));
-                eventInfo.add(2, eventNameR);
-                eventInfo.add(3, String.valueOf(numParticipatingR));
-                eventInfo.add(4, descriptionR);*/
-
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -232,7 +219,7 @@ public class MyApplicationClass extends Application {
 
                 int userIdR = getProfileResult.getInt(1);
                 int idUserProfileR = getProfileResult.getInt(2);
-                String profileNameR = getProfileResult.getString(3);
+                String userNameR = getProfileResult.getString(3);
                 String descriptionR = getProfileResult.getString(4);
                 String eventsR = getProfileResult.getString(5);
                 String likes_dislikes_R = getProfileResult.getString(6);
@@ -241,7 +228,7 @@ public class MyApplicationClass extends Application {
 
                 profileInfo.add(0, String.valueOf(userIdR));
                 profileInfo.add(1, String.valueOf(idUserProfileR));
-                profileInfo.add(2, profileNameR);
+                profileInfo.add(2, userNameR);
                 profileInfo.add(3, descriptionR);
                 profileInfo.add(4, eventsR);
                 profileInfo.add(5, likes_dislikes_R);
