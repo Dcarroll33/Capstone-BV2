@@ -32,24 +32,33 @@ public class LocateEventsActivity extends AppCompatActivity {
     String userName;
     String events;
 
+    /*These are the ArrayList's of strings used for storing the values passed in through the intent
+        and bundle.
+     */
     private ArrayList<String> eventInfo;
     private ArrayList<String> eventTitles;
     private ArrayList<String> eventLocation;
+    private ArrayList<String> userProfileInfo;
+    private ArrayList<String> friendsList;
 
+    /*Fields for the navigation drawer use in this activity the consists of the layout, listview
+        and the toggle button to make the menu slide out.
+    */
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
 
-    // nav drawer title
+    /*Navigation drawer title*/
     private CharSequence mDrawerTitle;
 
-    // used to store app title
+    /* CharSequence used to store app title */
     private CharSequence mTitle;
 
-    // slide menu items
+    /* Sliding menu items in the list view along with the icons that go with them*/
     private String[] navMenuTitles;
     private TypedArray navMenuIcons;
 
+    /*ArrayList and arrayList adapater used tp populate the sliding menu*/
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
 
@@ -71,23 +80,18 @@ public class LocateEventsActivity extends AppCompatActivity {
         eventInfo = thisIntent.getStringArrayListExtra("eventInfo");
         eventTitles = thisIntent.getStringArrayListExtra("eventTitles");
         eventLocation = thisIntent.getStringArrayListExtra("eventLocation");
+        userProfileInfo = thisIntent.getStringArrayListExtra("userProfileInfo");
+        friendsList = thisIntent.getStringArrayListExtra("friendsList");
 
         Fragment fragment = new Fragment();
                 /*A bundle is created here, where the values from the intent are then passed in to.*/
         Bundle bundle = new Bundle();
         bundle.putString("currentUser", currentUser);
-        /*bundle.putString("idUserProfile", idUserProfile);
-        bundle.putString("userName", userName);
-        bundle.putString("description", description);
-        bundle.putString("events", events);
-        bundle.putString("likes_dislikes", likes_dislikes)*/;
-        /*bundle.putDouble("userLongitude", userLongitude);
-        bundle.putDouble("userLatitude", userLatitude);
-        bundle.putStringArrayList("friendsList", friendsList);
-        bundle.putStringArrayList("userProfileInfo", userProfileInfo);*/
         bundle.putStringArrayList("eventInfo", eventInfo);
         bundle.putStringArrayList("eventTitles", eventTitles);
         bundle.putStringArrayList("eventLocation", eventLocation);
+        bundle.putStringArrayList("userProfileInfo", userProfileInfo);
+        bundle.putStringArrayList("friendsList", friendsList);
         //bundle.putString("userImageUri", userImageUri);*/
         fragment.setArguments(bundle);
 
@@ -238,20 +242,22 @@ public class LocateEventsActivity extends AppCompatActivity {
                     Intent home = new Intent(LocateEventsActivity.this, MainActivity.class);
 
                     home.putExtra("userId", currentUser);
-                    home.putExtra("idUserProfile", idUserProfile);
-                    home.putExtra("userName", userName);
-                    home.putExtra("description", "" + description );
-                    home.putExtra("events", events);
-                    home.putExtra("likes_dislikes", likes_dislikes);
+                    home.putStringArrayListExtra("eventInfo", eventInfo);
+                    home.putStringArrayListExtra("eventTitles", eventTitles);
+                    home.putStringArrayListExtra("eventLocation", eventLocation);
+                    home.putStringArrayListExtra("userProfileInfo", userProfileInfo);
+                    home.putStringArrayListExtra("friendsList", friendsList);
+
 
                     android.app.Fragment MainActivityFrag = new android.app.Fragment();
                     Bundle MainActivityBundle = new Bundle();
                     MainActivityBundle.putString("currentUser", currentUser);
-                    MainActivityBundle.putString("idUserProfile", idUserProfile);
-                    MainActivityBundle.putString("userName", userName);
-                    MainActivityBundle.putString("description", description);
-                    MainActivityBundle.putString("events", events);
-                    MainActivityBundle.putString("likes_dislikes", likes_dislikes);
+                    MainActivityBundle.putStringArrayList("eventInfo", eventInfo);
+                    MainActivityBundle.putStringArrayList("eventTitles", eventTitles);
+                    MainActivityBundle.putStringArrayList("eventLocation", eventLocation);
+                    MainActivityBundle.putStringArrayList("userProfileInfo", userProfileInfo);
+                    MainActivityBundle.putStringArrayList("friendsList", friendsList);
+
                     MainActivityFrag.setArguments(MainActivityBundle);
 
                     startActivity(home);
@@ -263,20 +269,21 @@ public class LocateEventsActivity extends AppCompatActivity {
                     Intent FindPeople = new Intent(LocateEventsActivity.this, LocateFriendsActivity.class);
 
                     FindPeople.putExtra("userId", currentUser);
-                    FindPeople.putExtra("idUserProfile", idUserProfile);
-                    FindPeople.putExtra("userName", userName);
-                    FindPeople.putExtra("description", "" + description);
-                    FindPeople.putExtra("events", events);
-                    FindPeople.putExtra("likes_dislikes", likes_dislikes);
+                    FindPeople.putStringArrayListExtra("eventInfo", eventInfo);
+                    FindPeople.putStringArrayListExtra("eventTitles", eventTitles);
+                    FindPeople.putStringArrayListExtra("eventLocation", eventLocation);
+                    FindPeople.putStringArrayListExtra("userProfileInfo", userProfileInfo);
+                    FindPeople.putStringArrayListExtra("friendsList", friendsList);
+
 
                     android.app.Fragment FindPeopleFrag = new android.app.Fragment();
                     Bundle FindPeopleBundle = new Bundle();
                     FindPeopleBundle.putString("currentUser", currentUser);
-                    FindPeopleBundle.putString("idUserProfile", idUserProfile);
-                    FindPeopleBundle.putString("userName", userName);
-                    FindPeopleBundle.putString("description", description);
-                    FindPeopleBundle.putString("events", events);
-                    FindPeopleBundle.putString("likes_dislikes", likes_dislikes);
+                    FindPeopleBundle.putStringArrayList("eventInfo", eventInfo);
+                    FindPeopleBundle.putStringArrayList("eventTitles", eventTitles);
+                    FindPeopleBundle.putStringArrayList("eventLocation", eventLocation);
+                    FindPeopleBundle.putStringArrayList("userProfileInfo", userProfileInfo);
+                    FindPeopleBundle.putStringArrayList("friendsList", friendsList);
                     FindPeopleFrag.setArguments(FindPeopleBundle);
 
                     startActivity(FindPeople);
@@ -293,59 +300,68 @@ public class LocateEventsActivity extends AppCompatActivity {
                  *locate hangouts activity page.
                  */
                 case 3:
-                    Intent FindHangouts = new Intent(LocateEventsActivity.this, LocateHangoutActivity.class);
+                    Intent EditProfile = new Intent(LocateEventsActivity.this, EditProfileActivity.class);
 
-                    startActivity(FindHangouts);
+                    EditProfile.putExtra("userId", currentUser);
+                    EditProfile.putStringArrayListExtra("userProfileInfo", userProfileInfo);
+                    EditProfile.putStringArrayListExtra("eventInfo", eventInfo);
+                    EditProfile.putStringArrayListExtra("friendsList", friendsList);
+                    EditProfile.putStringArrayListExtra("eventTitles", eventTitles);
+                    EditProfile.putStringArrayListExtra("eventLocation", eventLocation);
+                   /* EditProfile.putExtra("userLongitude", userLongitude);
+                    EditProfile.putExtra("userLatitude", userLatitude);*/
+
+
+                    android.app.Fragment EditProfileFrag = new android.app.Fragment();
+                    Bundle EditProfileBundle = new Bundle();
+                    EditProfileBundle.putString("currentUser", currentUser);
+                    EditProfileBundle.putStringArrayList("userProfileInfo", userProfileInfo);
+                    EditProfileBundle.putStringArrayList("eventInfo", eventInfo);
+                    EditProfileBundle.putStringArrayList("friendsList", friendsList);
+                    EditProfileBundle.putStringArrayList("eventTitles", eventTitles);
+                    EditProfileBundle.putStringArrayList("eventLocation", eventLocation);
+                    /*EditProfileBundle.putDouble("userLongitude", userLongitude);
+                    EditProfileBundle.putDouble("userLatitude", userLatitude);*/
+                    EditProfileFrag.setArguments(EditProfileBundle);
+
+                    startActivity(EditProfile);
                     break;
                 /*Case 4 used for the Edit Profile item in the list and redirects the user to the
                 *profile activity page.
                 */
                 case 4:
-                    Intent EditProfile = new Intent(LocateEventsActivity.this, EditProfileActivity.class);
 
-                    EditProfile.putExtra("userId", currentUser);
-                    EditProfile.putExtra("idUserProfile", idUserProfile);
-                    EditProfile.putExtra("userName", userName);
-                    EditProfile.putExtra("description", "" + description);
-                    EditProfile.putExtra("events", events);
-                    EditProfile.putExtra("likes_dislikes", likes_dislikes);
+                Intent Settings = new Intent(LocateEventsActivity.this, SettingsActivity.class);
 
-                    android.app.Fragment EditProfileFrag = new android.app.Fragment();
-                    Bundle EditProfileBundle = new Bundle();
-                    EditProfileBundle.putString("currentUser", currentUser);
-                    EditProfileBundle.putString("idUserProfile", idUserProfile);
-                    EditProfileBundle.putString("userName", userName);
-                    EditProfileBundle.putString("description", description);
-                    EditProfileBundle.putString("events", events);
-                    EditProfileBundle.putString("likes_dislikes", likes_dislikes);
-                    EditProfileFrag.setArguments(EditProfileBundle);
+                Settings.putExtra("userId", currentUser);
+                Settings.putStringArrayListExtra("eventInfo", eventInfo);
+                Settings.putStringArrayListExtra("userProfileInfo", userProfileInfo);
+                Settings.putStringArrayListExtra("friendsList", friendsList);
+                Settings.putStringArrayListExtra("eventTitles", eventTitles);
+                Settings.putStringArrayListExtra("eventLocation", eventLocation);
+                    /*Settings.putExtra("userLongitude", userLongitude);
+                    Settings.putExtra("userLatitude", userLatitude);*/
+                android.app.Fragment SettingsFrag = new android.app.Fragment();
+                Bundle SettingsBundle = new Bundle();
+                SettingsBundle.putString("currentUser", currentUser);
+                SettingsBundle.putStringArrayList("eventInfo", eventInfo);
+                SettingsBundle.putStringArrayList("userProfileInfo", userProfileInfo);
+                SettingsBundle.putStringArrayList("friendsList", friendsList);
+                SettingsBundle.putStringArrayList("eventTitles", eventTitles);
+                SettingsBundle.putStringArrayList("eventLocation", eventLocation);
+                    /*SettingsBundle.putDouble("userLongitude", userLongitude);
+                    SettingsBundle.putDouble("userLatitude", userLatitude);*/
+                SettingsFrag.setArguments(SettingsBundle);
 
-                    startActivity(EditProfile);
-                    break;
+                startActivity(Settings);
+                break;
                 /*Case 5 used for the Settings item in the list and redirects the user to the
                  *settings activity page.
                  */
                 case 5:
-                    Intent Settings = new Intent(LocateEventsActivity.this, SettingsActivity.class);
 
-                    Settings.putExtra("userId", currentUser);
-                    Settings.putExtra("idUserProfile", idUserProfile);
-                    Settings.putExtra("userName", userName);
-                    Settings.putExtra("description", "" + description);
-                    Settings.putExtra("events", events);
-                    Settings.putExtra("likes_dislikes", likes_dislikes);
-
-                    android.app.Fragment SettingsFrag = new android.app.Fragment();
-                    Bundle SettingsBundle = new Bundle();
-                    SettingsBundle.putString("currentUser", currentUser);
-                    SettingsBundle.putString("idUserProfile", idUserProfile);
-                    SettingsBundle.putString("userName", userName);
-                    SettingsBundle.putString("description", description);
-                    SettingsBundle.putString("events", events);
-                    SettingsBundle.putString("likes_dislikes", likes_dislikes);
-                    SettingsFrag.setArguments(SettingsBundle);
-
-                    startActivity(Settings);
+                    Intent main = new Intent(LocateEventsActivity.this, Login_Screen.class);
+                    startActivity(main);
                     break;
                 default:
 

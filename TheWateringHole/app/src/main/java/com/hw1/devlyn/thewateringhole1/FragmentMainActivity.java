@@ -5,15 +5,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class FragmentMainActivity extends Fragment implements  View.OnClickListener {
+public class FragmentMainActivity extends Fragment /*implements  View.OnClickListener*/{
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -25,11 +27,6 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
 
     private boolean mIntentInProgress;
     private String currentUser;
-    private String idUserProfile;
-    private String userName;
-    private String description;
-    private String events;
-    private String likes_dislikes;
     private double userLongitude;
     private double userLatitude;
     private ArrayList<String> userProfileInfo;
@@ -37,13 +34,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
     private ArrayList<String> eventInfo;
     private ArrayList<String> eventTitles;
     private ArrayList<String> eventLocation;
-    //private String friendUserName;
-    //private String friendLongitude;
-    //private String friendLatitude;
-    /*private String eventNameInfo;
-    private String numParticipatingInfo;
-    private String eventDescriptionInfo;
-    private String userImageUri;*/
+    private TextView InstructionView;
+    /*private String userImageUri;*/
     /*Fields for the buttons to be used in this class.*/
     Button Events;
     Button Friends;
@@ -79,11 +71,6 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
 
         Bundle args = getActivity().getIntent().getExtras();
         currentUser = args.getString("userId", currentUser);
-        idUserProfile = args.getString("idUserProfile", idUserProfile);
-        userName = args.getString("userName", userName);
-        description = args.getString("description", description);
-        events = args.getString("events", events);
-        likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
         userLongitude = args.getDouble("userLongitude");
         userLatitude = args.getDouble("userLatitude");
         userProfileInfo = args.getStringArrayList("userProfileInfo");
@@ -104,33 +91,10 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_main_activity, container, false);
-
-        getButtons(rootView);
-
-        SignOut = (Button) rootView.findViewById(R.id.sign_out_button);
-        Events = (Button) rootView.findViewById(R.id.events_btn);
-        Friends = (Button) rootView.findViewById(R.id.friends_btn);
-        Profile = (Button) rootView.findViewById(R.id.profile_btn);
-        Settings = (Button) rootView.findViewById(R.id.settings_btn);
+        InstructionView = (TextView) rootView.findViewById(R.id.InstructionView);
+        InstructionView.setMovementMethod(new ScrollingMovementMethod());
 
         return rootView;
-    }
-
-    public void getButtons(View v){
-        if(v instanceof ViewGroup) {
-            ViewGroup vg = (ViewGroup) v;
-
-            for (int i = 0; i < vg.getChildCount(); i++) {
-                View v1 = vg.getChildAt(i);
-                if (v1 instanceof Button) {
-                    Button b = (Button) v1;
-                    b.setOnClickListener(this);
-                }
-                else if(v1 instanceof ViewGroup) {
-                    getButtons(v1);
-                }
-            }
-        }
     }
 
     public void onButtonPressed(Uri uri) {
@@ -149,125 +113,6 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
         super.onDetach();
         mListener = null;
     }
-
-    /*This method is for the on screen clicks by the user depending on which button is pushed
-        in this case the Events, Friends, Profile or Settings buttons. Once one button has been
-        clicked depending on their relationship the screen will switch to the appropriate screen.*/
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.sign_out_button) {
-            /*mGoogleApiClient.disconnect();*/
-            /*Toast.makeText(super.getActivity().getBaseContext(), "Connected: " /* mGoogleApiClient.isConnected()+"", Toast.LENGTH_LONG).show();*/
-            Intent main = new Intent(getActivity(), Login_Screen.class);
-            this.startActivity(main);
-        }
-        if (view == Events) {
-            Intent eventsInfo = new Intent(getActivity(), EventsActivity.class);
-
-            eventsInfo.putExtra("userId", currentUser);
-            eventsInfo.putExtra("idUserProfile", idUserProfile);
-            eventsInfo.putExtra("userName", userName);
-            eventsInfo.putExtra("description", "" + description);
-            eventsInfo.putExtra("events", events);
-            eventsInfo.putExtra("likes_dislikes", likes_dislikes);
-            eventsInfo.putExtra("userLongitude", userLongitude);
-            eventsInfo.putExtra("userLatitude", userLatitude);
-            eventsInfo.putExtra("eventInfo", eventInfo);
-            eventsInfo.putExtra("eventTitles", eventTitles);
-            eventsInfo.putExtra("eventLocation", eventLocation);
-
-            Fragment fragment = new Fragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("currentUser", currentUser);
-            bundle.putString("idUserProfile", idUserProfile);
-            bundle.putString("userName", userName);
-            bundle.putString("description", description);
-            bundle.putString("events", events);
-            bundle.putString("likes_dislikes", likes_dislikes);
-            bundle.putDouble("userLongitude", userLongitude);
-            bundle.putDouble("userLatitude", userLatitude);
-            bundle.putStringArrayList("eventInfo", eventInfo);
-            bundle.putStringArrayList("eventTitles", eventTitles);
-            bundle.putStringArrayList("eventLocation", eventLocation);
-            fragment.setArguments(bundle);
-
-            Button b = (Button) view;
-            this.startActivity(eventsInfo);
-
-        } else if (view == Friends) {
-            Intent friends = new Intent(getActivity(), LocateFriendsActivity.class);
-
-            friends.putExtra("userId", currentUser);
-            friends.putExtra("userLongitude", userLongitude);
-            friends.putExtra("userLatitude", userLatitude);
-            friends.putExtra("friendsList", friendsList);
-            friends.putExtra("userProfileInfo", userProfileInfo);
-            friends.putExtra("eventInfo", eventInfo);
-            //friends.putExtra("userImageUri", userImageUri);
-
-            Fragment fragment = new Fragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("currentUser", currentUser);
-            bundle.putDouble("userLongitude", userLongitude);
-            bundle.putDouble("userLatitude", userLatitude);
-            bundle.putStringArrayList("friendsList", friendsList);
-            bundle.putStringArrayList("userProfileInfo", userProfileInfo);
-            //bundle.putString("userImageUri", userImageUri);
-            fragment.setArguments(bundle);
-
-
-            Button b = (Button) view;
-            this.startActivity(friends);
-        } else if (view == Profile) {
-            Intent profile = new Intent(getActivity(), EditProfileActivity.class);
-            profile.putExtra("userId", currentUser);
-            profile.putStringArrayListExtra("userProfileInfo", userProfileInfo);
-            profile.putExtra("userLongitude", userLongitude);
-            profile.putExtra("userLatitude", userLatitude);
-            //profile.putExtra("userImageUri", userImageUri);
-
-            Fragment fragment = new Fragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("currentUser", currentUser);
-            bundle.putStringArrayList("userProfileInfo", userProfileInfo);
-            bundle.putDouble("userLongitude", userLongitude);
-            bundle.putDouble("userLatitude", userLatitude);
-            //bundle.putString("userImageUri", userImageUri);
-            fragment.setArguments(bundle);
-
-
-            Button b = (Button) view;
-            this.startActivity(profile);
-        } else if (view == Settings) {
-            Intent settings = new Intent(getActivity(), SettingsActivity.class);
-
-            settings.putExtra("userId", currentUser);
-            settings.putExtra("idUserProfile", idUserProfile);
-            settings.putExtra("userName", userName);
-            settings.putExtra("description", "" + description);
-            settings.putExtra("events", events);
-            settings.putExtra("likes_dislikes", likes_dislikes);
-            settings.putExtra("userLongitude", userLongitude);
-            settings.putExtra("userLatitude", userLatitude);
-
-            Fragment fragment = new Fragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("currentUser", currentUser);
-            bundle.putString("idUserProfile", idUserProfile);
-            bundle.putString("userName", userName);
-            bundle.putString("description", description);
-            bundle.putString("events", events);
-            bundle.putString("likes_dislikes", likes_dislikes);
-            bundle.putDouble("userLongitude", userLongitude);
-            bundle.putDouble("userLatitude", userLatitude);
-            fragment.setArguments(bundle);
-
-            Button b = (Button) view;
-            this.startActivity(settings);
-        }
-    }
-
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

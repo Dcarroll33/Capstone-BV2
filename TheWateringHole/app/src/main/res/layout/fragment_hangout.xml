@@ -19,7 +19,7 @@
         android:id="@+id/hangouts_nrby_btn"
 
         android:text="Hangouts Nearby"
-        android:textColor="#FEFFFA"
+        android:textColor="#96160b"
         android:textSize="30sp"
 
         android:layout_width="240dp"
@@ -39,7 +39,7 @@
         android:id="@+id/start_btn"
 
         android:text="Start Hangout"
-        android:textColor="#FEFFFA"
+        android:textColor="#96160b"
         android:textSize="30sp"
 
         android:layout_width="240dp"

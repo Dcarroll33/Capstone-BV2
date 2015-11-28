@@ -92,11 +92,7 @@
             android:name="com.hw1.devlyn.thewateringhole1.FriendsProfileActivity"
             android:label="@string/friends_profile" >
         </activity>
-        <activity
-            android:name="com.hw1.devlyn.thewateringhole1.UserProfileActivity"
-            android:label="UserProfile">
-        </activity>
-        <activity
+    <activity
             android:name="com.hw1.devlyn.thewateringhole1.LocateFriendsActivity"
             android:label="@string/Locate__Friends" >
         </activity>

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <color name="counter_text_bg">#DDE89B</color>
-        <color name="list_background">#DDE89B</color>
-        <color name="list_background_pressed">#BB3AB3</color>
+        <color name="counter_text_bg">#8096160b</color>
+        <color name="list_background">#8096160b</color>
+        <color name="list_background_pressed">#96160b</color>
+        <color name="list_view_text_color">#f4be2a</color>
 
-        <color name="view_bg">#b20e0f</color>
+        <!--<color name="view_bg">#b20e0f</color>!-->
+        <color name="view_bg">#8096160b</color>
         <color name="white">#ffffff</color>
         <color name="btn_bg">#3e4a56</color>
 </resources>

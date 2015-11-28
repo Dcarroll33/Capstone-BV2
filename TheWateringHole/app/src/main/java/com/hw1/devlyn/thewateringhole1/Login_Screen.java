@@ -12,7 +12,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-
+/*This is the login activity where the user enters their credentials and tries to log in. The
+    credentials are then sent to the database to ensure the user exists and has entered their
+    information in correctly.
+ */
 public class Login_Screen extends Activity implements View.OnClickListener {
 
     /*Field declarations for the buttons login and register*/
@@ -42,12 +45,14 @@ public class Login_Screen extends Activity implements View.OnClickListener {
 
 
     }
-
+    /*onStart is what allows the app to be visible to the user, by allowing the resources needed
+        for that to happen to run.*/
     @Override
     protected void onStart() {
         super.onStart();
     }
-
+    /*onStop is what allows the app to be hidden from the user, by stopping the resources needed
+        for the app to display.*/
     @Override
     protected void onStop() {
         super.onStop();
@@ -72,8 +77,12 @@ public class Login_Screen extends Activity implements View.OnClickListener {
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
+            /*userId is assigned the value that the the method getUserId in connectDb returns.*/
             String userId = String.valueOf(conDb.getUserId());
 
+            /*userProfileInfo is assigned the values that the method getUserProfileInfo in connectDb
+                returns. These values should be the userName, description, events, likes_dislikes
+                and userId.*/
             ArrayList<String> userProfileInfo = conDb.getUserProfileInfo();
             //String userImageUri = myList.get(6);*/
 
@@ -81,11 +90,20 @@ public class Login_Screen extends Activity implements View.OnClickListener {
             double userLongitude = myList2.get(0);
             double userLatitude = myList2.get(1);
 
+            /*friendCoords is assigned the values that the method getFriendCoords in connectDb
+                returns. These values should be friendUserName, friendLongitude and friendLatitude.*/
             ArrayList<String> friendCoords = conDb.getFriendCoords();
 
+            /*eventInfo is assigned the values that the method userEventInfo in connectDb returns.
+                These values should be eventName, numParticipating, description.*/
             ArrayList<String> eventInfo = conDb.userEventInfo();
 
+            /*eventTitles is assigned the values that the method userEventTitles in connectDb returns.
+                These values should only be the eventName.*/
             ArrayList<String> eventTitles = conDb.userEventTitles();
+
+            /*eventLocation is assigned the values that the method getEventLocation in connectDb
+                returns. These values should be the eventLongitude and eventLatitude.*/
 
             ArrayList<String> eventLocation = conDb.getEventLocation();
             /*This is a check to make sure the userId is valid and if it is then we have logged in

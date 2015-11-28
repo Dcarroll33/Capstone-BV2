@@ -28,11 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
     /*Fields for the data that is being passed in from the bundle.*/
     private String currentUser;
-    private String idUserProfile;
-    private String description;
-    private String likes_dislikes;
-    private String userName;
-    private String events;
     private double userLongitude;
     private double userLatitude;
     private ArrayList<String> userProfileInfo;
@@ -40,12 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> eventInfo;
     private ArrayList<String> eventTitles;
     private ArrayList<String> eventLocation;
-    private String friendUserName;
-    private String friendLongitude;
-    private String friendLatitude;
-    private String eventNameInfo;
-    private String numParticipatingInfo;
-    private String eventDescriptionInfo;
     private String userImageUri;
 
     /*These fields are used for the navigation slide out menu.*/
@@ -76,11 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
         Intent thisIntent = getIntent();
             currentUser = thisIntent.getStringExtra("userId");
-            idUserProfile = thisIntent.getStringExtra("idUserProfile");
-            userName = thisIntent.getStringExtra("userName");
-            description = thisIntent.getStringExtra("description");
-            events = thisIntent.getStringExtra("events");
-            likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
             userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
             userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
             userProfileInfo = thisIntent.getStringArrayListExtra("userProfileInfo");
@@ -96,23 +80,12 @@ public class MainActivity extends AppCompatActivity {
                 /*A bundle is created here, where the values from the intent are then passed in to.*/
                 Bundle bundle = new Bundle();
                 bundle.putString("currentUser", currentUser);
-                bundle.putString("idUserProfile", idUserProfile);
-                /*bundle.putString("userName", userName);
-                bundle.putString("description", description);
-                bundle.putString("events", events);
-                bundle.putString("likes_dislikes", likes_dislikes);*/
                 bundle.putDouble("userLongitude", userLongitude);
                 bundle.putDouble("userLatitude", userLatitude);
-                bundle.putString("friendUserName", friendUserName);
-                bundle.putString("friendLongitude", friendLongitude);
-                bundle.putString("friendLatitude", friendLatitude);
                 bundle.putStringArrayList("userProfileInfo", userProfileInfo);
                 bundle.putStringArrayList("eventInfo", eventInfo);
                 bundle.putStringArrayList("eventTitles", eventTitles);
                 bundle.putStringArrayList("eventLocation", eventLocation);
-                /*bundle.putString("eventName", eventNameInfo);
-                bundle.putString("numParticipating", numParticipatingInfo);
-                bundle.putString("eventDescription", eventDescriptionInfo);*/
                 //bundle.putString("userImageUri", userImageUri);
                 fragment.setArguments(bundle);
 
@@ -274,6 +247,7 @@ public class MainActivity extends AppCompatActivity {
                     FindPeople.putStringArrayListExtra("friendsList", friendsList);
                     FindPeople.putStringArrayListExtra("eventInfo", eventInfo);
                     FindPeople.putStringArrayListExtra("eventTitles", eventTitles);
+                    FindPeople.putStringArrayListExtra("eventLocation", eventLocation);
                     FindPeople.putExtra("userLongitude", userLongitude);
                     FindPeople.putExtra("userLatitude", userLatitude);
                     //FindPeople.putExtra("userImageUri", userImageUri);*/
@@ -285,6 +259,7 @@ public class MainActivity extends AppCompatActivity {
                     FindPeopleBundle.putStringArrayList("friendsList", friendsList);
                     FindPeopleBundle.putStringArrayList("eventInfo", eventInfo);
                     FindPeopleBundle.putStringArrayList("eventTitles", eventTitles);
+                    FindPeopleBundle.putStringArrayList("eventLocation", eventLocation);
                     FindPeopleBundle.putDouble("userLongitude", userLongitude);
                     FindPeopleBundle.putDouble("userLatitude", userLatitude);
                     //FindPeopleBundle.putString("userImageUri", userImageUri);
@@ -318,39 +293,17 @@ public class MainActivity extends AppCompatActivity {
 
                     startActivity(Events);
                     break;
-                /*Case 3 used for the FindHangouts item in the list and redirects the user to the
-                 *locate hangouts activity page.
-                    */
-                case 3:
-                    Intent FindHangouts = new Intent(MainActivity.this, LocateHangoutActivity.class);
 
-                    FindHangouts.putExtra("userId", currentUser);
-                    FindHangouts.putExtra("idUserProfile", idUserProfile);
-                    FindHangouts.putExtra("userName", userName);
-                    FindHangouts.putExtra("description", "" + description);
-                    FindHangouts.putExtra("events", events);
-                    FindHangouts.putExtra("likes_dislikes", likes_dislikes);
-
-                    android.app.Fragment FindHangoutsFrag = new android.app.Fragment();
-                    Bundle FindHangoutsBundle = new Bundle();
-                    FindHangoutsBundle.putString("currentUser", currentUser);
-                    FindHangoutsBundle.putString("idUserProfile", idUserProfile);
-                    FindHangoutsBundle.putString("userName", userName);
-                    FindHangoutsBundle.putString("description", description);
-                    FindHangoutsBundle.putString("events", events);
-                    FindHangoutsBundle.putString("likes_dislikes", likes_dislikes);
-                    FindHangoutsFrag.setArguments(FindHangoutsBundle);
-
-                    startActivity(FindHangouts);
-                    break;
                 /*Case 4 used for the Edit Profile item in the list and redirects the user to the
                  *profile activity page.
                  */
-                case 4:
+                case 3:
                     Intent EditProfile = new Intent(MainActivity.this, EditProfileActivity.class);
                     EditProfile.putExtra("userId", currentUser);
                     EditProfile.putStringArrayListExtra("userProfileInfo", userProfileInfo);
                     EditProfile.putStringArrayListExtra("eventInfo", eventInfo);
+                    EditProfile.putStringArrayListExtra("eventTitles", eventTitles);
+                    EditProfile.putStringArrayListExtra("eventLocation", eventLocation);
                     EditProfile.putStringArrayListExtra("friendsList", friendsList);
                     EditProfile.putExtra("userLongitude", userLongitude);
                     EditProfile.putExtra("userLatitude", userLatitude);
@@ -360,6 +313,8 @@ public class MainActivity extends AppCompatActivity {
                     EditProfileBundle.putString("currentUser", currentUser);
                     EditProfileBundle.putStringArrayList("userProfileInfo", userProfileInfo);
                     EditProfileBundle.putStringArrayList("eventInfo", eventInfo);
+                    EditProfileBundle.putStringArrayList("eventTitles", eventTitles);
+                    EditProfileBundle.putStringArrayList("eventLocation", eventLocation);
                     EditProfileBundle.putStringArrayList("friendsList", friendsList);
                     EditProfileBundle.putDouble("userLongitude", userLongitude);
                     EditProfileBundle.putDouble("userLatitude", userLatitude);
@@ -371,12 +326,14 @@ public class MainActivity extends AppCompatActivity {
                 /*Case 5 used for the Settings item in the list and redirects the user to the
                  *settings activity page.
                  */
-                case 5:
+                case 4:
                     Intent Settings = new Intent(MainActivity.this, SettingsActivity.class);
 
                     Settings.putExtra("userId", currentUser);
                     Settings.putStringArrayListExtra("eventInfo", eventInfo);
                     Settings.putStringArrayListExtra("userProfileInfo", userProfileInfo);
+                    Settings.putStringArrayListExtra("eventTitles", eventTitles);
+                    Settings.putStringArrayListExtra("eventLocation", eventLocation);
                     Settings.putStringArrayListExtra("friendsList", friendsList);
                     Settings.putExtra("userLongitude", userLongitude);
                     Settings.putExtra("userLatitude", userLatitude);
@@ -386,6 +343,8 @@ public class MainActivity extends AppCompatActivity {
                     SettingsBundle.putString("currentUser", currentUser);
                     SettingsBundle.putStringArrayList("eventInfo", eventInfo);
                     SettingsBundle.putStringArrayList("userProfileInfo", userProfileInfo);
+                    SettingsBundle.putStringArrayList("eventTitles", eventTitles);
+                    SettingsBundle.putStringArrayList("eventLocation", eventLocation);
                     SettingsBundle.putStringArrayList("friendsList", friendsList);
                     SettingsBundle.putDouble("userLongitude", userLongitude);
                     SettingsBundle.putDouble("userLatitude", userLatitude);
@@ -393,6 +352,9 @@ public class MainActivity extends AppCompatActivity {
 
                     startActivity(Settings);
                     break;
+                case 5:
+                    Intent main = new Intent(MainActivity.this, Login_Screen.class);
+                    startActivity(main);
                 default:
 
             }

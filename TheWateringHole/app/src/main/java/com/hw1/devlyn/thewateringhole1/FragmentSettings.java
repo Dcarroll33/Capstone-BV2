@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class FragmentSettings extends Fragment implements  View.OnClickListener {
+import java.util.ArrayList;
+
+public class FragmentSettings extends Fragment implements View.OnClickListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -31,6 +33,12 @@ public class FragmentSettings extends Fragment implements  View.OnClickListener 
     private String description;
     private String events;
     private String likes_dislikes;
+
+    private ArrayList<String> eventInfo;
+    private ArrayList<String> eventTitles;
+    private ArrayList<String> eventLocation;
+    private ArrayList<String> userProfileInfo;
+    private ArrayList<String> friendsList;
     private double userLongitude;
     private double userLatitude;
 
@@ -61,6 +69,11 @@ public class FragmentSettings extends Fragment implements  View.OnClickListener 
 
         Bundle args = getActivity().getIntent().getExtras();
         currentUser = args.getString("userId", currentUser);
+        eventInfo = args.getStringArrayList("eventInfo");
+        eventTitles = args.getStringArrayList("eventTitles");
+        eventLocation = args.getStringArrayList("eventLocation");
+        userProfileInfo = args.getStringArrayList("userProfileInfo");
+        friendsList = args.getStringArrayList("friendsList");
         idUserProfile = args.getString("idUserProfile", idUserProfile);
         userName = args.getString("userName", userName);
         description = args.getString("description", description);
@@ -88,17 +101,16 @@ public class FragmentSettings extends Fragment implements  View.OnClickListener 
         return rootView;
     }
 
-    public void getButtons(View v){
-        if(v instanceof ViewGroup) {
+    public void getButtons(View v) {
+        if (v instanceof ViewGroup) {
             ViewGroup vg = (ViewGroup) v;
 
-            for (int i = 0; i <vg.getChildCount(); i++) {
+            for (int i = 0; i < vg.getChildCount(); i++) {
                 View v1 = vg.getChildAt(i);
                 if (v1 instanceof Button) {
                     Button b = (Button) v1;
                     b.setOnClickListener(this);
-                }
-                else if(v1 instanceof ViewGroup) {
+                } else if (v1 instanceof ViewGroup) {
                     getButtons(v1);
                 }
             }
@@ -134,6 +146,7 @@ public class FragmentSettings extends Fragment implements  View.OnClickListener 
             this.startActivity(events);
         }
     }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

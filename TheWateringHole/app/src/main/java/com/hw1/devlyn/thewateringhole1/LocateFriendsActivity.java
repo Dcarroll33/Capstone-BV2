@@ -37,6 +37,8 @@ public class LocateFriendsActivity extends AppCompatActivity {
     private ArrayList<String> friendsList;
     private ArrayList<String> userProfileInfo;
     private ArrayList<String> eventInfo;
+    private ArrayList<String> eventTitles;
+    private ArrayList<String> eventLocation;
     //private String friendUserName;
     //private String friendLongitude;
     //private String friendLatitude;
@@ -79,6 +81,8 @@ public class LocateFriendsActivity extends AppCompatActivity {
         friendsList = thisIntent.getStringArrayListExtra("friendsList");
         userProfileInfo = thisIntent.getStringArrayListExtra("userProfileInfo");
         eventInfo = thisIntent.getStringArrayListExtra("eventInfo");
+        eventTitles = thisIntent.getStringArrayListExtra("eventTitles");
+        eventLocation = thisIntent.getStringArrayListExtra("eventLocation");
 
 
         /* This is where a new fragment object is initialized*/
@@ -96,6 +100,8 @@ public class LocateFriendsActivity extends AppCompatActivity {
         bundle.putStringArrayList("friendsList", friendsList);
         bundle.putStringArrayList("userProfileInfo", userProfileInfo);
         bundle.putStringArrayList("eventInfo", eventInfo);
+        bundle.putStringArrayList("eventTitles", eventTitles);
+        bundle.putStringArrayList("eventLocation", eventLocation);
         //bundle.putString("userImageUri", userImageUri);*/
         fragment.setArguments(bundle);
 
@@ -249,6 +255,8 @@ public class LocateFriendsActivity extends AppCompatActivity {
                     home.putStringArrayListExtra("userProfileInfo", userProfileInfo);
                     home.putStringArrayListExtra("friendsList", friendsList);
                     home.putStringArrayListExtra("eventInfo", eventInfo);
+                    home.putStringArrayListExtra("eventTitles", eventTitles);
+                    home.putStringArrayListExtra("eventLocation", eventLocation);
                     home.putExtra("userLongitude", userLongitude);
                     home.putExtra("userLatitude", userLatitude);
 
@@ -257,6 +265,8 @@ public class LocateFriendsActivity extends AppCompatActivity {
                     MainActivityBundle.putString("currentUser", currentUser);
                     MainActivityBundle.putStringArrayList("userProfileInfo", userProfileInfo);
                     MainActivityBundle.putStringArrayList("eventInfo", eventInfo);
+                    MainActivityBundle.putStringArrayList("eventTitles", eventTitles);
+                    MainActivityBundle.putStringArrayList("eventLocation", eventLocation);
                     MainActivityBundle.putStringArrayList("friendsList", friendsList);
                     MainActivityFrag.setArguments(MainActivityBundle);
 
@@ -280,6 +290,8 @@ public class LocateFriendsActivity extends AppCompatActivity {
                     Events.putStringArrayListExtra("eventInfo", eventInfo);
                     Events.putStringArrayListExtra("userProfileInfo", userProfileInfo);
                     Events.putStringArrayListExtra("friendsList", friendsList);
+                    Events.putStringArrayListExtra("eventTitles", eventTitles);
+                    Events.putStringArrayListExtra("eventLocation", eventLocation);
 
 
                     android.app.Fragment FindEventsFrag = new android.app.Fragment();
@@ -288,6 +300,8 @@ public class LocateFriendsActivity extends AppCompatActivity {
                     FindEventsBundle.putStringArrayList("eventInfo", eventInfo);
                     FindEventsBundle.putStringArrayList("userProfileInfo", userProfileInfo);
                     FindEventsBundle.putStringArrayList("friendsList", friendsList);
+                    FindEventsBundle.putStringArrayList("eventTitles", eventTitles);
+                    FindEventsBundle.putStringArrayList("eventLocation", eventLocation);
                     FindEventsFrag.setArguments(FindEventsBundle);
 
                     startActivity(Events);
@@ -296,37 +310,14 @@ public class LocateFriendsActivity extends AppCompatActivity {
                  *locate hangouts activity page.
                  */
                 case 3:
-                    Intent FindHangouts = new Intent(LocateFriendsActivity.this, LocateHangoutActivity.class);
-
-                    FindHangouts.putExtra("userId", currentUser);
-                    FindHangouts.putExtra("idUserProfile", idUserProfile);
-                    FindHangouts.putExtra("userName", userName);
-                    FindHangouts.putExtra("description", "" + description);
-                    FindHangouts.putExtra("events", events);
-                    FindHangouts.putExtra("likes_dislikes", likes_dislikes);
-
-                    android.app.Fragment FindHangoutsFrag = new android.app.Fragment();
-                    Bundle FindHangoutsBundle = new Bundle();
-                    FindHangoutsBundle.putString("currentUser", currentUser);
-                    FindHangoutsBundle.putString("idUserProfile", idUserProfile);
-                    FindHangoutsBundle.putString("userName", userName);
-                    FindHangoutsBundle.putString("description", description);
-                    FindHangoutsBundle.putString("events", events);
-                    FindHangoutsBundle.putString("likes_dislikes", likes_dislikes);
-                    FindHangoutsFrag.setArguments(FindHangoutsBundle);
-
-                    startActivity(FindHangouts);
-                    break;
-                /*Case 4 used for the Edit Profile item in the list and redirects the user to the
-                *profile activity page.
-                */
-                case 4:
                     Intent EditProfile = new Intent(LocateFriendsActivity.this, EditProfileActivity.class);
 
                     EditProfile.putExtra("userId", currentUser);
                     EditProfile.putStringArrayListExtra("userProfileInfo", userProfileInfo);
                     EditProfile.putStringArrayListExtra("eventInfo", eventInfo);
                     EditProfile.putStringArrayListExtra("friendsList", friendsList);
+                    EditProfile.putStringArrayListExtra("eventTitles", eventTitles);
+                    EditProfile.putStringArrayListExtra("eventLocation", eventLocation);
                     EditProfile.putExtra("userLongitude", userLongitude);
                     EditProfile.putExtra("userLatitude", userLatitude);
 
@@ -336,21 +327,25 @@ public class LocateFriendsActivity extends AppCompatActivity {
                     EditProfileBundle.putStringArrayList("userProfileInfo", userProfileInfo);
                     EditProfileBundle.putStringArrayList("eventInfo", eventInfo);
                     EditProfileBundle.putStringArrayList("friendsList", friendsList);
+                    EditProfileBundle.putStringArrayList("eventTitles", eventTitles);
+                    EditProfileBundle.putStringArrayList("eventLocation", eventLocation);
                     EditProfileBundle.putDouble("userLongitude", userLongitude);
                     EditProfileBundle.putDouble("userLatitude", userLatitude);
                     EditProfileFrag.setArguments(EditProfileBundle);
                     startActivity(EditProfile);
                     break;
-                /*Case 5 used for the Settings item in the list and redirects the user to the
-                 *settings activity page.
-                 */
-                case 5:
+                /*Case 4 used for the Edit Profile item in the list and redirects the user to the
+                *profile activity page.
+                */
+                case 4:
                     Intent Settings = new Intent(LocateFriendsActivity.this, SettingsActivity.class);
 
                     Settings.putExtra("userId", currentUser);
                     Settings.putStringArrayListExtra("eventInfo", eventInfo);
                     Settings.putStringArrayListExtra("userProfileInfo", userProfileInfo);
                     Settings.putStringArrayListExtra("friendsList", friendsList);
+                    Settings.putStringArrayListExtra("eventTitles", eventTitles);
+                    Settings.putStringArrayListExtra("eventLocation", eventLocation);
                     Settings.putExtra("userLongitude", userLongitude);
                     Settings.putExtra("userLatitude", userLatitude);
 
@@ -360,11 +355,21 @@ public class LocateFriendsActivity extends AppCompatActivity {
                     SettingsBundle.putStringArrayList("eventInfo", eventInfo);
                     SettingsBundle.putStringArrayList("userProfileInfo", userProfileInfo);
                     SettingsBundle.putStringArrayList("friendsList", friendsList);
+                    SettingsBundle.putStringArrayList("eventTitles", eventTitles);
+                    SettingsBundle.putStringArrayList("eventLocation", eventLocation);
                     SettingsBundle.putDouble("userLongitude", userLongitude);
                     SettingsBundle.putDouble("userLatitude", userLatitude);
                     SettingsFrag.setArguments(SettingsBundle);
 
                     startActivity(Settings);
+                    break;
+
+                /*Case 5 used for the Settings item in the list and redirects the user to the
+                 *settings activity page.
+                 */
+                case 5:
+                    Intent main = new Intent(LocateFriendsActivity.this, Login_Screen.class);
+                    startActivity(main);
                     break;
                 default:
 

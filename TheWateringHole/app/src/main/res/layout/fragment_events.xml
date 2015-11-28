@@ -20,7 +20,7 @@
         android:id="@+id/save_btn"
 
         android:text="@string/SaveEvent"
-        android:textColor="#fdfdfc"
+        android:textColor="#96160b"
         android:textSize="20sp"
 
         android:layout_width="200dp"
@@ -41,11 +41,12 @@
         android:layout_above="@+id/save_btn"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:divider="#ff0bff31"
+        android:divider="#f4be2a"
         android:dividerHeight="1dp"
         android:listSelector="@drawable/list_selector"
         android:background="@color/list_background"
         android:layout_below="@+id/numParticipants"
+        android:textColor="@color/list_view_text_color"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

@@ -32,7 +32,7 @@
         android:id="@+id/friends_profile_btn"
 
         android:text="Friends Profile"
-        android:textColor="#FEFFFA"
+        android:textColor="#96160b"
         android:textSize="30sp"
 
         android:layout_width="240dp"
@@ -54,7 +54,7 @@
         android:text="Add Friend"
         android:id="@+id/addFriend"
         android:background="@drawable/button"
-        android:textColor="#FEFFFA"
+        android:textColor="#96160b"
         android:textSize="30sp"
         android:layout_above="@+id/friends_profile_btn"
         android:layout_alignParentLeft="true"

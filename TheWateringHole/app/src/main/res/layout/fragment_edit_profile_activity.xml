@@ -19,7 +19,7 @@
             android:id="@+id/save_btn"
 
             android:text="Save"
-            android:textColor="#FEFFFA"
+            android:textColor="#96160b"
             android:textSize="30sp"
 
             android:layout_width="240dp"
@@ -62,7 +62,7 @@
         android:text="@string/Upload_Image"
         android:id="@+id/uploadImage"
         android:background="@drawable/login_button"
-        android:textColor="#FEFFFA"
+        android:textColor="#96160b"
         android:textSize="20sp"
         android:layout_width="240dp"
         android:layout_height="50dp"

@@ -19,7 +19,7 @@
         android:id="@+id/locate_friends_btn"
 
         android:text="Locate Friends"
-        android:textColor="#FEFFFA"
+        android:textColor="#96160b"
         android:textSize="30sp"
 
         android:layout_width="225dp"
@@ -67,7 +67,7 @@
         android:layout_alignEnd="@+id/locate_friends_btn"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textColor="#FEFFFA"
+        android:textColor="#96160b"
         android:textSize="30sp"/>
 
 </RelativeLayout>

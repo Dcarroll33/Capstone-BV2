@@ -3,11 +3,11 @@
     android:orientation="vertical"
     android:background="@android:color/transparent">
 
-        <Button
+        <!--<Button
             android:id="@+id/friends_btn"
 
             android:text="@string/Friends"
-            android:textColor="#FEFFFA"
+            android:textColor="#96160b"
             android:textSize="30sp"
 
             android:layout_width="125dp"
@@ -23,7 +23,7 @@
         android:id="@+id/profile_btn"
 
         android:text="@string/Profile"
-        android:textColor="#FEFFFA"
+        android:textColor="#96160b"
         android:textSize="30sp"
 
         android:layout_width="125dp"
@@ -40,7 +40,7 @@
             android:id="@+id/settings_btn"
 
             android:text="@string/Settings"
-            android:textColor="#FEFFFA"
+            android:textColor="#96160b"
             android:textSize="25sp"
 
             android:layout_width="125dp"
@@ -57,7 +57,7 @@
             android:id="@+id/events_btn"
 
             android:text="@string/Events"
-            android:textColor="#FEFFFA"
+            android:textColor="#96160b"
             android:textSize="30sp"
 
             android:layout_width="125dp"
@@ -74,7 +74,7 @@
         android:id="@+id/sign_out_button"
 
         android:text="Sign Out"
-        android:textColor="#FEFFFA"
+        android:textColor="#96160b"
         android:textSize="20sp"
 
         android:layout_width="125dp"
@@ -85,6 +85,17 @@
         android:shadowDy="0"
         android:shadowRadius="5"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10sp" />
+        android:layout_marginTop="10sp" />!-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/Instructions"
+        android:id="@+id/InstructionView"
+        android:textSize="40dp"
+        android:background="#8096160b"
+        android:textColor="#f4be2a"
+        android:maxLines = "300"
+        android:scrollbars = "vertical"/>
 
 </LinearLayout>
