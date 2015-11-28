@@ -40,8 +40,10 @@ public class EventsActivity extends AppCompatActivity implements AdapterView.OnI
     private String userName;
     private String events;
     private ArrayList<String> eventInfo;
+    private ArrayList<String> eventTitles;
     private ArrayList<String> userProfileInfo;
     private ArrayList<String> friendsList;
+    private ArrayList<String> eventLocation;
     private String eventDesc;
     private String numPart;
     private String eventName;
@@ -83,6 +85,8 @@ public class EventsActivity extends AppCompatActivity implements AdapterView.OnI
             userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
             userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
             eventInfo = thisIntent.getStringArrayListExtra("eventInfo");
+            eventTitles = thisIntent.getStringArrayListExtra("eventTitles");
+            eventLocation = thisIntent.getStringArrayListExtra("eventLocation");
             userProfileInfo = thisIntent.getStringArrayListExtra("userProfileInfo");
             friendsList = thisIntent.getStringArrayListExtra("friendsList");
 
@@ -102,6 +106,8 @@ public class EventsActivity extends AppCompatActivity implements AdapterView.OnI
             bundle.putDouble("userLongitude", userLongitude);
             bundle.putDouble("userLatitude", userLatitude);
             bundle.putStringArrayList("eventInfo", eventInfo);
+            bundle.putStringArrayList("eventTitles", eventTitles);
+            bundle.putStringArrayList("eventLocation", eventLocation);
             bundle.putStringArrayList("userProfileInfo", userProfileInfo);
             bundle.putStringArrayList("friendsList", friendsList);
         fragment.setArguments(bundle);
@@ -113,12 +119,15 @@ public class EventsActivity extends AppCompatActivity implements AdapterView.OnI
         // This is the array adapter, it takes the context of the activity as a
         // first parameter, the type of list view as a second parameter and your
         // array as a third parameter.
-        for(int i = 0 ; i <= eventInfo.size(); i = i + 3) {
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                    this,
-                    android.R.layout.simple_list_item_1,
-                    eventInfo);
-            eventsList.setAdapter(arrayAdapter);
+        for(int i = 0 ; i < eventTitles.size(); i = i + 1) {
+            //for(int j = 0; j < arrayAdapter.getCount(); j++) {
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                        this,
+                        android.R.layout.simple_list_item_1,
+                        eventTitles);
+                eventsList.setAdapter(arrayAdapter);
+                //i++;
+            //}
         }
 
         mTitle = mDrawerTitle = getTitle();
@@ -193,29 +202,65 @@ public class EventsActivity extends AppCompatActivity implements AdapterView.OnI
             displayView(0);
         }
     }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        CharSequence[] items = eventInfo.toArray(new CharSequence[eventInfo.size()]);
+        CharSequence[] eventInfo1 = {eventInfo.get(1), eventInfo.get(2)};//eventInfo.toArray(new CharSequence[eventInfo.size()]);
+        CharSequence[] eventInfo2 = {eventInfo.get(4), eventInfo.get(5)};
+        CharSequence[] eventInfo3 = {eventInfo.get(7), eventInfo.get(8)};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if(id == 0) {
-            String title = eventInfo.get(0);
+            String title = eventTitles.get(0);
             builder.setTitle(title);
-            //builder.setItems(eventInfo.get())
+            builder.setItems(eventInfo1, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
+                    if (eventTitles.get(0) != null) {
+                        Intent LocateEvents = new Intent(EventsActivity.this, LocateEventsActivity.class);
+                            LocateEvents.putStringArrayListExtra("eventInfo", eventInfo);
+                            LocateEvents.putStringArrayListExtra("eventTitles", eventTitles);
+                            LocateEvents.putStringArrayListExtra("eventLocation", eventLocation);
+                        startActivity(LocateEvents);
+                    }
+                }
+            });
         } else if (id == 1) {
-            String title = eventInfo.get(1);
+            String title = eventTitles.get(1);
             builder.setTitle(title);
+            builder.setItems(eventInfo2, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
+                    if(eventTitles.get(1) != null) {
+                        Intent LocateEvents = new Intent(EventsActivity.this, LocateEventsActivity.class);
+                        LocateEvents.putStringArrayListExtra("eventInfo", eventInfo);
+                        LocateEvents.putStringArrayListExtra("eventTitles", eventTitles);
+                        startActivity(LocateEvents);
+                    }
+                    // Do something with the selection
+                }
+            });
         } else if (id == 2) {
-            String title = eventInfo.get(2);
+            String title = eventTitles.get(2);
             builder.setTitle(title);
+            builder.setItems(eventInfo3, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
+                    if(eventTitles.get(2) != null) {
+                        Intent LocateEvents = new Intent(EventsActivity.this, LocateEventsActivity.class);
+                        LocateEvents.putStringArrayListExtra("eventInfo", eventInfo);
+                        LocateEvents.putStringArrayListExtra("eventTitles", eventTitles);
+                        LocateEvents.putStringArrayListExtra("eventLocation", eventLocation);
+                        startActivity(LocateEvents);
+                    }
+                    // Do something with the selection
+                }
+            });
         }
-        //builder.setTitle(String.valueOf(id));
+ /*       //builder.setTitle(String.valueOf(id));
         builder.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 // Do something with the selection
             }
-        });
+        });*/
         AlertDialog alert = builder.create();
         alert.show();
     }

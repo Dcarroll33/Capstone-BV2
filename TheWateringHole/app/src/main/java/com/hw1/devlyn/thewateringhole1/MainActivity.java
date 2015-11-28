@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> userProfileInfo;
     private ArrayList<String> friendsList;
     private ArrayList<String> eventInfo;
+    private ArrayList<String> eventTitles;
+    private ArrayList<String> eventLocation;
     private String friendUserName;
     private String friendLongitude;
     private String friendLatitude;
@@ -84,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
             userProfileInfo = thisIntent.getStringArrayListExtra("userProfileInfo");
             friendsList = thisIntent.getStringArrayListExtra("friendsList");
             eventInfo = thisIntent.getStringArrayListExtra("eventInfo");
+            eventTitles = thisIntent.getStringArrayListExtra("eventTitles");
+            eventLocation = thisIntent.getStringArrayListExtra("eventLocation");
 
             //userImageUri = thisIntent.getStringExtra("userImageUri");
 
@@ -104,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putString("friendLatitude", friendLatitude);
                 bundle.putStringArrayList("userProfileInfo", userProfileInfo);
                 bundle.putStringArrayList("eventInfo", eventInfo);
+                bundle.putStringArrayList("eventTitles", eventTitles);
+                bundle.putStringArrayList("eventLocation", eventLocation);
                 /*bundle.putString("eventName", eventNameInfo);
                 bundle.putString("numParticipating", numParticipatingInfo);
                 bundle.putString("eventDescription", eventDescriptionInfo);*/
@@ -267,6 +273,7 @@ public class MainActivity extends AppCompatActivity {
                     FindPeople.putStringArrayListExtra("userProfileInfo", userProfileInfo);
                     FindPeople.putStringArrayListExtra("friendsList", friendsList);
                     FindPeople.putStringArrayListExtra("eventInfo", eventInfo);
+                    FindPeople.putStringArrayListExtra("eventTitles", eventTitles);
                     FindPeople.putExtra("userLongitude", userLongitude);
                     FindPeople.putExtra("userLatitude", userLatitude);
                     //FindPeople.putExtra("userImageUri", userImageUri);*/
@@ -277,6 +284,7 @@ public class MainActivity extends AppCompatActivity {
                     FindPeopleBundle.putStringArrayList("userProfileInfo", userProfileInfo);
                     FindPeopleBundle.putStringArrayList("friendsList", friendsList);
                     FindPeopleBundle.putStringArrayList("eventInfo", eventInfo);
+                    FindPeopleBundle.putStringArrayList("eventTitles", eventTitles);
                     FindPeopleBundle.putDouble("userLongitude", userLongitude);
                     FindPeopleBundle.putDouble("userLatitude", userLatitude);
                     //FindPeopleBundle.putString("userImageUri", userImageUri);
@@ -292,6 +300,8 @@ public class MainActivity extends AppCompatActivity {
 
                     Events.putExtra("userId", currentUser);
                     Events.putStringArrayListExtra("eventInfo", eventInfo);
+                    Events.putStringArrayListExtra("eventTitles", eventTitles);
+                    Events.putStringArrayListExtra("eventLocation", eventLocation);
                     Events.putStringArrayListExtra("userProfileInfo", userProfileInfo);
                     Events.putStringArrayListExtra("friendsList", friendsList);
 
@@ -300,6 +310,8 @@ public class MainActivity extends AppCompatActivity {
                     Bundle FindEventsBundle = new Bundle();
                     FindEventsBundle.putString("currentUser", currentUser);
                     FindEventsBundle.putStringArrayList("eventInfo", eventInfo);
+                    FindEventsBundle.putStringArrayList("eventTitles", eventTitles);
+                    FindEventsBundle.putStringArrayList("eventLocation", eventLocation);
                     FindEventsBundle.putStringArrayList("userProfileInfo", userProfileInfo);
                     FindEventsBundle.putStringArrayList("friendsList", friendsList);
                     FindEventsFrag.setArguments(FindEventsBundle);

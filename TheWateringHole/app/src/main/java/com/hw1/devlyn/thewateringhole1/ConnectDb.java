@@ -40,9 +40,13 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
 
     private ArrayList<String> userEventInfo = null;
 
+    private ArrayList<String> userEventTitles = null;
+
     private ArrayList<Double> friendCurrentLocation = null;
 
     private ArrayList<Double> currentUserLocation = null;
+
+    public ArrayList<String> userEventLocation = null;
 
     public static MyApplicationClass.MySQLAccess dao = new MyApplicationClass.MySQLAccess();
 
@@ -85,6 +89,15 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                     ArrayList<String> userEventInfoResult = dao.userEventInfo(userId);
                     if (userEventInfoResult != null) {
                         userEventInfo = userEventInfoResult;
+                    }
+                    ArrayList<String> userEventTitlesResult = dao.userEventTitles(userId);
+                    if (userEventTitlesResult != null) {
+                        userEventTitles = userEventTitlesResult;
+                    }
+
+                    ArrayList<String> eventLocation = dao.userEventLocation(userId);
+                    if (eventLocation != null) {
+                        userEventLocation = eventLocation;
                     }
                     return 0;
                  } else {
@@ -189,6 +202,10 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
         return currentUserLocation;
     }
 
+    public ArrayList<String> getEventLocation() {
+        return userEventLocation;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -199,6 +216,10 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
 
     public ArrayList<String> userEventInfo() {
        return userEventInfo;
+    }
+
+    public ArrayList<String> userEventTitles(){
+        return userEventTitles;
     }
 
     public int getSave(){

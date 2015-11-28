@@ -85,6 +85,9 @@ public class Login_Screen extends Activity implements View.OnClickListener {
 
             ArrayList<String> eventInfo = conDb.userEventInfo();
 
+            ArrayList<String> eventTitles = conDb.userEventTitles();
+
+            ArrayList<String> eventLocation = conDb.getEventLocation();
             /*This is a check to make sure the userId is valid and if it is then we have logged in
                 successfully. This also starts an intent for the MainActivity and stores the userId,
                 description and likes_dislikes as extras to pass to MainActivity. */
@@ -98,6 +101,8 @@ public class Login_Screen extends Activity implements View.OnClickListener {
                     login.putExtra("userLatitude", userLatitude);
                     login.putExtra("friendsList", friendCoords);
                     login.putExtra("eventInfo", eventInfo);
+                    login.putExtra("eventTitles", eventTitles);
+                    login.putExtra("eventLocation", eventLocation);
                     //login.putExtra("userImageUri", userImageUri);
 
                 this.startActivity(login);

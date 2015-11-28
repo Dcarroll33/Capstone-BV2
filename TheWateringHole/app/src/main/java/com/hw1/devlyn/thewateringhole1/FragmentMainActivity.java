@@ -35,6 +35,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
     private ArrayList<String> userProfileInfo;
     private ArrayList<String> friendsList;
     private ArrayList<String> eventInfo;
+    private ArrayList<String> eventTitles;
+    private ArrayList<String> eventLocation;
     //private String friendUserName;
     //private String friendLongitude;
     //private String friendLatitude;
@@ -87,6 +89,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
         userProfileInfo = args.getStringArrayList("userProfileInfo");
         friendsList = args.getStringArrayList("friendsList");
         eventInfo = args.getStringArrayList("eventInfo");
+        eventTitles = args.getStringArrayList("eventTitles");
+        eventLocation = args.getStringArrayList("eventLocation");
         //userImageUri = args.getString("userImageUri");
 
         if (getArguments() != null) {
@@ -169,6 +173,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             eventsInfo.putExtra("userLongitude", userLongitude);
             eventsInfo.putExtra("userLatitude", userLatitude);
             eventsInfo.putExtra("eventInfo", eventInfo);
+            eventsInfo.putExtra("eventTitles", eventTitles);
+            eventsInfo.putExtra("eventLocation", eventLocation);
 
             Fragment fragment = new Fragment();
             Bundle bundle = new Bundle();
@@ -181,6 +187,8 @@ public class FragmentMainActivity extends Fragment implements  View.OnClickListe
             bundle.putDouble("userLongitude", userLongitude);
             bundle.putDouble("userLatitude", userLatitude);
             bundle.putStringArrayList("eventInfo", eventInfo);
+            bundle.putStringArrayList("eventTitles", eventTitles);
+            bundle.putStringArrayList("eventLocation", eventLocation);
             fragment.setArguments(bundle);
 
             Button b = (Button) view;

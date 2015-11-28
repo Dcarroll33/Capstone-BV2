@@ -35,6 +35,7 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
     private String events;
     private String likes_dislikes;
     private ArrayList<String> eventInfo;
+    private ArrayList<String> eventLocation;
     private String eventName;
     private String numPart;
     private String eventDesc;
@@ -82,6 +83,7 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
         events = args.getString("events", events);
         likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
         eventInfo = args.getStringArrayList("eventInfo");
+        eventLocation = args.getStringArrayList("eventLocation");
         /*eventNameInfo= args.getString("eventName", eventNameInfo);
         numParticipatingInfo = args.getString("numParticipating", numParticipatingInfo);
         eventDescriptionInfo = args.getString("eventDescription", eventDescriptionInfo);*/
@@ -103,9 +105,9 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
         getButtons(rootView);
 
         saveEvent = (Button) rootView.findViewById(R.id.save_btn);
-        /*eventDescription = (EditText) rootView.findViewById(R.id.eventDescription);
+        eventDescription = (EditText) rootView.findViewById(R.id.eventDescription);
         eventTitle = (EditText) rootView.findViewById(R.id.eventName);
-        numParticipants = (EditText) rootView.findViewById(R.id.numParticipants);*/
+        numParticipants = (EditText) rootView.findViewById(R.id.numParticipants);
 
         /*eventName = eventInfo.get(2);
         numPart   = eventInfo.get(3);

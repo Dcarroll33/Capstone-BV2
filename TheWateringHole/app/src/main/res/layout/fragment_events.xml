@@ -38,18 +38,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/eventsList"
-        android:layout_below="@+id/EventsTitle"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_above="@+id/save_btn"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:divider="#ff0bff31"
         android:dividerHeight="1dp"
         android:listSelector="@drawable/list_selector"
-        android:background="@color/list_background" />
+        android:background="@color/list_background"
+        android:layout_below="@+id/numParticipants"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-    <!--<EditText
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/eventDescription"
@@ -80,13 +80,10 @@
         android:ems="10"
         android:id="@+id/numParticipants"
         android:hint="Number of Participants"
-        android:layout_below="@+id/eventDescription"
-        android:layout_alignLeft="@+id/save_btn"
-        android:layout_alignStart="@+id/save_btn"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:textColor="#f4be2a"
         android:textColorHint="#f4be2a"
-        android:background="@drawable/wateringhole_textfield_activated_holo_dark" />!-->
+        android:background="@drawable/wateringhole_textfield_activated_holo_dark"
+        android:layout_below="@+id/eventDescription"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

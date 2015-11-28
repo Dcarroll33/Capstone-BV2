@@ -87,7 +87,7 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
     // Location updates intervals in sec
     private static int UPDATE_INTERVAL = 10000; // 10 sec
     private static int FATEST_INTERVAL = 5000; // 5 sec
-    private static int DISPLACEMENT = 1; // 10 meters
+    private static int DISPLACEMENT = 1; // 1 meters
 
     ConnectDb conDb = new ConnectDb();
 

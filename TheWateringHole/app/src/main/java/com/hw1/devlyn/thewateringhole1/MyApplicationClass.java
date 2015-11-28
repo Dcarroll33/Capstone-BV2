@@ -152,7 +152,7 @@ public class MyApplicationClass extends Application {
         public int eventInfo(String userId, String eventName, String numParticipating, String eventDescription) {
             try {
                 preparedStatement = connect
-                        .prepareStatement("select * from events where userId=?");
+                        .prepareStatement("select * from events where idevents=?");
                 preparedStatement.setString(1, userId);
                 Log.d("lol", "About to execute prepstatement1");
                 ResultSet eventInfoResult = preparedStatement.executeQuery();
@@ -168,7 +168,7 @@ public class MyApplicationClass extends Application {
                     return preparedStatement.executeUpdate();
                 } else {
                     preparedStatement = connect
-                            .prepareStatement("update events set eventName=?, numParticipating=?, description=? where userId=?");
+                            .prepareStatement("update events set eventName=?, numParticipating=?, description=? where idevents=?");
 
                     preparedStatement.setString(1, eventName);
                     preparedStatement.setString(2, numParticipating);
@@ -187,7 +187,7 @@ public class MyApplicationClass extends Application {
             ArrayList<String> eventInfo = new ArrayList<>();
             try {
                 preparedStatement = connect
-                        .prepareStatement("select eventName from events where userId in (select userId from events where userId=?)");//"select * from events where userId=?;");description, numParticipating
+                        .prepareStatement("select eventName, numParticipating, description from events where userId in (select userId from events where userId=?)");//"select * from events where userId=?;");description, numParticipating
                 preparedStatement.setInt(1, userId);
                 ResultSet getEventResult = preparedStatement.executeQuery();
                 //getEventResult.next();
@@ -204,6 +204,51 @@ public class MyApplicationClass extends Application {
                 e.printStackTrace();
             }
             return eventInfo;
+        }
+
+        public ArrayList<String> userEventLocation(int userId) {
+            ArrayList<String> eventLocation = new ArrayList<>();
+            try {
+                preparedStatement = connect
+                        .prepareStatement("select  longitude, latitude from events where userId in (select userId from events where userId=?)");//"select * from events where userId=?;");description, numParticipating
+                preparedStatement.setInt(1, userId);
+                ResultSet getEventLocationResult = preparedStatement.executeQuery();
+                //getEventResult.next();
+
+                int numberOfColumns = getEventLocationResult.getMetaData().getColumnCount();
+                while (getEventLocationResult.next()) {
+                    int i = 1;
+                    while(i <= numberOfColumns) {
+                        eventLocation.add(getEventLocationResult.getString(i++));
+                    }
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return eventLocation;
+        }
+        public ArrayList<String> userEventTitles(int userId) {
+            ArrayList<String> userEventTitles = new ArrayList<>();
+            try {
+                preparedStatement = connect
+                        .prepareStatement("select eventName from events where userId in (select userId from events where userId=?)");//"select * from events where userId=?;");description, numParticipating
+                preparedStatement.setInt(1, userId);
+                ResultSet getEventTitleResult = preparedStatement.executeQuery();
+                //getEventResult.next();
+
+                int numberOfColumns = getEventTitleResult.getMetaData().getColumnCount();
+                while (getEventTitleResult.next()) {
+                    int i = 1;
+                    while(i <= numberOfColumns) {
+                        userEventTitles.add(getEventTitleResult.getString(i++));
+                    }
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return userEventTitles;
         }
 
         public ArrayList<String> getUserProfileInfo(int userId) {

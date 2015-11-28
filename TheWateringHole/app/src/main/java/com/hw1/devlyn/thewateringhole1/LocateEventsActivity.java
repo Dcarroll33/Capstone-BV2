@@ -3,6 +3,7 @@ package com.hw1.devlyn.thewateringhole1;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -30,6 +31,10 @@ public class LocateEventsActivity extends AppCompatActivity {
     String likes_dislikes;
     String userName;
     String events;
+
+    private ArrayList<String> eventInfo;
+    private ArrayList<String> eventTitles;
+    private ArrayList<String> eventLocation;
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -63,6 +68,28 @@ public class LocateEventsActivity extends AppCompatActivity {
         description = thisIntent.getStringExtra("description");
         events = thisIntent.getStringExtra("events");
         likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
+        eventInfo = thisIntent.getStringArrayListExtra("eventInfo");
+        eventTitles = thisIntent.getStringArrayListExtra("eventTitles");
+        eventLocation = thisIntent.getStringArrayListExtra("eventLocation");
+
+        Fragment fragment = new Fragment();
+                /*A bundle is created here, where the values from the intent are then passed in to.*/
+        Bundle bundle = new Bundle();
+        bundle.putString("currentUser", currentUser);
+        /*bundle.putString("idUserProfile", idUserProfile);
+        bundle.putString("userName", userName);
+        bundle.putString("description", description);
+        bundle.putString("events", events);
+        bundle.putString("likes_dislikes", likes_dislikes)*/;
+        /*bundle.putDouble("userLongitude", userLongitude);
+        bundle.putDouble("userLatitude", userLatitude);
+        bundle.putStringArrayList("friendsList", friendsList);
+        bundle.putStringArrayList("userProfileInfo", userProfileInfo);*/
+        bundle.putStringArrayList("eventInfo", eventInfo);
+        bundle.putStringArrayList("eventTitles", eventTitles);
+        bundle.putStringArrayList("eventLocation", eventLocation);
+        //bundle.putString("userImageUri", userImageUri);*/
+        fragment.setArguments(bundle);
 
         mTitle = mDrawerTitle = getTitle();
 
