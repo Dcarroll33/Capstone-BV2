@@ -66,11 +66,6 @@ public class FriendsActivity extends AppCompatActivity {
 
         Intent thisIntent = getIntent();
         currentUser = thisIntent.getStringExtra("userId");
-        /*idUserProfile = thisIntent.getStringExtra("idUserProfile");
-        userName = thisIntent.getStringExtra("userName");
-        description = thisIntent.getStringExtra("description");
-        events = thisIntent.getStringExtra("events");
-        likes_dislikes = thisIntent.getStringExtra("likes_dislikes");*/
         userProfileInfo = thisIntent.getStringArrayListExtra("userProfileInfo");
         eventInfo = thisIntent.getStringArrayListExtra("eventInfo");
         eventTitles = thisIntent.getStringArrayListExtra("eventTitles");

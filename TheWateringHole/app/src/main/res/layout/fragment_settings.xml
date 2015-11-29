@@ -18,49 +18,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Privacy_Mode"
+        android:text="@string/SettingsInfo"
         android:id="@+id/Privacy_Mode"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="49dp"
         android:textSize="20dp"
         android:layout_below="@+id/settings"
-        android:textColor="#d9282e" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Enable_Locator"
-        android:id="@+id/Enable_Locator"
-        android:layout_below="@+id/Privacy_Mode"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="41dp"
-        android:textSize="20dp"
-        android:textColor="#d9282e" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/About"
-        android:id="@+id/About"
-        android:textSize="20dp"
-        android:layout_below="@+id/Enable_Locator"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="39dp"
-        android:textColor="#d9282e" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Version"
-        android:id="@+id/Version"
-        android:layout_below="@+id/About"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="60dp"
-        android:textSize="20dp"
-        android:textColor="#d9282e" />
+        android:textColor="#f4be2a"
+        android:background="@color/list_background"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

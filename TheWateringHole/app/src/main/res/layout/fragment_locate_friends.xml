@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/Locate_Friends"
         android:textSize="35dp"
-        android:textColor="#d9282e"
+        android:textColor="#96160b"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true">
 

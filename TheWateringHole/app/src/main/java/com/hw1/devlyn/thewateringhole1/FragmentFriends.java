@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 
@@ -28,11 +29,11 @@ public class FragmentFriends extends Fragment implements  View.OnClickListener {
     private boolean mIntentInProgress;
 
     private String currentUser;
-    private String idUserProfile;
-    private String userName;
-    private String description;
-    private String events;
-    private String likes_dislikes;
+    private ArrayList<String> eventInfo;
+    private ArrayList<String> eventTitles;
+    private ArrayList<String> eventLocation;
+    private ArrayList<String> userProfileInfo;
+    private ArrayList<String> friendsList;
     String friendUserName;
     String friendEmail;
     double userLongitude;
@@ -72,11 +73,11 @@ public class FragmentFriends extends Fragment implements  View.OnClickListener {
 
         Bundle args = getActivity().getIntent().getExtras();
         currentUser = args.getString("userId", currentUser);
-        idUserProfile = args.getString("idUserProfile", idUserProfile);
-        userName = args.getString("userName", userName);
-        description = args.getString("description", description);
-        events = args.getString("events", events);
-        likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
+        eventInfo = args.getStringArrayList("eventInfo");
+        eventTitles = args.getStringArrayList("eventTitles");
+        eventLocation = args.getStringArrayList("eventLocation");
+        userProfileInfo = args.getStringArrayList("userProfileInfo");
+        friendsList = args.getStringArrayList("friendsList");
         userLongitude = args.getDouble("userLongitude", userLongitude);
         userLatitude = args.getDouble("userLatitude", userLatitude);
 
@@ -145,7 +146,12 @@ public class FragmentFriends extends Fragment implements  View.OnClickListener {
         ConnectDb conDb = new ConnectDb();
         if (view == LocateFriends) {
             Intent events = new Intent(getActivity(), LocateFriendsActivity.class);
-
+            events.putExtra("currentUser", currentUser);
+            events.putStringArrayListExtra("eventInfo", eventInfo);
+            events.putStringArrayListExtra("eventTitles", eventTitles);
+            events.putStringArrayListExtra("eventLocation", eventLocation);
+            events.putStringArrayListExtra("userProfileInfo", userProfileInfo);
+            events.putStringArrayListExtra("friendsList", friendsList);
             Button b = (Button) view;
             this.startActivity(events);
         }

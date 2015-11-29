@@ -62,6 +62,8 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
     private ArrayList<String> friendsList;
     private ArrayList<String> userProfileInfo;
     private ArrayList<String> eventInfo;
+    private ArrayList<String> eventTitles;
+    private ArrayList<String> eventLocation;
     private double currentLongitude;
     private double currentLatitude;
     private double updatedLongitude;
@@ -127,6 +129,8 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
         friendsList = args.getStringArrayList("friendsList");
         userProfileInfo = args.getStringArrayList("userProfileInfo");
         eventInfo = args.getStringArrayList("eventInfo");
+        eventTitles = args.getStringArrayList("eventTitles");
+        eventLocation = args.getStringArrayList("eventLocation");
 
         // First we need to check availability of play services
         if (checkPlayServices()) {
@@ -434,13 +438,10 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
         if (view == AddFriend) {
             Intent addFriend = new Intent(getActivity(), FriendsActivity.class);
             addFriend.putExtra("userId", currentUser);
-            addFriend.putExtra("idUserProfile", idUserProfile);
-            addFriend.putExtra("userName", userName);
-            addFriend.putExtra("description", "" + description);
-            addFriend.putExtra("events", events);
-            addFriend.putExtra("likes_dislikes", likes_dislikes);
             addFriend.putStringArrayListExtra("userProfileInfo", userProfileInfo);
             addFriend.putStringArrayListExtra("eventInfo", eventInfo);
+            addFriend.putStringArrayListExtra("eventTitles", eventTitles);
+            addFriend.putStringArrayListExtra("eventLocation", eventLocation);
             addFriend.putStringArrayListExtra("friendsList", friendsList);
             addFriend.putExtra("userLongitude", userLongitude);
             addFriend.putExtra("userLatitude", userLatitude);
@@ -449,11 +450,9 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
             android.app.Fragment fragment = new android.app.Fragment();
             Bundle bundle = new Bundle();
             bundle.putString("currentUser", currentUser);
-            bundle.putString("idUserProfile", idUserProfile);
-            bundle.putString("userName", userName);
-            bundle.putString("description", description);
-            bundle.putString("events", events);
-            bundle.putString("likes_dislikes", likes_dislikes);
+            bundle.putStringArrayList("eventInfo", eventInfo);
+            bundle.putStringArrayList("eventTitles", eventTitles);
+            bundle.putStringArrayList("eventLocation", eventLocation);
             bundle.putDouble("userLongitude", userLongitude);
             bundle.putDouble("userLatitude", userLatitude);
             //bundle.putString("userImageUri", userImageUri);
