@@ -208,9 +208,32 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
         mLastLocation = LocationServices.FusedLocationApi
                 .getLastLocation(mGoogleApiClient);
 
+
         if (mLastLocation != null) {
+
+            //Send updated user location data to server
+            try {
+                String[] currentLocation = {"currentLocation", currentUser, String.valueOf(mLastLocation.getLongitude()), String.valueOf(mLastLocation.getLatitude())};
+                conDb.execute(currentLocation).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            ArrayList<Double> currentLocation = conDb.setCurrentCoords();
+            if (currentLocation != null) {
+                Toast.makeText(getActivity(), "User Location Updated", Toast.LENGTH_SHORT).show();
+            } else if (currentLocation == null) {
+                Toast.makeText(getActivity(), "Location Update Failed", Toast.LENGTH_SHORT).show();
+
+            }
+
             updatedLatitude = mLastLocation.getLatitude();
             updatedLongitude = mLastLocation.getLongitude();
+            LatLng userLocation = new LatLng(updatedLatitude,updatedLongitude);
+            if (userLocationMarker != null) {
+                userLocationMarker.setPosition(userLocation);
+            }
 
             Toast.makeText(getActivity(), "CurrentCoords: " + updatedLatitude + "," + updatedLongitude, Toast.LENGTH_SHORT).show();
 
@@ -348,10 +371,10 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
                                 .position(new LatLng(Double.valueOf(friendsList.get(i + 2)), Double.valueOf(friendsList.get(i + 1)))).title(friendsList.get(i)));
                     }
 
-                    currentLongitude = updatedLongitude;
-                    currentLatitude = updatedLatitude;
+                    //currentLongitude = updatedLongitude;
+                    //currentLatitude = updatedLatitude;
 
-                    try {
+                    /*try {
                         String[] currentLocation = {"currentLocation", currentUser, String.valueOf(currentLongitude), String.valueOf(currentLatitude)};
                         conDb.execute(currentLocation).get();
                     } catch (InterruptedException e) {
@@ -365,7 +388,7 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
                     } else if (currentLocation == null) {
                         Toast.makeText(getActivity(), "Location Update Failed", Toast.LENGTH_SHORT).show();
 
-                    }
+                    }*/
 
                     googleMap.setOnMyLocationChangeListener(null);
                 }

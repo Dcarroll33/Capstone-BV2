@@ -324,12 +324,13 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
 
                 @Override
                 public void onMyLocationChange(Location arg0) {
-
+                    int titleCount = 0;
                     googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arg0.getLatitude(), arg0.getLongitude()), 18.0f));
-                    for (int i = 0; i < eventTitles.size(); i = i + 1) {
+                    for (int i = 0; i < eventLocation.size(); i = i + 2) {
                             //for (int j = 0; j < eventLocation.size(); j = j+1)
                             userLocationMarker = googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                                    .position(new LatLng(Double.valueOf(eventLocation.get(i+1)), Double.valueOf(eventLocation.get(i)))).title(eventTitles.get(i)));
+                                    .position(new LatLng(Double.valueOf(eventLocation.get(i+1)), Double.valueOf(eventLocation.get(i)))).title(eventTitles.get(titleCount)));
+                            titleCount++;
                     }
                     googleMap.setOnMyLocationChangeListener(null);
                 }

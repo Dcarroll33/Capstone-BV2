@@ -152,28 +152,29 @@ public class MyApplicationClass extends Application {
         public int eventInfo(String userId, String eventName, String numParticipating, String eventDescription) {
             try {
                 preparedStatement = connect
-                        .prepareStatement("select * from events where idevents=?");
-                preparedStatement.setString(1, userId);
+                        .prepareStatement("select * from events where eventName=?");
+                preparedStatement.setString(1, eventName);
                 Log.d("lol", "About to execute prepstatement1");
                 ResultSet eventInfoResult = preparedStatement.executeQuery();
                 Log.d("SELECT", "inside select");
                 if (!eventInfoResult.next()) {
 
                     preparedStatement = connect
-                            .prepareStatement("insert into events (eventName, numParticipating, description) values (?,?,?)");
-                    preparedStatement.setString(1, eventName);
-                    preparedStatement.setString(2, numParticipating);
-                    preparedStatement.setString(3, eventDescription);
-                    Log.d("SQLConnect", "added to DB");
-                    return preparedStatement.executeUpdate();
-                } else {
-                    preparedStatement = connect
-                            .prepareStatement("update events set eventName=?, numParticipating=?, description=? where idevents=?");
-
+                            .prepareStatement("insert into events (eventName, numParticipating, description, userId) values (?,?,?,?)");
                     preparedStatement.setString(1, eventName);
                     preparedStatement.setString(2, numParticipating);
                     preparedStatement.setString(3, eventDescription);
                     preparedStatement.setString(4, userId);
+                    Log.d("SQLConnect", "added to DB");
+                    return preparedStatement.executeUpdate();
+                } else {
+                    preparedStatement = connect
+                            .prepareStatement("update events set eventName=?, numParticipating=?, description=? where eventName=?");
+
+                    preparedStatement.setString(1, eventName);
+                    preparedStatement.setString(2, numParticipating);
+                    preparedStatement.setString(3, eventDescription);
+                    preparedStatement.setString(4, eventName);
                     //Log.d("UPDATE", "userId already exists");
                     return preparedStatement.executeUpdate();
                 }

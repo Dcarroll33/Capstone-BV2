@@ -203,6 +203,8 @@ public class EventsActivity extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        final int itemSelection = (int) id;
+
 
         CharSequence[] eventInfo1 = {eventInfo.get(1), eventInfo.get(2)};//eventInfo.toArray(new CharSequence[eventInfo.size()]);
         CharSequence[] eventInfo2 = {eventInfo.get(4), eventInfo.get(5)};
@@ -254,6 +256,22 @@ public class EventsActivity extends AppCompatActivity implements AdapterView.OnI
                 }
             });
         }
+        /*final int test = itemSelection;
+        final int test2 = (int) id;
+        String title = eventInfo.get(test);
+        builder.setTitle(title);
+        builder.setItems(eventInfoResult, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                if(eventInfo.get(test) != null) {
+                    Intent LocateEvents = new Intent(EventsActivity.this, LocateEventsActivity.class);
+                    LocateEvents.putStringArrayListExtra("eventInfo", eventInfo);
+                    LocateEvents.putStringArrayListExtra("eventTitles", eventTitles);
+                    LocateEvents.putStringArrayListExtra("eventLocation", eventLocation);
+                    startActivity(LocateEvents);
+                }
+                // Do something with the selection
+            }
+        });*/
  /*       //builder.setTitle(String.valueOf(id));
         builder.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
