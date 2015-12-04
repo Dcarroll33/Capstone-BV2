@@ -70,6 +70,7 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
     private double updatedLatitude;
     private Marker userLocationMarker;
     private Marker friendLocationMarker;
+    private Marker userLocationMarker2;
 
     // LogCat tag
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -87,8 +88,8 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
     private LocationRequest mLocationRequest;
 
     // Location updates intervals in sec
-    private static int UPDATE_INTERVAL = 10000; // 10 sec
-    private static int FATEST_INTERVAL = 5000; // 5 sec
+    private static int UPDATE_INTERVAL = 5000; // 5 sec
+    private static int FATEST_INTERVAL = 1000; // 1 sec
     private static int DISPLACEMENT = 1; // 1 meters
 
     ConnectDb conDb = new ConnectDb();
@@ -163,7 +164,7 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
 
         userName = userProfileInfo.get(2);
         return rootView;
-        }
+    }
 
     @Override
     public void onStart() {
@@ -231,6 +232,8 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
             updatedLatitude = mLastLocation.getLatitude();
             updatedLongitude = mLastLocation.getLongitude();
             LatLng userLocation = new LatLng(updatedLatitude,updatedLongitude);
+            userLocationMarker = googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                    .position(new LatLng(updatedLatitude, updatedLongitude)).title(userName));
             if (userLocationMarker != null) {
                 userLocationMarker.setPosition(userLocation);
             }
@@ -241,6 +244,8 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
 
             Toast.makeText(getActivity(), "Location update failed", Toast.LENGTH_SHORT).show();
         }
+//        userLocationMarker.remove();
+        //currentLocationUpdate();
         setUpMapIfNeeded(mMapView);
 
     }
@@ -338,8 +343,23 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
                 Toast.LENGTH_SHORT).show();
 
         // Displaying the new location on UI
+        //userLocationMarker.remove();
         displayLocation();
+
+
+
+        //this.mMapView.invalidate();
     }
+
+    public void currentLocationUpdate(){
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()), 18.0f));
+        if (userLocationMarker != null) {
+            userLocationMarker.remove();
+            userLocationMarker2 = googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                    .position(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude())).title(userName));
+        }
+    }
+
 
     private void setUpMapIfNeeded(View rootView) {
         // Do a null check to confirm that we have not already instantiated the map.
@@ -349,19 +369,20 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
 
         } else if (googleMap != null) {
             googleMap.setMyLocationEnabled(true);
-            googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+            //userLocationMarker.remove();
+            currentLocationUpdate();
+            //googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
 
-                @Override
-                public void onMyLocationChange(Location arg0) {
+                //@Override
+                //public void onMyLocationChange(Location arg0) {
 
-                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arg0.getLatitude(), arg0.getLongitude()), 18.0f));
-
+                    //googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arg0.getLatitude(), arg0.getLongitude()), 18.0f));
+/*
                     if (userLocationMarker != null) {
                         userLocationMarker.remove();
-                    } else {
                         userLocationMarker = googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
                                 .position(new LatLng(updatedLatitude, updatedLongitude)).title(userName));
-                    }
+                    }*/
 
                         /*For loop to skip to the next row in friends table in database. The i + 3 pulls the friendsName, friendsLongitude and friendLatitude from the friends table.
                            Markers are placed at each friends location until there are no more friends in the table.
@@ -387,15 +408,14 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
                         Toast.makeText(getActivity(), "User Location Updated", Toast.LENGTH_SHORT).show();
                     } else if (currentLocation == null) {
                         Toast.makeText(getActivity(), "Location Update Failed", Toast.LENGTH_SHORT).show();
-
                     }*/
 
-                    googleMap.setOnMyLocationChangeListener(null);
+                    //googleMap.setOnMyLocationChangeListener(null);
                 }
-            });
+            }
 
-        }
-    }
+
+
 
 
     public void getButtons(View v){

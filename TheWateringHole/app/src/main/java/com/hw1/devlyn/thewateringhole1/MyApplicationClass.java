@@ -13,7 +13,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
- * Created by Devlyn on 4/8/2015.
+ * @Author: Devlyn Carroll
+ * @Date: 4/8/2015.
+ * MyApplicationClass contains the methods that have SQL preparedStatements to read in information
+ * from the database tables, insert information into the tables or in some cases updated information
+ * that already exists in the database.
  */
 public class MyApplicationClass extends Application {
 
@@ -26,8 +30,9 @@ public class MyApplicationClass extends Application {
         private static final String USERNAME = "devlyn";
         private static final String USERPSWD = "wateringcap";
 
-        /*This method is for when the user registers an account. The userName, userPswd and email
-          are inserted into the users DB table.
+        /**
+         * This method is for when the user registers an account. The userName, userPswd and email
+         * are inserted into the users DB table using the select and insert preparedStatements.
          */
         public int registerUser(String userName, String userPswd, String email) {
             try {
@@ -51,11 +56,14 @@ public class MyApplicationClass extends Application {
             return -1;
         }
 
+        /**
+         * readDataBase method that loads the MySQL driver associated with the database. Sets up the
+         * connection with the database to be able to read from it.
+         * @throws Exception
+         */
         public static void readDataBase() throws Exception {
             try {
-                // This will load the MySQL driver, each DB has its own driver
                 Class.forName("com.mysql.jdbc.Driver").newInstance();
-                // Setup the connection with the DB
                 Log.d("Before Connect", "Connecting to DB");
                 connect = DriverManager
                         .getConnection(DBCON, USERNAME, USERPSWD);
@@ -68,6 +76,16 @@ public class MyApplicationClass extends Application {
 
         }
 
+        /**
+         * loginUser method that reads in the userName and userPswd as parameters, selects the
+         * userName and password from the users table and then executes the query. The values pulled
+         * from the query are then assigned the ResultSet userResult and then checks to see if the
+         * userResult does not have a next value. If it does then userResult is set to the value
+         * of the userId.
+         * @param userName
+         * @param userPswd
+         * @return
+         */
         public int loginUser(String userName, String userPswd) {
             try {
                 preparedStatement = connect
@@ -87,6 +105,21 @@ public class MyApplicationClass extends Application {
             return -1;
         }
 
+        /**
+         * userProfile method is used to get, set or update all the user's profile information such
+         * as the userId, name, description, likes_dislikes and userImage from the database table
+         * userProfile. Once the userId has been selected from the table the userProfileResult is
+         * assigned the values that are retrieved from the database query. The userProfileResult is
+         * then checked to see if there is another value. If there is not another value then the
+         * user's profile information is inserted into the table where the userId was selected. If
+         * there is more values then the profile information already exists and that profile
+         * information is updated.
+         * @param userId
+         * @param name
+         * @param description
+         * @param likes_dislikes
+         * @return
+         */
         public int userProfile(String userId, String name, String description, String likes_dislikes/*, String userImage*/) {
             try {
                 Log.d("UserProfile", "Got data: userId: " + userId + " desc: " + description + " likes-dislikes: " + likes_dislikes + "userName: " + name);
@@ -124,6 +157,17 @@ public class MyApplicationClass extends Application {
             return -1;
         }
 
+        /**
+         * getUserCoords method used to get the user's GPS coordinates(latitude,longitude) from the
+         * database table userProfile. This is done by reading in the userId as a parameter and then
+         * selecting the user from the table by the userId. The userLatitude & userLongitude are
+         * also selected from the same row as the userId and then assigned to the ResultSet
+         * userCoordsResult. Then if there is a next value in userCoordsResult those values are
+         * assigned to userLatitude & userLongitude. Finally those doubles are added to the ArrayList
+         * of doubles userCoords that is then returned for later use.
+         * @param userId
+         * @return
+         */
         public ArrayList<Double> getUserCoords(int userId) {
             ArrayList<Double> userCoords = new ArrayList<>();
             try {
@@ -149,6 +193,20 @@ public class MyApplicationClass extends Application {
             return userCoords;
         }
 
+        /**
+         * eventInfo method used to set, get or update all the eventInfo values such as; userId,
+         * eventName, numParticipating, eventDescription. Those values are passed in as parameters
+         * and the eventName is immediately used to select the row containing that eventName in the
+         * database table events. eventInfoResult is then assigned the values from the query and
+         * checked to see if it contains a next value. If it does not contain a next value then the
+         * values are inserted into the table. If it does contain a next value then the event
+         * already exists and we update the values for that event.
+         * @param userId
+         * @param eventName
+         * @param numParticipating
+         * @param eventDescription
+         * @return
+         */
         public int eventInfo(String userId, String eventName, String numParticipating, String eventDescription) {
             try {
                 preparedStatement = connect
@@ -184,6 +242,16 @@ public class MyApplicationClass extends Application {
             return -1;
         }
 
+        /**
+         * userEventInfo method that iteratively  checks to see if eventName, numParticipating and
+         * description are in the database. This is based off the userId given and if the i count is
+         * less than the numberOfColumns found, then each value from each column will be added to the
+         * ArrayList of strings eventInfo, until there are no more values in the ResultSet.
+         * getEventResult.
+         * of columns in the database then
+         * @param userId
+         * @return
+         */
         public ArrayList<String> userEventInfo(int userId) {
             ArrayList<String> eventInfo = new ArrayList<>();
             try {
@@ -207,6 +275,14 @@ public class MyApplicationClass extends Application {
             return eventInfo;
         }
 
+        /**
+         * userEventLocation method that reads in userId as a parameter. This selects the longitude,
+         * latitude if they exists in the events table based off the userId. Then iteratively
+         * checks the numberOfColumns within the table. Then the values found are added to the
+         * ArrayList of strings eventLocation.
+         * @param userId
+         * @return
+         */
         public ArrayList<String> userEventLocation(int userId) {
             ArrayList<String> eventLocation = new ArrayList<>();
             try {
@@ -229,6 +305,15 @@ public class MyApplicationClass extends Application {
             }
             return eventLocation;
         }
+
+        /**
+         * userEventTitles method that reads in the userId as a parameter. Then the method checks
+         * to see if eventName is within the database. Then it checks to see if there is other
+         * eventNames wherever the userId is. Then iteratively checks the numberOfColumns in the
+         * table and adds the values to ArrayList of strings userEventTitles.
+         * @param userId
+         * @return
+         */
         public ArrayList<String> userEventTitles(int userId) {
             ArrayList<String> userEventTitles = new ArrayList<>();
             try {
@@ -252,6 +337,11 @@ public class MyApplicationClass extends Application {
             return userEventTitles;
         }
 
+        /**
+         * getUserProfileInfo method that reads in userId as a paramter.
+         * @param userId
+         * @return
+         */
         public ArrayList<String> getUserProfileInfo(int userId) {
             ArrayList<String> profileInfo = new ArrayList<>();
             try {

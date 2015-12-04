@@ -109,11 +109,7 @@
             android:name="com.hw1.devlyn.thewateringhole1.EditProfileActivity"
             android:label="@string/edit_profile_title" >
         </activity>
-        <activity
-            android:name="com.hw1.devlyn.thewateringhole1.AccountInfoActivity"
-            android:label="@string/account_info_title" >
-        </activity>
-        <activity
+    <activity
             android:name="com.hw1.devlyn.thewateringhole1.HangoutPageActivity"
             android:label="@string/hangout_page_title" >
         </activity>

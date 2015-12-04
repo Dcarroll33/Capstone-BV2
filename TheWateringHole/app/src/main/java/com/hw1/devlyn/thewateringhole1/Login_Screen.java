@@ -12,20 +12,30 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-/*This is the login activity where the user enters their credentials and tries to log in. The
-    credentials are then sent to the database to ensure the user exists and has entered their
-    information in correctly.
+/**
+ * This is the login activity where the user enters their credentials and tries to log in. The
+ * credentials are then sent to the database to ensure the user exists and has entered their
+ * information in correctly.
  */
 public class Login_Screen extends Activity implements View.OnClickListener {
 
-    /*Field declarations for the buttons login and register*/
+    /**
+     * Global button declarations for the buttons login and register.
+     */
     Button login;
     Button register;
 
-    /*Fields for the EditText's on the login screen*/
+    /**
+     * Global editTexts for the editTexts userNameText and userNamePass in login activity.
+     */
     EditText userNameText;
     EditText userNamePass;
 
+    /**
+     * onCreate method used to set up the activity_login_screen layout as well as initialize the
+     * buttons and editTexts that are used. OnClickListeners are also set to the buttons.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,28 +55,40 @@ public class Login_Screen extends Activity implements View.OnClickListener {
 
 
     }
-    /*onStart is what allows the app to be visible to the user, by allowing the resources needed
-        for that to happen to run.*/
+
+    /**
+     * onStart is what allows the app to be visible to the user, by allowing the resources needed
+     * for that to happen to run.
+     */
     @Override
     protected void onStart() {
         super.onStart();
     }
-    /*onStop is what allows the app to be hidden from the user, by stopping the resources needed
-        for the app to display.*/
+
+    /**
+     * onStop is what allows the app to be hidden from the user, by stopping the resources needed
+     * for the app to display.
+     */
     @Override
     protected void onStop() {
         super.onStop();
     }
 
-    /*This method is used to listen for user clicks on the login & register buttons that are
-        displayed on the screen*/
+    /**
+     * This method is used to listen for user clicks on the login & register buttons that are
+     * displayed on the screen.
+     * */
     public void onClick(View view) {
         ConnectDb conDb = new ConnectDb();
-        /*Checks to see if the click is the login else if the click is on the register button*/
+        /**
+         * Checks to see if the click is the login else if the click is on the register button.
+         */
         if (view == login) {
-            /*These are the userName and userPass strings that store the strings from the EditTexts
-              that are in the layout. Once the strings are stored they are passed as parameters and
-              are sent to the DB. */
+            /**
+             * These are the userName and userPass strings that store the strings from the EditTexts
+             * that are in the layout. Once the strings are stored they are passed as parameters and
+             * are sent to the database.
+             */
             String userName = userNameText.getText().toString();
             String userPass = userNamePass.getText().toString();
             String[] params = {"login", userName, userPass};
@@ -77,12 +99,16 @@ public class Login_Screen extends Activity implements View.OnClickListener {
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
-            /*userId is assigned the value that the the method getUserId in connectDb returns.*/
+            /**
+             * userId is assigned the value that the the method getUserId in connectDb returns.
+             */
             String userId = String.valueOf(conDb.getUserId());
 
-            /*userProfileInfo is assigned the values that the method getUserProfileInfo in connectDb
-                returns. These values should be the userName, description, events, likes_dislikes
-                and userId.*/
+            /**
+             * userProfileInfo is assigned the values that the method getUserProfileInfo in connectDb
+             * returns. These values should be the userName, description, events, likes_dislikes
+             * and userId.
+             * */
             ArrayList<String> userProfileInfo = conDb.getUserProfileInfo();
             //String userImageUri = myList.get(6);*/
 
@@ -90,25 +116,34 @@ public class Login_Screen extends Activity implements View.OnClickListener {
             double userLongitude = myList2.get(0);
             double userLatitude = myList2.get(1);
 
-            /*friendCoords is assigned the values that the method getFriendCoords in connectDb
-                returns. These values should be friendUserName, friendLongitude and friendLatitude.*/
+            /**
+             * friendCoords is assigned the values that the method getFriendCoords in connectDb
+             * returns. These values should be friendUserName, friendLongitude and friendLatitude.
+             */
             ArrayList<String> friendCoords = conDb.getFriendCoords();
 
-            /*eventInfo is assigned the values that the method userEventInfo in connectDb returns.
-                These values should be eventName, numParticipating, description.*/
+            /**
+             * eventInfo is assigned the values that the method userEventInfo in connectDb returns.
+             * These values should be eventName, numParticipating, description.
+             */
             ArrayList<String> eventInfo = conDb.userEventInfo();
 
-            /*eventTitles is assigned the values that the method userEventTitles in connectDb returns.
-                These values should only be the eventName.*/
+            /**
+             * eventTitles is assigned the values that the method userEventTitles in connectDb returns.
+             * These values should only be the eventNames.
+             */
             ArrayList<String> eventTitles = conDb.userEventTitles();
 
-            /*eventLocation is assigned the values that the method getEventLocation in connectDb
-                returns. These values should be the eventLongitude and eventLatitude.*/
-
+            /**
+             * eventLocation is assigned the values that the method getEventLocation in connectDb
+             * returns. These values should be the eventLongitude and eventLatitude.
+             */
             ArrayList<String> eventLocation = conDb.getEventLocation();
-            /*This is a check to make sure the userId is valid and if it is then we have logged in
-                successfully. This also starts an intent for the MainActivity and stores the userId,
-                description and likes_dislikes as extras to pass to MainActivity. */
+            /**
+             * This is a check to make sure the userId is valid and if it is then we have logged in
+             * successfully. This also starts an intent for the MainActivity and stores the userId,
+             * description and likes_dislikes as extras to pass to MainActivity.
+             */
             if(!userId.equals("-1")){
                 Toast.makeText(getBaseContext(), "Logged in", Toast.LENGTH_SHORT).show();
 
@@ -127,7 +162,9 @@ public class Login_Screen extends Activity implements View.OnClickListener {
             }else {
                 Toast.makeText(getBaseContext(), "Invalid username or password", Toast.LENGTH_SHORT).show();
             }
-        /*This is the intent that fires when the register button has been clicked and launches the RegisterActivity.*/
+        /**
+         * This is the intent that fires when the register button has been clicked and launches the RegisterActivity.
+         */
         }else if (view == register) {
             Intent register = new Intent(this, RegisterActivity.class);
 
