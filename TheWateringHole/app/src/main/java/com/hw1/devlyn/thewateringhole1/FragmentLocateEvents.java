@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class FragmentLocateEvents extends Fragment implements  View.OnClickListener, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, LocationListener {
+        GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMyLocationChangeListener, LocationListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -66,6 +66,8 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
     private LocationRequest mLocationRequest;
 
     private Marker userLocationMarker;
+
+    private Location location;
 
     // Location updates intervals in sec
     private static int UPDATE_INTERVAL = 10000; // 10 sec
@@ -116,12 +118,6 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
         eventInfo = args.getStringArrayList("eventInfo");
         eventTitles = args.getStringArrayList("eventTitles");
         eventLocation = args.getStringArrayList("eventLocation");
-
-       /* idUserProfile = args.getString("idUserProfile", idUserProfile);
-        userName = args.getString("userName", userName);
-        description = args.getString("description", description);
-        events = args.getString("events", events);
-        likes_dislikes = args.getString("likes_dislikes", likes_dislikes);*/
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -212,7 +208,13 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
 
             Toast.makeText(getActivity(), "Location update failed", Toast.LENGTH_SHORT).show();
         }
-        setUpMapIfNeeded(mMapView);
+        if(location != null) {
+            LatLng updateMarker = new LatLng(location.getLatitude(), location.getLongitude());
+            userLocationMarker.setPosition(updateMarker);
+        } else {
+            setUpMapIfNeeded(mMapView);
+        }
+        //setUpMapIfNeeded(mMapView);
 
     }
 
@@ -299,7 +301,6 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
     public void onConnectionSuspended(int arg0) {
         mGoogleApiClient.connect();
     }
-
     @Override
     public void onLocationChanged(Location location) {
         // Assign the new location
@@ -309,9 +310,22 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
                 Toast.LENGTH_SHORT).show();
 
         // Displaying the new location on UI
+        userLocationMarker.remove();
         displayLocation();
     }
 
+     @Override
+     public void onMyLocationChange(Location location) {
+         // Assign the new location
+         mLastLocation = location;
+
+         Toast.makeText(getActivity(), "Location changed!",
+                 Toast.LENGTH_SHORT).show();
+
+         // Displaying the new location on UI
+         userLocationMarker.remove();
+         displayLocation();
+     }
     private void setUpMapIfNeeded(View rootView) {
         // Do a null check to confirm that we have not already instantiated the map.
         if (googleMap == null) {
@@ -324,17 +338,21 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
 
                 @Override
                 public void onMyLocationChange(Location arg0) {
+                    location = arg0;
                     int titleCount = 0;
                     googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arg0.getLatitude(), arg0.getLongitude()), 18.0f));
                     for (int i = 0; i < eventLocation.size(); i = i + 2) {
-                            //for (int j = 0; j < eventLocation.size(); j = j+1)
-                            userLocationMarker = googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                                    .position(new LatLng(Double.valueOf(eventLocation.get(i+1)), Double.valueOf(eventLocation.get(i)))).title(eventTitles.get(titleCount)));
-                            titleCount++;
+                        //for (int j = 0; j < eventLocation.size(); j = j+1)
+                        userLocationMarker = googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                                .position(new LatLng(Double.valueOf(eventLocation.get(i + 1)),Double.valueOf(eventLocation.get(i)))).title(eventTitles.get(titleCount)));
+                        titleCount++;
+                        googleMap.setOnMyLocationChangeListener(null);
                     }
-                    googleMap.setOnMyLocationChangeListener(null);
                 }
             });
+
+
+
 
         }
     }
@@ -385,6 +403,7 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
             this.startActivity(events);
         }
     }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

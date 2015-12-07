@@ -194,8 +194,8 @@ public class EventsActivity extends AppCompatActivity implements AdapterView.OnI
         for(int i = 0 ; i < eventTitles.size(); i = i + 1) {
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                         this,
-            R.layout.activity_events_listview_text_color,R.id.list_content,
-                    eventTitles);
+                        R.layout.activity_events_listview_text_color,R.id.list_content,
+                        eventTitles);
                 eventsList.setAdapter(arrayAdapter);
 
         }

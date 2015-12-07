@@ -438,7 +438,7 @@ public class MyApplicationClass extends Application {
             return -1;
         }
 
-        public ArrayList<String> getFriendCoords(int userId) {
+        public ArrayList<String> getFriendCoords(int userId) throws Exception {
             ArrayList<String> friendCoords = new ArrayList<>();
             try {
                 preparedStatement = connect

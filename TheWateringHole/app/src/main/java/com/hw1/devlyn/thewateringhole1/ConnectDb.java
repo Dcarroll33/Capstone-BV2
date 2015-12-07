@@ -82,7 +82,7 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
      * friendCurrentLocation is the global ArrayList of doubles that stores the user's friend's
      * latitude & longitude.
      */
-    private ArrayList<Double> friendCurrentLocation = null;
+    private ArrayList<String> friendCurrentLocation = null;
 
     /**
      * currentUserLocation is the global ArrayList of doubles that stores the user's current
@@ -101,12 +101,20 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
      */
     public static MyApplicationClass.MySQLAccess dao = new MyApplicationClass.MySQLAccess();
 
+    public ConnectDb() {
+    }
+
+
     /**
      * getter method to return the new SQL Access dao.
      * @return
      */
     public static MyApplicationClass.MySQLAccess getDao() {
         return dao;
+    }
+
+    public ConnectDb(Integer userId){
+        this.userId = userId;
     }
 
     /**
@@ -263,6 +271,11 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                 } else {
                     return -1;
                 }
+            }else if (strings[0] == "eventUpdate") {
+                ArrayList<String> userEventTitlesResult = dao.userEventTitles(userId);
+                if (userEventTitlesResult != null) {
+                    userEventTitles = userEventTitlesResult;
+                }
 
                 /**
                  * Checks to see if the string is load and then reads the database. Then
@@ -308,8 +321,8 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                  * Then assigns friendLocation to the ArrayList of doubles friendCurrentLocation,
                  * return success else return failure.
                  */
-            } else if (strings[0] == "friendLocation") {
-                MyApplicationClass.MySQLAccess.readDataBase();
+            //}/* else if (strings[0] == "friendLocation") {
+               /* MyApplicationClass.MySQLAccess.readDataBase();
                 ArrayList<Double> friendLocation = dao.setFriendCoords(strings[1], Double.parseDouble(strings[2]), Double.parseDouble(strings[3]));
                 if (friendLocation != null){
                     friendLocation.add(0, Double.valueOf(strings[1]));
@@ -319,7 +332,7 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                     return 0;
                 } else {
                     return -1;
-                }
+                }*/
 
                 /**
                  * Checks to see if the string is currentLocation and then reads the database.
@@ -341,7 +354,14 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
             } else {
                 return -1;
             }
-        }
+        } else if (strings[0] == "friendUpdatedLoc") {
+                MyApplicationClass.MySQLAccess.readDataBase();
+                ArrayList<String> friendCoordsResult = dao.getFriendCoords(userId);
+                if (friendCoordsResult != null) {
+                    Log.d("ConnectDB", "friendLongitude" + friendCoordsResult.get(1) + " friendLatitude" + friendCoordsResult.get(2));
+                    friendCurrentLocation = friendCoordsResult;
+                }
+            }
             /**
              * catch block for the try block to capture exceptions.
              */
@@ -380,6 +400,7 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
      * @return
      */
     public ArrayList<String> getFriendCoords(){
+
         return friendCoords;
     }
 
@@ -387,7 +408,8 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
      * getter to return the ArrayList of doubles friendCurrentLocation.
      * @return
      */
-    public ArrayList<Double> setFriendCoords(){
+    public ArrayList<String> setFriendCoords() throws Exception {
+
         return friendCurrentLocation;
     }
 

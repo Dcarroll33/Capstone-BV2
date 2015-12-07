@@ -1,15 +1,21 @@
 package com.hw1.devlyn.thewateringhole1;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -36,11 +42,14 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
     private String likes_dislikes;
     private ArrayList<String> eventInfo;
     private ArrayList<String> eventLocation;
+    private ArrayList<String> eventTitles;
+    private ArrayList<String> eventTitlesUpdate;
     private String eventName;
     private String numPart;
     private String eventDesc;
     private double userLongitude;
     private double userLatitude;
+    private ListView eventsList;
 
     /*Fields for the buttons to be used in this class.*/
     Button saveEvent;
@@ -84,9 +93,7 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
         likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
         eventInfo = args.getStringArrayList("eventInfo");
         eventLocation = args.getStringArrayList("eventLocation");
-        /*eventNameInfo= args.getString("eventName", eventNameInfo);
-        numParticipatingInfo = args.getString("numParticipating", numParticipatingInfo);
-        eventDescriptionInfo = args.getString("eventDescription", eventDescriptionInfo);*/
+        eventTitles = args.getStringArrayList("eventTitles");
         userLongitude = args.getDouble("userLongitude", userLongitude);
         userLatitude = args.getDouble("userLatitude", userLatitude);
 
@@ -108,6 +115,92 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
         eventDescription = (EditText) rootView.findViewById(R.id.eventDescription);
         eventTitle = (EditText) rootView.findViewById(R.id.eventName);
         numParticipants = (EditText) rootView.findViewById(R.id.numParticipants);
+        /**
+         * Initializing eventsList to the resource ListView eventsList.
+         */
+        eventsList = (ListView) rootView.findViewById(R.id.eventsList);
+
+        /**
+         * Setting the onItemClickListener for eventsList.
+         */
+        eventsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final int itemSelection = (int) id;
+
+                /**
+                 * Assigns the values that are returned from the eventInfo ArrayList to CharSequence arrays.
+                 */
+                CharSequence[] eventInfo1 = {eventInfo.get(1), eventInfo.get(2)};//eventInfo.toArray(new CharSequence[eventInfo.size()]);
+                CharSequence[] eventInfo2 = {eventInfo.get(4), eventInfo.get(5)};
+                CharSequence[] eventInfo3 = {eventInfo.get(7), eventInfo.get(8)};
+
+                /**
+                 * Initializes a new alert dialog builder.
+                 */
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                if(id == 0) {
+                    /**
+                     * Assigns and sets the titles of the events.
+                     */
+                    String title = eventTitles.get(0);
+                    builder.setTitle(title);
+
+                    /**
+                     * Setting items in the builder based off the eventInfo ArrayList and values from the
+                     * DialogInterface.OnClickListener().
+                     */
+                    builder.setItems(eventInfo1, new DialogInterface.OnClickListener() {
+                        /**
+                         * onClick method that checks to see what item was selected. Then it creates an
+                         * intent that passes the eventInfo, eventTitles and eventLocation to the
+                         * LocateEventsActivity. Then the intent is fired.
+                         * @param dialog
+                         * @param item
+                         */
+                        public void onClick(DialogInterface dialog, int item) {
+                            if (eventTitles.get(0) != null) {
+                                Intent LocateEvents = new Intent(getActivity(), LocateEventsActivity.class);
+                                LocateEvents.putStringArrayListExtra("eventInfo", eventInfo);
+                                LocateEvents.putStringArrayListExtra("eventTitles", eventTitles);
+                                LocateEvents.putStringArrayListExtra("eventLocation", eventLocation);
+                                startActivity(LocateEvents);
+                            }
+                        }
+                    });
+                } else if (id == 1) {
+                    String title = eventTitles.get(1);
+                    builder.setTitle(title);
+                    builder.setItems(eventInfo2, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int item) {
+                            if(eventTitles.get(1) != null) {
+                                Intent LocateEvents = new Intent(getActivity(), LocateEventsActivity.class);
+                                LocateEvents.putStringArrayListExtra("eventInfo", eventInfo);
+                                LocateEvents.putStringArrayListExtra("eventTitles", eventTitles);
+                                LocateEvents.putStringArrayListExtra("eventLocation", eventLocation);
+                                startActivity(LocateEvents);
+                            }
+                        }
+                    });
+                } else if (id == 2) {
+                    String title = eventTitles.get(2);
+                    builder.setTitle(title);
+                    builder.setItems(eventInfo3, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int item) {
+                            if(eventTitles.get(2) != null) {
+                                Intent LocateEvents = new Intent(getActivity(), LocateEventsActivity.class);
+                                LocateEvents.putStringArrayListExtra("eventInfo", eventInfo);
+                                LocateEvents.putStringArrayListExtra("eventTitles", eventTitles);
+                                LocateEvents.putStringArrayListExtra("eventLocation", eventLocation);
+                                startActivity(LocateEvents);
+                            }
+                        }
+                    });
+                }
+
+            }
+        });
 
         /*eventName = eventInfo.get(2);
         numPart   = eventInfo.get(3);
@@ -186,6 +279,18 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
                 Toast.makeText(getActivity(), "Save Unsuccessful", Toast.LENGTH_SHORT).show();
 
             }
+
+            /*ConnectDb conDb2 = new ConnectDb();
+            ArrayList<String> eventTitlesUpdate = conDb2.userEventTitles();
+
+            for(int i = 0 ; i < eventTitlesUpdate.size(); i = i + 1) {
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                        getActivity(),
+                        R.layout.activity_events_listview_text_color,R.id.list_content,
+                        eventTitlesUpdate);
+                eventsList.setAdapter(arrayAdapter);
+
+            }*/
         }
         }
 

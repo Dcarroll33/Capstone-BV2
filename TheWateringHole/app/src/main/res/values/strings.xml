@@ -36,7 +36,10 @@
             redirects you to the edit profile page where you can update your user profile information
             and save it. Settings redirects you to the settings page of the application. Sign out
             redirects the user to the login screen and successfully logs the user out.</string>
-    <string name ="SettingsInfo">Privacy \n\n\n\n Enable Locator \n\n\n\n About: Android V:4.1.2 Ice Cream Sandwich</string>
+    <string name ="SettingsInfo">Privacy \n\n\n\n Enable Locator \n\n\n\n
+                                    About: Android V:4.1.2 Ice Cream Sandwich \n\n\n\n
+                                    Developer: Devlyn Carroll \n\n\n\n Date: December 1st, 2015
+                                    </string>
 
     <!--Input field string names for the activity screens-->
     <string name="Profile_Picture">Profile Picture:</string>

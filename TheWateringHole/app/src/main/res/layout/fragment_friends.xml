@@ -13,7 +13,7 @@
         android:textSize="35dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textColor="#d9282e" />
+        android:textColor="#f4be2a" />
 
     <Button
         android:id="@+id/locate_friends_btn"
@@ -43,8 +43,9 @@
         android:layout_below="@+id/Friends"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="59dp"
-        android:textColor="#d9282e"
-        android:textColorHint="#d9282e" />
+        android:textColor="#f4be2a"
+        android:textColorHint="#f4be2a"
+        android:background="@drawable/wateringhole_textfield_activated_holo_dark"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -53,8 +54,9 @@
         android:layout_below="@+id/friendUserName"
         android:layout_centerHorizontal="true"
         android:hint="Friend Email"
-        android:textColor="#d9282e"
-        android:textColorHint="#d9282e" />
+        android:textColor="#f4be2a"
+        android:textColorHint="#f4be2a"
+        android:background="@drawable/wateringhole_textfield_activated_holo_dark"/>
 
     <Button
         android:layout_width="225dp"

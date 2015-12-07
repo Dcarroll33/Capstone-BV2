@@ -19,6 +19,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -69,13 +70,15 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
     private double updatedLongitude;
     private double updatedLatitude;
     private Marker userLocationMarker;
+
+    private Handler handler = new Handler();
     private Marker friendLocationMarker;
     private Marker userLocationMarker2;
 
     // LogCat tag
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 5000;
 
     private Location mLastLocation;
 
@@ -88,9 +91,9 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
     private LocationRequest mLocationRequest;
 
     // Location updates intervals in sec
-    private static int UPDATE_INTERVAL = 5000; // 5 sec
-    private static int FATEST_INTERVAL = 1000; // 1 sec
-    private static int DISPLACEMENT = 1; // 1 meters
+    private static int UPDATE_INTERVAL = 5000; // 10 sec
+    private static int FATEST_INTERVAL = 5000; // 10 sec
+    //private static int DISPLACEMENT = 1; // 1 meters
 
     ConnectDb conDb = new ConnectDb();
 
@@ -152,7 +155,6 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
 
         mMapView = (MapView) rootView.findViewById(R.id.mapview);
         mMapView.onCreate(savedInstanceState);
-        setUpMapIfNeeded(rootView);
 
         googleMap = mMapView.getMap();
         MapsInitializer.initialize(this.getActivity());
@@ -203,7 +205,7 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
 
     /**
      * Method to display the location on UI
-     * */
+     */
     private void displayLocation() {
 
         mLastLocation = LocationServices.FusedLocationApi
@@ -211,7 +213,7 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
 
 
         if (mLastLocation != null) {
-
+            ConnectDb conDb = new ConnectDb(Integer.valueOf(currentUser));
             //Send updated user location data to server
             try {
                 String[] currentLocation = {"currentLocation", currentUser, String.valueOf(mLastLocation.getLongitude()), String.valueOf(mLastLocation.getLatitude())};
@@ -223,36 +225,36 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
             }
             ArrayList<Double> currentLocation = conDb.setCurrentCoords();
             if (currentLocation != null) {
-                Toast.makeText(getActivity(), "User Location Updated", Toast.LENGTH_SHORT).show();
+                //  userLocationMarker.setPosition(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
+                //Toast.makeText(getActivity(), "DispLoc User Location Updated", Toast.LENGTH_SHORT).show();
+                updatedLatitude = mLastLocation.getLatitude();
+                updatedLongitude = mLastLocation.getLongitude();
+                //LatLng userLocation = new LatLng(updatedLatitude,updatedLongitude);
+                LatLng userLocation = new LatLng(currentLocation.get(2), currentLocation.get(1));
+                userLocationMarker = googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                        .position(userLocation).title(userName));
+                if (userLocationMarker != null) {
+                    userLocationMarker.remove();
+                    mMapView.invalidate();
+                    userLocationMarker.setPosition(userLocation);
+                }
             } else if (currentLocation == null) {
-                Toast.makeText(getActivity(), "Location Update Failed", Toast.LENGTH_SHORT).show();
+          //      Toast.makeText(getActivity(), "DispLoc Location Update Failed", Toast.LENGTH_SHORT).show();
 
             }
-
-            updatedLatitude = mLastLocation.getLatitude();
-            updatedLongitude = mLastLocation.getLongitude();
-            LatLng userLocation = new LatLng(updatedLatitude,updatedLongitude);
-            userLocationMarker = googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                    .position(new LatLng(updatedLatitude, updatedLongitude)).title(userName));
-            if (userLocationMarker != null) {
-                userLocationMarker.setPosition(userLocation);
-            }
-
-            Toast.makeText(getActivity(), "CurrentCoords: " + updatedLatitude + "," + updatedLongitude, Toast.LENGTH_SHORT).show();
-
         } else {
-
-            Toast.makeText(getActivity(), "Location update failed", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getActivity(), "Location update failed", Toast.LENGTH_SHORT).show();
         }
-//        userLocationMarker.remove();
-        //currentLocationUpdate();
-        setUpMapIfNeeded(mMapView);
-
+        googleMap.clear();
+        try {
+            setUpMapIfNeeded(mMapView);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
     /**
      * Creating google api client object
-     * */
+     */
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(this)
@@ -262,18 +264,18 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
 
     /**
      * Creating location request object
-     * */
+     */
     protected void createLocationRequest() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(UPDATE_INTERVAL);
         mLocationRequest.setFastestInterval(FATEST_INTERVAL);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setSmallestDisplacement(DISPLACEMENT);
+        //mLocationRequest.setSmallestDisplacement(DISPLACEMENT);
     }
 
     /**
      * Method to verify google play services on the device
-     * */
+     */
     private boolean checkPlayServices() {
         int resultCode = GooglePlayServicesUtil
                 .isGooglePlayServicesAvailable(getActivity());
@@ -282,9 +284,9 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
                 GooglePlayServicesUtil.getErrorDialog(resultCode, getActivity(),
                         PLAY_SERVICES_RESOLUTION_REQUEST).show();
             } else {
-                Toast.makeText(getActivity(),
-                        "This device is not supported.", Toast.LENGTH_LONG)
-                        .show();
+    //            Toast.makeText(getActivity(),
+      //                  "This device is not supported.", Toast.LENGTH_LONG)
+        //                .show();
                 //finish();
             }
             return false;
@@ -294,7 +296,7 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
 
     /**
      * Starting the location updates
-     * */
+     */
     protected void startLocationUpdates() {
 
         LocationServices.FusedLocationApi.requestLocationUpdates(
@@ -322,7 +324,8 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
     public void onConnected(Bundle arg0) {
 
         // Once connected with google api, get the location
-        displayLocation();
+        //displayLocation();
+        runnable.run();
 
         if (mRequestingLocationUpdates) {
             startLocationUpdates();
@@ -339,29 +342,26 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
         // Assign the new location
         mLastLocation = location;
 
-        Toast.makeText(getActivity(), "Location changed!",
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Location changed!",
+  //              Toast.LENGTH_SHORT).show();
 
         // Displaying the new location on UI
         //userLocationMarker.remove();
-        displayLocation();
-
+        //displayLocation();
 
 
         //this.mMapView.invalidate();
     }
 
-    public void currentLocationUpdate(){
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()), 18.0f));
-        if (userLocationMarker != null) {
-            userLocationMarker.remove();
-            userLocationMarker2 = googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                    .position(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude())).title(userName));
+
+    private Runnable runnable = new Runnable() {
+        public void run() {
+            displayLocation();
+            handler.postDelayed(this, UPDATE_INTERVAL + 3);
         }
-    }
+    };
 
-
-    private void setUpMapIfNeeded(View rootView) {
+    private void setUpMapIfNeeded(View rootView) throws Exception {
         // Do a null check to confirm that we have not already instantiated the map.
         if (googleMap == null) {
             googleMap = ((MapView) rootView.findViewById(R.id.mapview)).getMap();
@@ -369,52 +369,71 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
 
         } else if (googleMap != null) {
             googleMap.setMyLocationEnabled(true);
-            //userLocationMarker.remove();
-            currentLocationUpdate();
-            //googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+            //currentLocationUpdate();
+           /* googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
 
-                //@Override
-                //public void onMyLocationChange(Location arg0) {
-
-                    //googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arg0.getLatitude(), arg0.getLongitude()), 18.0f));
-/*
-                    if (userLocationMarker != null) {
-                        userLocationMarker.remove();
+                @Override
+                public void onMyLocationChange(Location arg0) {
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arg0.getLatitude(), arg0.getLongitude()), 18.0f));
+            */
+            ConnectDb conDb2 = new ConnectDb(Integer.valueOf(currentUser));
+            if (userLocationMarker != null) {
+             //           userLocationMarker.remove();
                         userLocationMarker = googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
                                 .position(new LatLng(updatedLatitude, updatedLongitude)).title(userName));
-                    }*/
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(/*updatedLatitude*/35.3105868, -83.1812686 /*updatedLongitude*/), 16.0f));
+
+            }
 
                         /*For loop to skip to the next row in friends table in database. The i + 3 pulls the friendsName, friendsLongitude and friendLatitude from the friends table.
                            Markers are placed at each friends location until there are no more friends in the table.
                         */
-                    for (int i = 0; i < friendsList.size(); i = i + 3) {
-                        friendLocationMarker = googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
-                                .position(new LatLng(Double.valueOf(friendsList.get(i + 2)), Double.valueOf(friendsList.get(i + 1)))).title(friendsList.get(i)));
+                    ArrayList<String> friendCoords = new ArrayList<String>();
+                    try {
+                        String[] friendUpdatedLoc = {"friendUpdatedLoc"};
+                        conDb2.execute(friendUpdatedLoc).get();
+                        friendCoords = conDb2.setFriendCoords();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    if (friendCoords.size() != 0) {
+                        for (int i = 0; i < friendCoords.size(); i = i + 3) {
+                            friendLocationMarker = googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
+                                    .position(new LatLng(Double.valueOf(friendCoords.get(i + 2)), Double.valueOf(friendCoords.get(i + 1)))).title(friendCoords.get(i)));
+                        }
+
+                    } else {
+                        Log.d("FragLocFriends: ", "Could not get friendCoords");
+
                     }
 
-                    //currentLongitude = updatedLongitude;
-                    //currentLatitude = updatedLatitude;
+                    currentLongitude = updatedLongitude;
+                    currentLatitude = updatedLatitude;
 
-                    /*try {
+                    ConnectDb conDb3 = new ConnectDb(Integer.valueOf(currentUser));
+                    try {
                         String[] currentLocation = {"currentLocation", currentUser, String.valueOf(currentLongitude), String.valueOf(currentLatitude)};
-                        conDb.execute(currentLocation).get();
+                         conDb3.execute(currentLocation).get();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     }
-                    ArrayList<Double> currentLocation = conDb.setCurrentCoords();
-                    if (currentLocation != null) {
-                        Toast.makeText(getActivity(), "User Location Updated", Toast.LENGTH_SHORT).show();
-                    } else if (currentLocation == null) {
-                        Toast.makeText(getActivity(), "Location Update Failed", Toast.LENGTH_SHORT).show();
-                    }*/
+            ConnectDb conDb4 = new ConnectDb(Integer.valueOf(currentUser));
 
+
+            ArrayList<Double> currentLocation = conDb4.setCurrentCoords();
+                    if (currentLocation != null) {
+               //         Toast.makeText(getActivity(), "User Location Updated", Toast.LENGTH_SHORT).show();
+                    } else if (currentLocation == null) {
+                        //Toast.makeText(getActivity(), "Location Update Failed", Toast.LENGTH_SHORT).show();
+                    }
                     //googleMap.setOnMyLocationChangeListener(null);
                 }
-            }
-
-
+            //});
+        //}
+    }
 
 
 
