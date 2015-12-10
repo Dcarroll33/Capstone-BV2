@@ -14,7 +14,7 @@ import java.util.ArrayList;
 /**
  * @Author: Devlyn Carroll
  * @Date: 4/21/2015
- * ConnectDb is the class used to run as an AsyncTask alongside the application.
+ * ConnectDb is the class used to run as an AsyncTask along side the application.
  */
 public class ConnectDb extends AsyncTask<String, Void, Integer> {
 
@@ -25,11 +25,6 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
      * made and if anything is in the database.
      */
     private int result = -1;
-
-    /**
-     *
-     */
-    private int idfriends = -1;
 
     /**
      * userId is the global variable that is used when the the user registers or logs into the
@@ -312,27 +307,6 @@ public class ConnectDb extends AsyncTask<String, Void, Integer> {
                     friendSave = friendResult;
                     return friendSave;
                 }
-
-                /**
-                 * Checks to see if the string is friendLocation and then reads the database.
-                 * friendLocation is assigned the values that the setFriendCoords method in
-                 * MyApplicationClass returns. Then if friendLocation is not null, add the values
-                 * friendName, friendLatitude & friendLongitude to the ArrayList friendLocation.
-                 * Then assigns friendLocation to the ArrayList of doubles friendCurrentLocation,
-                 * return success else return failure.
-                 */
-            //}/* else if (strings[0] == "friendLocation") {
-               /* MyApplicationClass.MySQLAccess.readDataBase();
-                ArrayList<Double> friendLocation = dao.setFriendCoords(strings[1], Double.parseDouble(strings[2]), Double.parseDouble(strings[3]));
-                if (friendLocation != null){
-                    friendLocation.add(0, Double.valueOf(strings[1]));
-                    friendLocation.add(1, Double.valueOf(strings[2]));
-                    friendLocation.add(2, Double.valueOf(strings[3]));
-                    friendCurrentLocation = friendLocation;
-                    return 0;
-                } else {
-                    return -1;
-                }*/
 
                 /**
                  * Checks to see if the string is currentLocation and then reads the database.

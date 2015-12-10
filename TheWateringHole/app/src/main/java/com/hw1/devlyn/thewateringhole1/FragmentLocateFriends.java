@@ -38,6 +38,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * @Author: Devlyn Carroll
+ * FragmentLocateFriends is used to work along side the LocateFriendsActivity that allows for the
+ * map and button clicks to run with the sliding menu.
+ */
 public class FragmentLocateFriends extends Fragment implements  View.OnClickListener, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,17 +54,15 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
 
     private OnFragmentInteractionListener mListener;
 
+    /**
+     * Global fields to be used in this activity that store the values passed in and then are used
+     * to place markers and update information correctly.
+     */
     private MapView mMapView;
     private GoogleMap googleMap;
 
     private String currentUser;
-    private String idUserProfile;
     private String userName;
-    private String description;
-    private String events;
-    private String likes_dislikes;
-    private double userLongitude;
-    private double userLatitude;
     private ArrayList<String> friendsList;
     private ArrayList<String> userProfileInfo;
     private ArrayList<String> eventInfo;
@@ -73,7 +76,6 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
 
     private Handler handler = new Handler();
     private Marker friendLocationMarker;
-    private Marker userLocationMarker2;
 
     // LogCat tag
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -91,8 +93,8 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
     private LocationRequest mLocationRequest;
 
     // Location updates intervals in sec
-    private static int UPDATE_INTERVAL = 5000; // 10 sec
-    private static int FATEST_INTERVAL = 5000; // 10 sec
+    private static int UPDATE_INTERVAL = 5000; // 5 sec
+    private static int FATEST_INTERVAL = 5000; // 5 sec
     //private static int DISPLACEMENT = 1; // 1 meters
 
     ConnectDb conDb = new ConnectDb();
@@ -128,8 +130,6 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
         super.onCreate(savedInstanceState);
         Bundle args = getActivity().getIntent().getExtras();
         currentUser = args.getString("userId", currentUser);
-        userLongitude = args.getDouble("userLongitude", userLongitude);
-        userLatitude = args.getDouble("userLatitude", userLatitude);
         friendsList = args.getStringArrayList("friendsList");
         userProfileInfo = args.getStringArrayList("userProfileInfo");
         eventInfo = args.getStringArrayList("eventInfo");
@@ -146,6 +146,13 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
         }
     }
 
+    /**
+     * onCreateView is used to initialize the mapView and buttons found in this activity.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -168,6 +175,9 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
         return rootView;
     }
 
+    /**
+     * onStart used to start the connection to the mGoogleApiClient if no connections were found.
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -176,6 +186,9 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
         }
     }
 
+    /**
+     * onResume used to resume the connection to the mGoogleApiClient.
+     */
     @Override
     public void onResume() {
         checkPlayServices();
@@ -188,6 +201,9 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
         super.onResume();
     }
 
+    /**
+     * onStop used to stop the connection to the mGoogleApiClient.
+     */
     @Override
     public void onStop() {
         super.onStop();
@@ -196,6 +212,9 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
         }
     }
 
+    /**
+     * onPaused used to pause the mapView and the location updates.
+     */
     @Override
     public void onPause() {
         super.onPause();
@@ -225,7 +244,6 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
             }
             ArrayList<Double> currentLocation = conDb.setCurrentCoords();
             if (currentLocation != null) {
-                //  userLocationMarker.setPosition(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
                 //Toast.makeText(getActivity(), "DispLoc User Location Updated", Toast.LENGTH_SHORT).show();
                 updatedLatitude = mLastLocation.getLatitude();
                 updatedLongitude = mLastLocation.getLongitude();
@@ -341,19 +359,11 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
     public void onLocationChanged(Location location) {
         // Assign the new location
         mLastLocation = location;
-
-//        Toast.makeText(getActivity(), "Location changed!",
-  //              Toast.LENGTH_SHORT).show();
-
-        // Displaying the new location on UI
-        //userLocationMarker.remove();
-        //displayLocation();
-
-
-        //this.mMapView.invalidate();
     }
 
-
+    /**
+     * Runnable used to delay how often the displayLocation method is called.
+     */
     private Runnable runnable = new Runnable() {
         public void run() {
             displayLocation();
@@ -361,6 +371,13 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
         }
     };
 
+    /**
+     * setUpMap if needed is used to create a google map, pass in the values of the event and
+     * currentUser location. The values are then passed to each marker on the map. There is also
+     * a couple of calls to the database to set and retrieve those values.
+     * @param rootView
+     * @throws Exception
+     */
     private void setUpMapIfNeeded(View rootView) throws Exception {
         // Do a null check to confirm that we have not already instantiated the map.
         if (googleMap == null) {
@@ -369,19 +386,11 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
 
         } else if (googleMap != null) {
             googleMap.setMyLocationEnabled(true);
-            //currentLocationUpdate();
-           /* googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-
-                @Override
-                public void onMyLocationChange(Location arg0) {
-                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arg0.getLatitude(), arg0.getLongitude()), 18.0f));
-            */
             ConnectDb conDb2 = new ConnectDb(Integer.valueOf(currentUser));
             if (userLocationMarker != null) {
-             //           userLocationMarker.remove();
                         userLocationMarker = googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
                                 .position(new LatLng(updatedLatitude, updatedLongitude)).title(userName));
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(/*updatedLatitude*/35.3105868, -83.1812686 /*updatedLongitude*/), 16.0f));
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(updatedLatitude, updatedLongitude), 16.0f));
 
             }
 
@@ -436,7 +445,10 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
     }
 
 
-
+    /**
+     * getButtons used to detect all the buttons and button clicks within the activity.
+     * @param v
+     */
     public void getButtons(View v){
         if(v instanceof ViewGroup) {
             ViewGroup vg = (ViewGroup) v;
@@ -466,31 +478,28 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
     }
 
     /*This method is for the on screen clicks by the user depending on which button is pushed
-        in this case the Events, Friends, Profile or Settings buttons. Once one button has been
-        clicked depending on their relationship the screen will switch to the appropriate screen.*/
+        in this case the FriendsProfile and AddFriend buttons. Once one button has been
+        clicked depending on their relationship the screen will switch to the appropriate screen.
+        While passing the values in as well.
+        */
     @Override
     public void onClick(View view) {
         if (view == FriendsProfile) {
             Intent friendsProfile = new Intent(getActivity(), FriendsProfileActivity.class);
             friendsProfile.putExtra("userId", currentUser);
-            friendsProfile.putExtra("idUserProfile", idUserProfile);
-            friendsProfile.putExtra("userName", userName);
-            friendsProfile.putExtra("description", "" + description);
-            friendsProfile.putExtra("events", events);
-            friendsProfile.putExtra("likes_dislikes", likes_dislikes);
-            friendsProfile.putExtra("userLongitude", userLongitude);
-            friendsProfile.putExtra("userLatitude", userLatitude);
+            friendsProfile.putStringArrayListExtra("userProfileInfo", userProfileInfo);
+            friendsProfile.putStringArrayListExtra("eventInfo", eventInfo);
+            friendsProfile.putStringArrayListExtra("eventTitles", eventTitles);
+            friendsProfile.putStringArrayListExtra("eventLocation", eventLocation);
+            friendsProfile.putStringArrayListExtra("friendsList", friendsList);
 
             android.app.Fragment fragment = new android.app.Fragment();
             Bundle bundle = new Bundle();
             bundle.putString("currentUser", currentUser);
-            bundle.putString("idUserProfile", idUserProfile);
-            bundle.putString("userName", userName);
-            bundle.putString("description", description);
-            bundle.putString("events", events);
-            bundle.putString("likes_dislikes", likes_dislikes);
-            bundle.putDouble("userLongitude", userLongitude);
-            bundle.putDouble("userLatitude", userLatitude);
+            bundle.putStringArrayList("userProfileInfo", userProfileInfo);
+            bundle.putStringArrayList("eventInfo", eventInfo);
+            bundle.putStringArrayList("eventTitles", eventTitles);
+            bundle.putStringArrayList("eventLocation", eventLocation);
             //bundle.putString("userImageUri", userImageUri);
             fragment.setArguments(bundle);
 
@@ -505,18 +514,15 @@ public class FragmentLocateFriends extends Fragment implements  View.OnClickList
             addFriend.putStringArrayListExtra("eventTitles", eventTitles);
             addFriend.putStringArrayListExtra("eventLocation", eventLocation);
             addFriend.putStringArrayListExtra("friendsList", friendsList);
-            addFriend.putExtra("userLongitude", userLongitude);
-            addFriend.putExtra("userLatitude", userLatitude);
             //addFriend.putExtra("userImageUri", userImageUri);
 
             android.app.Fragment fragment = new android.app.Fragment();
             Bundle bundle = new Bundle();
             bundle.putString("currentUser", currentUser);
+            bundle.putStringArrayList("userProfileInfo", userProfileInfo);
             bundle.putStringArrayList("eventInfo", eventInfo);
             bundle.putStringArrayList("eventTitles", eventTitles);
             bundle.putStringArrayList("eventLocation", eventLocation);
-            bundle.putDouble("userLongitude", userLongitude);
-            bundle.putDouble("userLatitude", userLatitude);
             //bundle.putString("userImageUri", userImageUri);
             fragment.setArguments(bundle);
             Button b = (Button) view;

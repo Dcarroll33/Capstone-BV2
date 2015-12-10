@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Created by drcar on 9/20/2015.
+ * @Author: Devlyn Carroll
  * FragmentEditProfileActivity is the fragment that is called from EditProfileActivity. This
  * fragment allows for the buttons and editTexts that the user interacts with to be accessible
  * alongside the navigation drawer. The fragment implements View.OnClickListener to detect button
@@ -71,8 +71,6 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
     private String userImageUri;
     private Uri userImageUriR;
     private ArrayList<String> userProfileInfo;
-    private double userLongitude;
-    private double userLatitude;
 
     /*Fields for the buttons that are in the fragment.*/
     Button Save;
@@ -122,8 +120,6 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         events = args.getString("events", events);
         likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
         userProfileInfo = args.getStringArrayList("userProfileInfo");
-        userLongitude = args.getDouble("userLongitude");
-        userLatitude = args.getDouble("userLatitude");
         //userImageUri = args.getString("userImageUri", userImageUri);
 
         MyApplicationClass.MySQLAccess dao = ConnectDb.getDao();
@@ -155,7 +151,6 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         UserName = (EditText) rootView.findViewById(R.id.Username);
         Save = (Button) rootView.findViewById(R.id.save_btn);
         UploadImage = (Button) rootView.findViewById(R.id.uploadImage);
-        //Load = (Button) rootView.findViewById(R.id.load_btn);
         //profileImage = (ImageView) rootView.findViewById(R.id.profileImage);
 
         /*This is where the editText fields are set with the Strings or Uri from whatever is passed
@@ -207,11 +202,11 @@ public class FragmentEditProfileActivity extends Fragment implements View.OnClic
         super.onAttach(activity);
     }
 
-    /*@Override
+    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }*/
+    }
 
     /*This method is for the on screen clicks by the user depending on which button is pushed
         in this case the Events, Friends, Profile or Settings buttons. Once one button has been

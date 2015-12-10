@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 /**
+ * @Author: Devlyn Carroll
  * RegisterActivity class used to set up the activity_register layout.
  */
 public class RegisterActivity extends AppCompatActivity {

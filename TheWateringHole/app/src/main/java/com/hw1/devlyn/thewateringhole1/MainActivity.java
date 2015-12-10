@@ -24,12 +24,16 @@ import info.info.wateringhole.slidingmenu.model.NavDrawerItem;
 
 import static com.hw1.devlyn.thewateringhole1.R.*;
 
+/**
+ * @Author: Devlyn Carroll
+ * MainActivity is used to set up the main page of the application using the main_activity layout.
+ */
 public class MainActivity extends AppCompatActivity {
 
-    /*Fields for the data that is being passed in from the bundle.*/
+    /**
+     * Fields for the data that is being passed in from the bundle.
+     */
     private String currentUser;
-    private double userLongitude;
-    private double userLatitude;
     private ArrayList<String> userProfileInfo;
     private ArrayList<String> friendsList;
     private ArrayList<String> eventInfo;
@@ -37,7 +41,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> eventLocation;
     private String userImageUri;
 
-    /*These fields are used for the navigation slide out menu.*/
+    /**
+     * These fields are used for the navigation slide out menu.
+     */
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -65,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
         Intent thisIntent = getIntent();
             currentUser = thisIntent.getStringExtra("userId");
-            userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
-            userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
             userProfileInfo = thisIntent.getStringArrayListExtra("userProfileInfo");
             friendsList = thisIntent.getStringArrayListExtra("friendsList");
             eventInfo = thisIntent.getStringArrayListExtra("eventInfo");
@@ -80,8 +84,6 @@ public class MainActivity extends AppCompatActivity {
                 /*A bundle is created here, where the values from the intent are then passed in to.*/
                 Bundle bundle = new Bundle();
                 bundle.putString("currentUser", currentUser);
-                bundle.putDouble("userLongitude", userLongitude);
-                bundle.putDouble("userLatitude", userLatitude);
                 bundle.putStringArrayList("userProfileInfo", userProfileInfo);
                 bundle.putStringArrayList("eventInfo", eventInfo);
                 bundle.putStringArrayList("eventTitles", eventTitles);
@@ -110,13 +112,13 @@ public class MainActivity extends AppCompatActivity {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
         // Find People
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-        // Photos
+        // Find Events
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-        // Communities, Will add a counter here
+        // Edit Profile
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
-        // Pages
+        // Settings
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
-        // What's hot, We  will add a counter here
+        // Sign out
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
 
 
@@ -248,8 +250,6 @@ public class MainActivity extends AppCompatActivity {
                     FindPeople.putStringArrayListExtra("eventInfo", eventInfo);
                     FindPeople.putStringArrayListExtra("eventTitles", eventTitles);
                     FindPeople.putStringArrayListExtra("eventLocation", eventLocation);
-                    FindPeople.putExtra("userLongitude", userLongitude);
-                    FindPeople.putExtra("userLatitude", userLatitude);
                     //FindPeople.putExtra("userImageUri", userImageUri);*/
 
                     android.app.Fragment FindPeopleFrag = new android.app.Fragment();
@@ -260,8 +260,6 @@ public class MainActivity extends AppCompatActivity {
                     FindPeopleBundle.putStringArrayList("eventInfo", eventInfo);
                     FindPeopleBundle.putStringArrayList("eventTitles", eventTitles);
                     FindPeopleBundle.putStringArrayList("eventLocation", eventLocation);
-                    FindPeopleBundle.putDouble("userLongitude", userLongitude);
-                    FindPeopleBundle.putDouble("userLatitude", userLatitude);
                     //FindPeopleBundle.putString("userImageUri", userImageUri);
                     FindPeopleFrag.setArguments(FindPeopleBundle);
 
@@ -305,8 +303,6 @@ public class MainActivity extends AppCompatActivity {
                     EditProfile.putStringArrayListExtra("eventTitles", eventTitles);
                     EditProfile.putStringArrayListExtra("eventLocation", eventLocation);
                     EditProfile.putStringArrayListExtra("friendsList", friendsList);
-                    EditProfile.putExtra("userLongitude", userLongitude);
-                    EditProfile.putExtra("userLatitude", userLatitude);
 
                     android.app.Fragment EditProfileFrag = new android.app.Fragment();
                     Bundle EditProfileBundle = new Bundle();
@@ -316,8 +312,6 @@ public class MainActivity extends AppCompatActivity {
                     EditProfileBundle.putStringArrayList("eventTitles", eventTitles);
                     EditProfileBundle.putStringArrayList("eventLocation", eventLocation);
                     EditProfileBundle.putStringArrayList("friendsList", friendsList);
-                    EditProfileBundle.putDouble("userLongitude", userLongitude);
-                    EditProfileBundle.putDouble("userLatitude", userLatitude);
                     EditProfileFrag.setArguments(EditProfileBundle);
 
                     startActivity(EditProfile);
@@ -335,8 +329,6 @@ public class MainActivity extends AppCompatActivity {
                     Settings.putStringArrayListExtra("eventTitles", eventTitles);
                     Settings.putStringArrayListExtra("eventLocation", eventLocation);
                     Settings.putStringArrayListExtra("friendsList", friendsList);
-                    Settings.putExtra("userLongitude", userLongitude);
-                    Settings.putExtra("userLatitude", userLatitude);
 
                     android.app.Fragment SettingsFrag = new android.app.Fragment();
                     Bundle SettingsBundle = new Bundle();
@@ -346,8 +338,6 @@ public class MainActivity extends AppCompatActivity {
                     SettingsBundle.putStringArrayList("eventTitles", eventTitles);
                     SettingsBundle.putStringArrayList("eventLocation", eventLocation);
                     SettingsBundle.putStringArrayList("friendsList", friendsList);
-                    SettingsBundle.putDouble("userLongitude", userLongitude);
-                    SettingsBundle.putDouble("userLatitude", userLatitude);
                     SettingsFrag.setArguments(SettingsBundle);
 
                     startActivity(Settings);

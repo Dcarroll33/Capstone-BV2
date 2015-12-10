@@ -15,9 +15,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-
+/**
+ * @Author: Devlyn Carroll
+ * FragmentFriends is used to work along side the friendsActivity and the sliding menu.
+ */
 public class FragmentFriends extends Fragment implements  View.OnClickListener {
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // the fragment initialization parameters
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -28,6 +31,10 @@ public class FragmentFriends extends Fragment implements  View.OnClickListener {
 
     private boolean mIntentInProgress;
 
+    /**
+     * Global variables used to store the values retrieved from the bundle to be used within this
+     * class.
+     */
     private String currentUser;
     private ArrayList<String> eventInfo;
     private ArrayList<String> eventTitles;
@@ -36,8 +43,6 @@ public class FragmentFriends extends Fragment implements  View.OnClickListener {
     private ArrayList<String> friendsList;
     String friendUserName;
     String friendEmail;
-    double userLongitude;
-    double userLatitude;
 
     /*Field for the button to be used in this class.*/
     Button LocateFriends;
@@ -67,6 +72,11 @@ public class FragmentFriends extends Fragment implements  View.OnClickListener {
         // Required empty public constructor
     }
 
+    /**
+     * onCreate used to assign the retrieved values from the bundle to local variables used in this
+     * class.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,8 +88,6 @@ public class FragmentFriends extends Fragment implements  View.OnClickListener {
         eventLocation = args.getStringArrayList("eventLocation");
         userProfileInfo = args.getStringArrayList("userProfileInfo");
         friendsList = args.getStringArrayList("friendsList");
-        userLongitude = args.getDouble("userLongitude", userLongitude);
-        userLatitude = args.getDouble("userLatitude", userLatitude);
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -87,6 +95,13 @@ public class FragmentFriends extends Fragment implements  View.OnClickListener {
         }
     }
 
+    /**
+     * onCreateView used to initialize the layout, buttons and editTexts used in this class.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -103,7 +118,10 @@ public class FragmentFriends extends Fragment implements  View.OnClickListener {
 
         return rootView;
     }
-
+    /**
+     * getButtons used to detect all the buttons and button clicks within the activity.
+     * @param v
+     */
     public void getButtons(View v){
         if(v instanceof ViewGroup) {
             ViewGroup vg = (ViewGroup) v;
@@ -155,6 +173,10 @@ public class FragmentFriends extends Fragment implements  View.OnClickListener {
             Button b = (Button) view;
             this.startActivity(events);
         }
+        /**
+         * Add allows for a user to add a friend and have it update in the database as well as check
+         * if that friend already exists or not.
+         */
         if (view == Add) {
             friendUserName = friendUserNameText.getText().toString();
             friendEmail = friendUserEmail.getText().toString();

@@ -22,15 +22,12 @@ import java.util.ArrayList;
 import info.info.wateringhole.slidingmenu.adapter.NavDrawerListAdapter;
 import info.info.wateringhole.slidingmenu.model.NavDrawerItem;
 /**
+ * @Author: Devlyn Carroll
  * EventsActivity used so the user can create an event from within the activity.
  */
 public class EventsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-
     /**
-     * Global variables used to store the values from the intent that is passed in from MainActivity.
-     */
-    /**
-     * Global string currentUser used to store the value of the currentUser passed in from the
+     * Global strings used to store the values of the currentUser passed in from the
      * intent.
      */
     private String currentUser;

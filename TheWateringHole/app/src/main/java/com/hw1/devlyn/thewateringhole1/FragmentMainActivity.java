@@ -15,6 +15,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * @Author: Devlyn Carroll
+ * FragmentMainActivity is used to work alongside the MainActivity and allow for the textView
+ * and button clicks to work with the sliding menu.
+ */
 public class FragmentMainActivity extends Fragment /*implements  View.OnClickListener*/{
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -27,21 +32,8 @@ public class FragmentMainActivity extends Fragment /*implements  View.OnClickLis
 
     private boolean mIntentInProgress;
     private String currentUser;
-    private double userLongitude;
-    private double userLatitude;
-    private ArrayList<String> userProfileInfo;
-    private ArrayList<String> friendsList;
-    private ArrayList<String> eventInfo;
-    private ArrayList<String> eventTitles;
-    private ArrayList<String> eventLocation;
     private TextView InstructionView;
     /*private String userImageUri;*/
-    /*Fields for the buttons to be used in this class.*/
-    Button Events;
-    Button Friends;
-    Button Profile;
-    Button Settings;
-    Button SignOut;
 
     /**
      * Method to create a new instance of
@@ -51,7 +43,6 @@ public class FragmentMainActivity extends Fragment /*implements  View.OnClickLis
      * @param /*param2 Parameter 2.
      * @return A new instance of fragment FragmentMainActivity.
      */
-
     public static FragmentMainActivity newInstance(String param1, String param2) {
         FragmentMainActivity fragment = new FragmentMainActivity();
         Bundle args = new Bundle();
@@ -65,19 +56,17 @@ public class FragmentMainActivity extends Fragment /*implements  View.OnClickLis
         // Required empty public constructor
     }
 
+    /**
+     * onCreate used to retrieve the values passed in from the bundle.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Bundle args = getActivity().getIntent().getExtras();
         currentUser = args.getString("userId", currentUser);
-        userLongitude = args.getDouble("userLongitude");
-        userLatitude = args.getDouble("userLatitude");
-        userProfileInfo = args.getStringArrayList("userProfileInfo");
-        friendsList = args.getStringArrayList("friendsList");
-        eventInfo = args.getStringArrayList("eventInfo");
-        eventTitles = args.getStringArrayList("eventTitles");
-        eventLocation = args.getStringArrayList("eventLocation");
+
         //userImageUri = args.getString("userImageUri");
 
         if (getArguments() != null) {
@@ -86,6 +75,13 @@ public class FragmentMainActivity extends Fragment /*implements  View.OnClickLis
         }
     }
 
+    /**
+     * onCreateView used to initialize the layout and the textView used in this activity.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

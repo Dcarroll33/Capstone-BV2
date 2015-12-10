@@ -21,7 +21,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-
+/**
+ * @Author: Devlyn Carroll
+ * FragmentEvents works along side the eventsActivity to display the eventInfo and allow button
+ * clicks to be detected.
+ */
 public class FragmentEvents extends Fragment implements  View.OnClickListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -34,6 +38,10 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
 
     private boolean mIntentInProgress;
 
+    /**
+     * Global fields to store the values from the bundle into local variables that are used within
+     * this class.
+     */
     private String currentUser;
     private String idUserProfile;
     private String userName;
@@ -43,15 +51,10 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
     private ArrayList<String> eventInfo;
     private ArrayList<String> eventLocation;
     private ArrayList<String> eventTitles;
-    private ArrayList<String> eventTitlesUpdate;
-    private String eventName;
-    private String numPart;
-    private String eventDesc;
-    private double userLongitude;
-    private double userLatitude;
+
     private ListView eventsList;
 
-    /*Fields for the buttons to be used in this class.*/
+    /*Fields for the buttons, editTexts and strings to be used in this class.*/
     Button saveEvent;
     EditText eventDescription;
     EditText eventTitle;
@@ -80,6 +83,11 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
         // Required empty public constructor
     }
 
+    /**
+     * onCreate used to assign the values retrieved from the bundle to local variables used within
+     * this class.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,8 +102,6 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
         eventInfo = args.getStringArrayList("eventInfo");
         eventLocation = args.getStringArrayList("eventLocation");
         eventTitles = args.getStringArrayList("eventTitles");
-        userLongitude = args.getDouble("userLongitude", userLongitude);
-        userLatitude = args.getDouble("userLatitude", userLatitude);
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -103,6 +109,14 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
         }
     }
 
+    /**
+     * onCreateView used to initialize the layout, buttons and editTexts that are used within this
+     * class.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -202,17 +216,13 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
             }
         });
 
-        /*eventName = eventInfo.get(2);
-        numPart   = eventInfo.get(3);
-        eventDesc = eventInfo.get(4);
-
-        eventTitle.setText(eventName);
-        eventDescription.setText(eventDesc);
-        numParticipants.setText(numPart);*/
-
         return rootView;
     }
 
+    /**
+     * getButtons used to detect all the buttons and button clicks within the activity.
+     * @param v
+     */
     public void getButtons(View v){
         if(v instanceof ViewGroup) {
             ViewGroup vg = (ViewGroup) v;
@@ -247,9 +257,13 @@ public class FragmentEvents extends Fragment implements  View.OnClickListener {
         mListener = null;
     }
 
-    /*This method is for the on screen clicks by the user depending on which button is pushed
-        in this case the Events, Friends, Profile or Settings buttons. Once one button has been
-        clicked depending on their relationship the screen will switch to the appropriate screen.*/
+    /**
+     * This method is for the on screen clicks by the user depending on which button is pushed
+     * in this case the saveEvent button. Once one button has been
+     * clicked depending on their relationship the screen will switch to the appropriate screen. As
+     * well as a connection is made to the database and the information retrieved from the editTexts
+     * is passed to the database.
+     */
     @Override
     public void onClick(View view) {
         if (view == saveEvent) {

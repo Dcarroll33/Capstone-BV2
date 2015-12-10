@@ -97,30 +97,14 @@
             android:label="@string/Locate__Friends" >
         </activity>
 
-        <activity
-            android:name="com.hw1.devlyn.thewateringhole1.HangoutSetupActivity"
-            android:label="@string/hangout_setup_title" >
-        </activity>
-        <activity
-            android:name="com.hw1.devlyn.thewateringhole1.LocateHangoutActivity"
-            android:label="@string/locate_hangout_title" >
-        </activity>
-        <activity
+    <activity
             android:name="com.hw1.devlyn.thewateringhole1.EditProfileActivity"
             android:label="@string/edit_profile_title" >
         </activity>
     <activity
-            android:name="com.hw1.devlyn.thewateringhole1.HangoutPageActivity"
-            android:label="@string/hangout_page_title" >
-        </activity>
-        <activity
             android:name="com.hw1.devlyn.thewateringhole1.MainActivity"
             android:label="@string/main_menu_title" >
         </activity>
-    <activity
-        android:name="com.hw1.devlyn.thewateringhole1.EventInfoList"
-        android:label="@string/event_info_title" >
-    </activity>
-    </application>
+</application>
 
 </manifest>

@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Bundle;
 
 /**
+ * @Author: Devlyn Carroll
  * SplashActivity is the first activity that is loaded when the application is launched. This class
  * displays a splash screen while the application loads.
  */

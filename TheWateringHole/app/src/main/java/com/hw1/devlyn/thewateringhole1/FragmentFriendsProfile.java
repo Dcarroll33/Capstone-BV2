@@ -10,6 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+/**
+ * @Author: Devlyn Carroll
+ * FragmentFriendsProfile used to work along side friendsProfileActivity.
+ */
 public class FragmentFriendsProfile extends Fragment implements  View.OnClickListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -22,6 +26,10 @@ public class FragmentFriendsProfile extends Fragment implements  View.OnClickLis
 
     private boolean mIntentInProgress;
 
+    /**
+     * Global variables that are used to store the values retrieved from the bundle to be used
+     * throughout the class.
+     */
     private String currentUser;
     private String idUserProfile;
     private String userName;
@@ -53,6 +61,11 @@ public class FragmentFriendsProfile extends Fragment implements  View.OnClickLis
         // Required empty public constructor
     }
 
+    /**
+     * onCreate is used to assign the retrieved values from the bundle to locale variables that are
+     * used within this class.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +84,13 @@ public class FragmentFriendsProfile extends Fragment implements  View.OnClickLis
         }
     }
 
+    /**
+     * onCreatView used to initalize the layout and buttons used in this class.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,6 +104,8 @@ public class FragmentFriendsProfile extends Fragment implements  View.OnClickLis
         return rootView;
     }
 
+    /*This getButtons method is used to find all the buttons that are within the View of the fragment.
+      Used to make button detection more efficient. */
     public void getButtons(View v){
         if(v instanceof ViewGroup) {
             ViewGroup vg = (ViewGroup) v;

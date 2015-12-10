@@ -16,8 +16,11 @@ import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
 
-/*FragmentRegister is used to allow the user to interact with the buttons and editText's that are
-  within the fragment. This is used alongside the registerActivity.*/
+/**
+ * @Author: Devlyn Carroll
+ * FragmentRegister is used to allow the user to interact with the buttons and editText's that are
+ * within the fragment. This is used alongside the registerActivity.
+ */
 public class FragmentRegister extends Fragment implements  View.OnClickListener {
     // the fragment initialization parameters
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +33,7 @@ public class FragmentRegister extends Fragment implements  View.OnClickListener 
 
     private boolean mIntentInProgress;
 
-    /*Fields for the buttons to be used in this class.*/
+    /*Fields for the buttons, editTexts and Strings to be used in this class.*/
     Button Register;
     EditText userName;
     EditText newPassword;
@@ -64,6 +67,10 @@ public class FragmentRegister extends Fragment implements  View.OnClickListener 
         // Required empty public constructor
     }
 
+    /**
+     * onCreate used to retrieve the values from the bundle.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +80,13 @@ public class FragmentRegister extends Fragment implements  View.OnClickListener 
         }
     }
 
+    /**
+     * onCreateView used to initialize the layout, buttons and editTexts used in this class.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -91,6 +105,8 @@ public class FragmentRegister extends Fragment implements  View.OnClickListener 
         return rootView;
     }
 
+    /*This getButtons method is used to find all the buttons that are within the View of the fragment.
+     Used to make button detection more efficient. */
     public void getButtons(View v){
         if(v instanceof ViewGroup) {
             ViewGroup vg = (ViewGroup) v;

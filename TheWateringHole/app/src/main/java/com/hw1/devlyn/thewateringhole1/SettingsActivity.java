@@ -22,18 +22,19 @@ import java.util.ArrayList;
 import info.info.wateringhole.slidingmenu.adapter.NavDrawerListAdapter;
 import info.info.wateringhole.slidingmenu.model.NavDrawerItem;
 
-
+/**
+ * @Author: Devlyn Carroll
+ * SettingsActivity is used to load the settings page within the application. This just displays
+ * the settings information when loaded.
+ */
 public class SettingsActivity extends AppCompatActivity {
 
     String currentUser;
-    String idUserProfile;
-    String description;
-    String likes_dislikes;
-    String userName;
-    String events;
-    double userLongitude;
-    double userLatitude;
 
+    /**
+     * Global fields used to store the values retrieved from the intent and bundle to be used within
+     * the class.
+     */
     private ArrayList<String> userProfileInfo;
     private ArrayList<String> eventInfo;
     private ArrayList<String> friendsList;
@@ -60,6 +61,11 @@ public class SettingsActivity extends AppCompatActivity {
 
     Button locate;
 
+    /**
+     * onCreate used to set up the layout and assign the values from both the intent and bundle
+     * to local variables used within this class.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,18 +73,12 @@ public class SettingsActivity extends AppCompatActivity {
 
         Intent thisIntent = getIntent();
         currentUser = thisIntent.getStringExtra("userId");
-        idUserProfile = thisIntent.getStringExtra("idUserProfile");
-        userName = thisIntent.getStringExtra("userName");
-        description = thisIntent.getStringExtra("description");
-        events = thisIntent.getStringExtra("events");
-        likes_dislikes = thisIntent.getStringExtra("likes_dislikes");
         userProfileInfo = thisIntent.getStringArrayListExtra("userProfileInfo");
         eventInfo = thisIntent.getStringArrayListExtra("eventInfo");
         friendsList = thisIntent.getStringArrayListExtra("friendsList");
         eventTitles = thisIntent.getStringArrayListExtra("eventTitles");
         eventLocation = thisIntent.getStringArrayListExtra("eventLocation");
-        userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
-        userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
+
 
         Fragment fragment = new Fragment();
         Bundle bundle = new Bundle();
@@ -88,13 +88,7 @@ public class SettingsActivity extends AppCompatActivity {
         bundle.putStringArrayList("friendsList", friendsList);
         bundle.putStringArrayList("eventTitles", eventTitles);
         bundle.putStringArrayList("eventLocation", eventLocation);
-        /*bundle.putString("idUserProfile", idUserProfile);
-        bundle.putString("userName", userName);
-        bundle.putString("description", description);
-        bundle.putString("events", events);
-        bundle.putString("likes_dislikes", likes_dislikes);*/
-        bundle.putDouble("userLongitude", userLongitude);
-        bundle.putDouble("userLatitude", userLatitude);
+
         fragment.setArguments(bundle);
 
         mTitle = mDrawerTitle = getTitle();
@@ -117,13 +111,13 @@ public class SettingsActivity extends AppCompatActivity {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
         // Find People
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-        // Photos
+        // Find Events
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-        // Communities, Will add a counter here
+        // Edit Profile
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
-        // Pages
+        // Settings
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
-        // What's hot, We  will add a counter here
+        // Sign out
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
 
 
@@ -249,8 +243,7 @@ public class SettingsActivity extends AppCompatActivity {
                     home.putStringArrayListExtra("eventInfo", eventInfo);
                     home.putStringArrayListExtra("eventTitles", eventTitles);
                     home.putStringArrayListExtra("eventLocation", eventLocation);
-                    home.putExtra("userLongitude", userLongitude);
-                    home.putExtra("userLatitude", userLatitude);
+
 
                     android.app.Fragment MainActivityFrag = new android.app.Fragment();
                     Bundle MainActivityBundle = new Bundle();
@@ -276,8 +269,6 @@ public class SettingsActivity extends AppCompatActivity {
                     FindPeople.putStringArrayListExtra("eventInfo", eventInfo);
                     FindPeople.putStringArrayListExtra("eventTitles", eventTitles);
                     FindPeople.putStringArrayListExtra("eventLocation", eventLocation);
-                    FindPeople.putExtra("userLongitude", userLongitude);
-                    FindPeople.putExtra("userLatitude", userLatitude);
                     //FindPeople.putExtra("userImageUri", userImageUri);*/
 
                     android.app.Fragment FindPeopleFrag = new android.app.Fragment();
@@ -288,8 +279,6 @@ public class SettingsActivity extends AppCompatActivity {
                     FindPeopleBundle.putStringArrayList("eventInfo", eventInfo);
                     FindPeopleBundle.putStringArrayList("eventTitles", eventTitles);
                     FindPeopleBundle.putStringArrayList("eventLocation", eventLocation);
-                    FindPeopleBundle.putDouble("userLongitude", userLongitude);
-                    FindPeopleBundle.putDouble("userLatitude", userLatitude);
                     //FindPeopleBundle.putString("userImageUri", userImageUri);
                     FindPeopleFrag.setArguments(FindPeopleBundle);
 
@@ -333,8 +322,6 @@ public class SettingsActivity extends AppCompatActivity {
                     EditProfile.putStringArrayListExtra("friendsList", friendsList);
                     EditProfile.putStringArrayListExtra("eventTitles", eventTitles);
                     EditProfile.putStringArrayListExtra("eventLocation", eventLocation);
-                    EditProfile.putExtra("userLongitude", userLongitude);
-                    EditProfile.putExtra("userLatitude", userLatitude);
 
                     android.app.Fragment EditProfileFrag = new android.app.Fragment();
                     Bundle EditProfileBundle = new Bundle();
@@ -344,8 +331,6 @@ public class SettingsActivity extends AppCompatActivity {
                     EditProfileBundle.putStringArrayList("friendsList", friendsList);
                     EditProfileBundle.putStringArrayList("eventTitles", eventTitles);
                     EditProfileBundle.putStringArrayList("eventLocation", eventLocation);
-                    EditProfileBundle.putDouble("userLongitude", userLongitude);
-                    EditProfileBundle.putDouble("userLatitude", userLatitude);
                     EditProfileFrag.setArguments(EditProfileBundle);
 
                     startActivity(EditProfile);
@@ -362,8 +347,6 @@ public class SettingsActivity extends AppCompatActivity {
                     Settings.putStringArrayListExtra("eventTitles", eventTitles);
                     Settings.putStringArrayListExtra("eventLocation", eventLocation);
                     Settings.putStringArrayListExtra("friendsList", friendsList);
-                    Settings.putExtra("userLongitude", userLongitude);
-                    Settings.putExtra("userLatitude", userLatitude);
 
                     android.app.Fragment SettingsFrag = new android.app.Fragment();
                     Bundle SettingsBundle = new Bundle();
@@ -373,8 +356,7 @@ public class SettingsActivity extends AppCompatActivity {
                     SettingsBundle.putStringArrayList("eventTitles", eventTitles);
                     SettingsBundle.putStringArrayList("eventLocation", eventLocation);
                     SettingsBundle.putStringArrayList("friendsList", friendsList);
-                    SettingsBundle.putDouble("userLongitude", userLongitude);
-                    SettingsBundle.putDouble("userLatitude", userLatitude);
+
                     SettingsFrag.setArguments(SettingsBundle);
 
                     startActivity(Settings);

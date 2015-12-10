@@ -31,6 +31,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * @Author: Devlyn Carroll
+ * FragmentLocateEvents is used to work along side the LocateEvents activity. This allows for
+ * button clicks, maps and the sliding menu to work with each other.
+ */
 public class FragmentLocateEvents extends Fragment implements  View.OnClickListener, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMyLocationChangeListener, LocationListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,6 +45,10 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
     private String mParam1;
     private String mParam2;
 
+    /**
+     * Global fields to assign values retrieved from bundles and intents to local variables used
+     * within this activity as well as the fields used for setting up the maps.
+     */
     private ArrayList<String> eventInfo = null;
     private ArrayList<String> eventTitles = null;
     private ArrayList<String> eventLocation = null;
@@ -109,6 +118,11 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
         // Required empty public constructor
     }
 
+    /**
+     * onCreate used to retrieve the values passed in from the bundle and assign them to local
+     * variables to be used within this activity.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +147,13 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
         }
     }
 
+    /**
+     * onCreateView is used to initialize the mapView and buttons for this activity.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -155,6 +176,10 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
         return rootView;
     }
 
+    /**
+     * onStart used to start the connection to the mGoogleApiClient if there is not already a
+     * connection.
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -163,6 +188,10 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
         }
     }
 
+    /**
+     * onResume used to check for googlePlayServies and resume the mGoogleApiClient connection and
+     * mapView.
+     */
     @Override
     public void onResume() {
         checkPlayServices();
@@ -175,6 +204,9 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
         super.onResume();
     }
 
+    /**
+     * onStop used to stop the mGoogleApiClient connection.
+     */
     @Override
     public void onStop() {
         super.onStop();
@@ -183,6 +215,9 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
         }
     }
 
+    /**
+     * onPause used to pause the mapView nad mGoogleApiClient connection.
+     */
     @Override
     public void onPause() {
         super.onPause();
@@ -214,8 +249,6 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
         } else {
             setUpMapIfNeeded(mMapView);
         }
-        //setUpMapIfNeeded(mMapView);
-
     }
 
     /**
@@ -314,6 +347,11 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
         displayLocation();
     }
 
+    /**
+     * onMyLocationChange is used to detect when the user moves and when they do removes the
+     * previous marker and runs displayLocation that then resets the marker.
+     * @param location
+     */
      @Override
      public void onMyLocationChange(Location location) {
          // Assign the new location
@@ -326,8 +364,16 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
          userLocationMarker.remove();
          displayLocation();
      }
+
+    /**
+     * setUpMap if needed is used to create a google map, pass in the values of the event and
+     * currentUser location. The values are then passed to each marker on the map. There is also
+     * a couple of calls to the database to set and retrieve those values.
+     * @param rootView
+     * @throws Exception
+     */
     private void setUpMapIfNeeded(View rootView) {
-        // Do a null check to confirm that we have not already instantiated the map.
+        // Do a null check to confirm that the map has been instantiated.
         if (googleMap == null) {
             googleMap = ((MapView) rootView.findViewById(R.id.eventview)).getMap();
             googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -357,6 +403,10 @@ public class FragmentLocateEvents extends Fragment implements  View.OnClickListe
         }
     }
 
+    /**
+     * getButtons used to detect all the buttons and button clicks within the activity.
+     * @param v
+     */
     public void getButtons(View v){
         if(v instanceof ViewGroup) {
             ViewGroup vg = (ViewGroup) v;

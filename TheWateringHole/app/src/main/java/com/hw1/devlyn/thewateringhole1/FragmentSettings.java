@@ -12,6 +12,10 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
+/**
+ * FragmentSettings is used to work along side the SettingsActivity where it will work with the
+ * sliding menu.
+ */
 public class FragmentSettings extends Fragment implements View.OnClickListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -28,19 +32,11 @@ public class FragmentSettings extends Fragment implements View.OnClickListener {
     Button LocateFriends;
 
     private String currentUser;
-    private String idUserProfile;
-    private String userName;
-    private String description;
-    private String events;
-    private String likes_dislikes;
-
     private ArrayList<String> eventInfo;
     private ArrayList<String> eventTitles;
     private ArrayList<String> eventLocation;
     private ArrayList<String> userProfileInfo;
     private ArrayList<String> friendsList;
-    private double userLongitude;
-    private double userLatitude;
 
     /**
      * Method to create a new instance of
@@ -63,6 +59,11 @@ public class FragmentSettings extends Fragment implements View.OnClickListener {
         // Required empty public constructor
     }
 
+    /**
+     * onCreate used to assign the retrieved values from the bundle to local variables used in this
+     * activity.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,13 +75,6 @@ public class FragmentSettings extends Fragment implements View.OnClickListener {
         eventLocation = args.getStringArrayList("eventLocation");
         userProfileInfo = args.getStringArrayList("userProfileInfo");
         friendsList = args.getStringArrayList("friendsList");
-        idUserProfile = args.getString("idUserProfile", idUserProfile);
-        userName = args.getString("userName", userName);
-        description = args.getString("description", description);
-        events = args.getString("events", events);
-        likes_dislikes = args.getString("likes_dislikes", likes_dislikes);
-        userLongitude = args.getDouble("userLongitude", userLongitude);
-        userLatitude = args.getDouble("userLatitude", userLatitude);
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -88,6 +82,13 @@ public class FragmentSettings extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * onCreateView used to set up the fragmentSettings layout and get the buttons found.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -96,11 +97,12 @@ public class FragmentSettings extends Fragment implements View.OnClickListener {
 
         getButtons(rootView);
 
-        //LocateFriends = (Button) rootView.findViewById(R.id.locate_events_btn);
 
         return rootView;
     }
 
+    /*This getButtons method is used to find all the buttons that are within the View of the fragment.
+     Used to make button detection more efficient. */
     public void getButtons(View v) {
         if (v instanceof ViewGroup) {
             ViewGroup vg = (ViewGroup) v;

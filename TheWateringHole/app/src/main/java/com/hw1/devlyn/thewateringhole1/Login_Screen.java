@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 /**
+ * @Author: Devlyn Carroll
  * This is the login activity where the user enters their credentials and tries to log in. The
  * credentials are then sent to the database to ensure the user exists and has entered their
  * information in correctly.
@@ -112,10 +113,6 @@ public class Login_Screen extends Activity implements View.OnClickListener {
             ArrayList<String> userProfileInfo = conDb.getUserProfileInfo();
             //String userImageUri = myList.get(6);*/
 
-            ArrayList<Double> myList2 = conDb.getUserCoords();
-            double userLongitude = myList2.get(0);
-            double userLatitude = myList2.get(1);
-
             /**
              * friendCoords is assigned the values that the method getFriendCoords in connectDb
              * returns. These values should be friendUserName, friendLongitude and friendLatitude.
@@ -150,8 +147,6 @@ public class Login_Screen extends Activity implements View.OnClickListener {
                 Intent login = new Intent(this, MainActivity.class);
                 login.putExtra("userId", userId);
                     login.putExtra("userProfileInfo", userProfileInfo);
-                    login.putExtra("userLongitude", userLongitude);
-                    login.putExtra("userLatitude", userLatitude);
                     login.putExtra("friendsList", friendCoords);
                     login.putExtra("eventInfo", eventInfo);
                     login.putExtra("eventTitles", eventTitles);

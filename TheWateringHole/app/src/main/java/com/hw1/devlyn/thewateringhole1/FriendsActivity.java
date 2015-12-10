@@ -21,18 +21,18 @@ import java.util.ArrayList;
 import info.info.wateringhole.slidingmenu.adapter.NavDrawerListAdapter;
 import info.info.wateringhole.slidingmenu.model.NavDrawerItem;
 
-
+/**
+ * @Author: Devlyn Carroll
+ * FriendsActivity used to view the user's friends and their information within the application.
+ */
 public class FriendsActivity extends AppCompatActivity {
 
     String currentUser;
-    String idUserProfile;
-    String description;
-    String likes_dislikes;
-    String userName;
-    String events;
-    double userLongitude;
-    double userLatitude;
 
+    /**
+     * Global fields used to store the values retrieved from the bundle that
+     * will be used within the class.
+     */
     private ArrayList<String> userProfileInfo;
     private ArrayList<String> eventInfo;
     private ArrayList<String> friendsList;
@@ -59,6 +59,11 @@ public class FriendsActivity extends AppCompatActivity {
 
     Button locate;
 
+    /**
+     * onCreate used to assign the values retrieved from the bundle to the local varaibles used
+     * within this class.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +76,6 @@ public class FriendsActivity extends AppCompatActivity {
         eventTitles = thisIntent.getStringArrayListExtra("eventTitles");
         eventLocation = thisIntent.getStringArrayListExtra("eventLocation");
         friendsList = thisIntent.getStringArrayListExtra("friendsList");
-        userLongitude = thisIntent.getDoubleExtra("userLongitude", userLongitude);
-        userLatitude = thisIntent.getDoubleExtra("userLatitude", userLatitude);
 
         mTitle = mDrawerTitle = getTitle();
 
@@ -94,13 +97,13 @@ public class FriendsActivity extends AppCompatActivity {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
         // Find People
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-        // Photos
+        // Find Events
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-        // Communities, Will add a counter here
+        // Edit Profile
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
-        // Pages
+        // Settings
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
-        // What's hot, We  will add a counter here
+        // Sign out
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
 
 
@@ -223,8 +226,6 @@ public class FriendsActivity extends AppCompatActivity {
                     home.putStringArrayListExtra("userProfileInfo", userProfileInfo);
                     home.putStringArrayListExtra("friendsList", friendsList);
                     home.putStringArrayListExtra("eventInfo", eventInfo);
-                    home.putExtra("userLongitude", userLongitude);
-                    home.putExtra("userLatitude", userLatitude);
 
                     android.app.Fragment MainActivityFrag = new android.app.Fragment();
                     Bundle MainActivityBundle = new Bundle();
@@ -248,8 +249,6 @@ public class FriendsActivity extends AppCompatActivity {
                     FindPeople.putStringArrayListExtra("eventInfo", eventInfo);
                     FindPeople.putStringArrayListExtra("eventTitles", eventTitles);
                     FindPeople.putStringArrayListExtra("eventLocation", eventLocation);
-                    FindPeople.putExtra("userLongitude", userLongitude);
-                    FindPeople.putExtra("userLatitude", userLatitude);
                     //FindPeople.putExtra("userImageUri", userImageUri);*/
 
                     android.app.Fragment FindPeopleFrag = new android.app.Fragment();
@@ -260,8 +259,6 @@ public class FriendsActivity extends AppCompatActivity {
                     FindPeopleBundle.putStringArrayList("eventInfo", eventInfo);
                     FindPeopleBundle.putStringArrayList("eventTitles", eventTitles);
                     FindPeopleBundle.putStringArrayList("eventLocation", eventLocation);
-                    FindPeopleBundle.putDouble("userLongitude", userLongitude);
-                    FindPeopleBundle.putDouble("userLatitude", userLatitude);
                     //FindPeopleBundle.putString("userImageUri", userImageUri);
                     FindPeopleFrag.setArguments(FindPeopleBundle);
 
@@ -305,8 +302,6 @@ public class FriendsActivity extends AppCompatActivity {
                     EditProfile.putStringArrayListExtra("friendsList", friendsList);
                     EditProfile.putStringArrayListExtra("eventTitles", eventTitles);
                     EditProfile.putStringArrayListExtra("eventLocation", eventLocation);
-                    EditProfile.putExtra("userLongitude", userLongitude);
-                    EditProfile.putExtra("userLatitude", userLatitude);
 
                     android.app.Fragment EditProfileFrag = new android.app.Fragment();
                     Bundle EditProfileBundle = new Bundle();
@@ -316,8 +311,6 @@ public class FriendsActivity extends AppCompatActivity {
                     EditProfileBundle.putStringArrayList("friendsList", friendsList);
                     EditProfileBundle.putStringArrayList("eventTitles", eventTitles);
                     EditProfileBundle.putStringArrayList("eventLocation", eventLocation);
-                    EditProfileBundle.putDouble("userLongitude", userLongitude);
-                    EditProfileBundle.putDouble("userLatitude", userLatitude);
                     EditProfileFrag.setArguments(EditProfileBundle);
 
                     startActivity(EditProfile);
@@ -335,8 +328,6 @@ public class FriendsActivity extends AppCompatActivity {
                 Settings.putStringArrayListExtra("friendsList", friendsList);
                 Settings.putStringArrayListExtra("eventTitles", eventTitles);
                 Settings.putStringArrayListExtra("eventLocation", eventLocation);
-                Settings.putExtra("userLongitude", userLongitude);
-                Settings.putExtra("userLatitude", userLatitude);
 
                 android.app.Fragment SettingsFrag = new android.app.Fragment();
                 Bundle SettingsBundle = new Bundle();
@@ -344,8 +335,6 @@ public class FriendsActivity extends AppCompatActivity {
                 SettingsBundle.putStringArrayList("eventInfo", eventInfo);
                 SettingsBundle.putStringArrayList("userProfileInfo", userProfileInfo);
                 SettingsBundle.putStringArrayList("friendsList", friendsList);
-                SettingsBundle.putDouble("userLongitude", userLongitude);
-                SettingsBundle.putDouble("userLatitude", userLatitude);
                 SettingsFrag.setArguments(SettingsBundle);
                     startActivity(Settings);
                 /*Case 5 used for the Settings item in the list and redirects the user to the
